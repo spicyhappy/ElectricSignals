@@ -5,13 +5,12 @@ html,body,p,article,img{
 	font-family:"Helvetica Neue Light","HelveticaNeue-Light",Arial,Helvetica,sans-serif;
 	font-size:1em;
 	display: block;
-	overflow:hidden
 }
 
 .languages{
 	margin: 0% auto;
 	margin-top: 8%;
-	padding: 0px 3%;
+	padding: 0 3%;
 	min-width: 100px;
 	max-width: 500px
 }
@@ -20,6 +19,10 @@ p{
 	font-weight: normal;
 	line-height: 1.125;
 	margin-bottom: 1.5em
+}
+
+img{
+	margin: 3% auto;
 }
 
 
