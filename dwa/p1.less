@@ -1,8 +1,20 @@
+@font-face {
+    font-family: Nexa;
+    src: url(fonts/nexa_light-webfont.ttf);
+    font-weight:normal;
+}
+
+@font-face {
+    font-family: Nexa;
+    src: url(fonts/nexa_bold-webfont.ttf);
+    font-weight:bold;
+}
+
 html, body, p, img, div {
 	margin: 0;
 	padding: 0;
     color: white;
-	font-family: Arial, sans-serif;
+	font-family: Nexa, Arial, sans-serif;
 	font-size: 1em;
     line-height: 1.25em;
 	display: block;
@@ -11,7 +23,7 @@ html, body, p, img, div {
 
 
 a, a:visited {
-	color: blue;
+	color: orange;
 	text-decoration:none;
 }
 
@@ -69,23 +81,32 @@ a:hover {
 }
 
 body {
-    background: url("img/01-Moon.jpg") no-repeat center;
+	background: url(img/02-Stars.png) 60% 90% no-repeat, url(img/01-Moon.jpg) 40% 35% no-repeat;
     background-size: cover;
-}
-
-body:after {
-    background: url("img/02-Stars.png") no-repeat center;
-    bacground-size: cover;
- 
 }
 
 
 @media all and (max-width: 565) and (max-height: 500) {
 	.xin {
 		bottom: 40%;
-		left: 50%;
-		right: 3%;
+		left: 45%;
+		width: 200px;
 		display: block;
 		max-height: 60%;
+		padding: 10px;
+		background-color: rgba(255,0,0,0.7);
+	}
+	.triangle {
+		position: fixed;
+		left: 60%;
+		bottom: 34%;
+		margin-top: 50px;
+		border-top: 10px solid rgba(255,0,0,0.7);
+		border-right: 10px solid transparent;
+		border-left: 10px solid transparent;
+		border-bottom: 0;
+		_border-right-color: pink;
+		_border-left-color: pink;
+		_filter: chroma(color=pink);
 	}
 }
