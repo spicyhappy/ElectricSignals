@@ -72,10 +72,13 @@ a:hover {
   margin-top: 40px;
 }
 body {
-  background: url(img/02-Stars.png) 60% 90% no-repeat, url(img/01-Moon.jpg) 40% 35% no-repeat;
-  background-size: cover;
+	background: url(img/02-Stars.png) no-repeat center 40% fixed, url(img/01-Moon.jpg) no-repeat center 40% fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
-@media all and (max-width: 565) and (max-height: 500) {
+@media all and (max-width: 565px) and (max-height: 500px) {
   .xin {
     bottom: 40%;
     left: 45%;
