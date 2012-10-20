@@ -13,6 +13,8 @@ If you want a different default time format for this app, set it below
 
 */
 
+# Default database name for this app
+	define('DB_NAME', "p2_electricsignals_com");
 
 # What is the name of this app?
 	define('APP_NAME', 'My App');  
