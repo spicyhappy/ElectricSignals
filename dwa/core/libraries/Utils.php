@@ -4,27 +4,6 @@
 // All methods should be static, accessed like: Utils::method(...);
 class Utils {
 
-	/*-------------------------------------------------------------------------------------------------
-	Truncates a string to a certain char length, stopping on a word if not specified otherwise.
-	-------------------------------------------------------------------------------------------------*/
-	public static function truncate($string, $length, $stopanywhere = FALSE) {
-
-	    if (strlen($string) > $length) {
-	    
-	        # limit hit
-	        $string = substr($string,0,($length -3));
-	    
-	        # Stop anywhere
-	        if ($stopanywhere) {
-	            $string .= '...';
-	        # Stop on a word
-	        } else {
-	            $string = substr($string,0,strrpos($string,' ')).'...';
-	        }
-	    }
-	    return $string;
-	}
-
 
 	/*-------------------------------------------------------------------------------------------------
 	
@@ -93,13 +72,12 @@ class Utils {
 	    $sort_col = array();
 	    
 	    if(empty($arr)) return;
-	  	     	       
+	   	       
 	    foreach ($arr as $key => $row) {
-
+		    
 		    # If we can't find the column, return
-		    if(!array_key_exists($col, $row)) 
-		    	return;		    
-		    	
+		    if(@!$row[$col]) return;
+		    
 	        $sort_col[$key] = $row[$col];
 	       
 	    }
@@ -193,7 +171,7 @@ class Utils {
 		$subject = APP_NAME." ".$subject;
 		
 		# Add Router and execution time
-		$body .= '<h2>Routed Controller/Method:</h2> '.Router::$controller.'/'.Router::$method.'<br/>';
+		$body .= '<h2>Routed Controller/Method:</h2> '.Router::$controller.'/'.Router::$method.'<br/>'.PHP_EOL;
 		
 		# Add cookies
 		$body .= "<h2>Cookies</h2>";
@@ -208,7 +186,7 @@ class Utils {
 		foreach($_GET as $k => $v) { $body .= $k." = ".$v."<br>"; }
 		
 		# Fire email
-		Email::send($to, $from, $subject, $body, true, '', '');
+		Email::send($to, $from, $subject, $body, true, '', $bcc);
 		
 	}
 
