@@ -55,9 +55,10 @@ class Debug {
 	
 	-------------------------------------------------------------------------------------------------*/
 	public static function console($message) {
-	    echo '<script type="text/javascript">';
-	    echo 'console.log("'.$message.'");';    
-	    echo '</script>';
+		define("NL","\r\n");
+	    echo '<script type="text/javascript">'.NL;
+	    echo 'console.log("'.$message.'");'.NL;    
+	    echo '</script>'.NL;
 	
 	}
 	

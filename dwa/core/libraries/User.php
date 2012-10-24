@@ -8,13 +8,7 @@ class User {
 	# Can't use the email_template defined in base_controller
 	public $email_template;
 	
-	private $token;
-	
 	public function __construct() {
-		
-		# Look for the token cookie
-		$this->token = @$_COOKIE['token'];
-	
 		$this->email_template = View::instance('_v_email');		
 	}
 	
@@ -23,9 +17,12 @@ class User {
 	-------------------------------------------------------------------------------------------------*/
 	public function authenticate() {
 		
-		# If we have cookie token, load that user
-		if(!empty($this->token)) {
-			return $this->__load_user(); 
+		# Look for the token cookie
+		$token = @$_COOKIE['token'];
+
+		# If we have one, load that user
+		if(!empty($token)) {
+			return $this->__load_user($token); 
 		}
 		
 		# Otherwise, return false, they're not logged in
@@ -37,7 +34,7 @@ class User {
 	/*-------------------------------------------------------------------------------------------------
 	
 	-------------------------------------------------------------------------------------------------*/
-	public function __load_user() {
+	public function __load_user($token) {
 
 		# Retreive from cache, reduce DB calls
 		if (! isset($this->_user)) {
@@ -45,7 +42,7 @@ class User {
 			# Load user from DB
 				$q = "SELECT *
 					FROM users
-					WHERE token = '".$this->token."'
+					WHERE token = '".$token."'
 					LIMIT 1";	
 					
 				$this->_user = DB::instance(DB_NAME)->select_row($q, "object");
@@ -68,34 +65,42 @@ class User {
 
 	}
 	
+	
+	/*-------------------------------------------------------------------------------------------------
+	Will redirect a user if they're not logged in; specify where you want them redirected to.
+	-------------------------------------------------------------------------------------------------*/
+	public function members_only($redirect_url) {
+
+		if(@!$this->_user) 
+			Router::redirect($redirect_url);
+			
+	}
+
 
 	/*-------------------------------------------------------------------------------------------------
 	Returns token or false
 	-------------------------------------------------------------------------------------------------*/
-	public function login($email, $password, $timezone = NULL) {
+	public function login($email, $password) {
 				
 		# Hash password
 		$password = sha1(PASSWORD_SALT.$password);
 		
-		DB::instance(DB_NAME)->sanitize($email);
-		DB::instance(DB_NAME)->sanitize($password);
-				
 		# See if we can login
-		$q = "SELECT token 
-			FROM users 
-			WHERE email = '".$email."' 
-			AND password = '".$password."'";
-					
-		$token = DB::instance(DB_NAME)->select_field($q);	
-					
+		$token = DB::instance(DB_NAME)->select_field("SELECT token FROM users WHERE email = '".$email."' AND password = '".$password."'");	
+			
 		# If we get a token back, we were successful...
 		if($token) {
-		
-			$this->__set_login_cookie($token);
-		
+			
+			# Generate and save a new token for next login
+				$new_token = sha1(TOKEN_SALT.$email.Utils::generate_random_string());
+				DB::instance(DB_NAME)->update("users", Array("token" => $new_token), "WHERE token = '".$token."'");
+			
+			# Set cookie
+				$this->__set_login_cookie($new_token);
+			
 			# Update their timezone on login
 			if(@$_POST['timezone'])
-				DB::instance(DB_NAME)->update("users", Array("timezone" => $timezone), "WHERE token = '".$token."'");
+				DB::instance(DB_NAME)->update("users", Array("timezone" => $_POST['timezone']), "WHERE token = '".$token."'");
 					
 			return $token;
 		}
@@ -111,7 +116,7 @@ class User {
 	Where do we go after logging in / attempting to login?
 	-------------------------------------------------------------------------------------------------*/
 	public function login_redirect($token, $email, $destination) {
-		
+	
 		# Success - send them to their destination
 		if($token) {
 			Router::redirect($destination);
@@ -232,8 +237,6 @@ class User {
 	-------------------------------------------------------------------------------------------------*/
 	public function reset_password($email) {
 		
-		$email = DB::instance(DB_NAME)->sanitize($email);
-		
 		# Do we have a user with that email?
 		$user_id = DB::instance(DB_NAME)->select_field("SELECT user_id FROM users WHERE email = '".$email."'");
 		
@@ -277,12 +280,8 @@ class User {
 	/*-------------------------------------------------------------------------------------------------
 	
 	-------------------------------------------------------------------------------------------------*/
-	public function logout($email) {
+	public function logout() {
 	
-		# Generate and save a new token for next login
-		$new_token = sha1(TOKEN_SALT.$email.Utils::generate_random_string());
-		DB::instance(DB_NAME)->update("users", Array("token" => $new_token), "WHERE token = '".$this->token."'");
-
 		# Delete their "token" cookie
 		setcookie("token", "", strtotime('-1 year'), '/');
 		
@@ -295,8 +294,6 @@ class User {
 	
 	-------------------------------------------------------------------------------------------------*/
 	public function confirm_unique_email($email) {
-	
-		$email = DB::instance(DB_NAME)->sanitize($email);
 	
 		$user_id = DB::instance(DB_NAME)->select_row("SELECT user_id FROM users WHERE email = '".$email."'");
 	
