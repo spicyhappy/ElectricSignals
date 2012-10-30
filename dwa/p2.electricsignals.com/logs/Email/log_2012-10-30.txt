@@ -1,0 +1,85 @@
+2012-10-30 15:29:34 - INFO --> Controller/Method: users/p_signup 
+2012-10-30 15:29:34 - INFO --> From: Pictochat (pictochat@electricsignals.com) 
+2012-10-30 15:29:34 - INFO --> To: Judy Grimes (judy@gmail.com),  
+2012-10-30 15:29:34 - INFO --> CC:  
+2012-10-30 15:29:34 - INFO --> BCC:  
+2012-10-30 15:29:34 - INFO --> Subject: Welcome to Pictochat 
+2012-10-30 15:29:34 - INFO --> Body: Hi Judy, welcome to Pictochat 
+2012-10-30 15:29:36 - INFO --> FAILED TO SEND EMAIL 
+2012-10-30 15:30:42 - INFO --> Controller/Method: users/p_signup 
+2012-10-30 15:30:42 - INFO --> From: Pictochat (pictochat@electricsignals.com) 
+2012-10-30 15:30:42 - INFO --> To: Judy Grimes (judy@gmail.com),  
+2012-10-30 15:30:42 - INFO --> CC:  
+2012-10-30 15:30:42 - INFO --> BCC:  
+2012-10-30 15:30:42 - INFO --> Subject: Welcome to Pictochat 
+2012-10-30 15:30:42 - INFO --> Body: Hi Judy, welcome to Pictochat 
+2012-10-30 15:33:03 - INFO --> Controller/Method: users/p_signup 
+2012-10-30 15:33:03 - INFO --> From: Pictochat (pictochat@electricsignals.com) 
+2012-10-30 15:33:03 - INFO --> To: Xin Xin (xin@jana.com),  
+2012-10-30 15:33:03 - INFO --> CC:  
+2012-10-30 15:33:03 - INFO --> BCC:  
+2012-10-30 15:33:03 - INFO --> Subject: Welcome to Pictochat 
+2012-10-30 15:33:03 - INFO --> Body: Hi Judy, welcome to Pictochat 
+2012-10-30 15:38:40 - INFO --> Controller/Method: users/p_signup 
+2012-10-30 15:38:40 - INFO --> From: Pictochat (pictochat@electricsignals.com) 
+2012-10-30 15:38:40 - INFO --> To: Xin Xin (xin@jana.com),  
+2012-10-30 15:38:40 - INFO --> CC:  
+2012-10-30 15:38:40 - INFO --> BCC:  
+2012-10-30 15:38:40 - INFO --> Subject: Welcome to Pictochat 
+2012-10-30 15:38:40 - INFO --> Body: Hi Judy, welcome to Pictochat 
+2012-10-30 15:43:05 - INFO --> Controller/Method: users/p_signup 
+2012-10-30 15:43:05 - INFO --> From: Pictochat (pictochat@electricsignals.com) 
+2012-10-30 15:43:05 - INFO --> To: Xin Xin (xin@jana.com),  
+2012-10-30 15:43:05 - INFO --> CC:  
+2012-10-30 15:43:05 - INFO --> BCC:  
+2012-10-30 15:43:05 - INFO --> Subject: Welcome to Pictochat 
+2012-10-30 15:43:05 - INFO --> Body: Hi Judy, welcome to Pictochat 
+2012-10-30 15:46:09 - INFO --> Controller/Method: users/p_signup 
+2012-10-30 15:46:09 - INFO --> From: Pictochat (pictochat@electricsignals.com) 
+2012-10-30 15:46:09 - INFO --> To:  (xin@jana.com),  
+2012-10-30 15:46:09 - INFO --> CC:  
+2012-10-30 15:46:09 - INFO --> BCC:  
+2012-10-30 15:46:09 - INFO --> Subject: Welcome to Pictochat 
+2012-10-30 15:46:09 - INFO --> Body: Hi Judy, welcome to Pictochat 
+2012-10-30 15:47:13 - INFO --> Controller/Method: users/p_signup 
+2012-10-30 15:47:13 - INFO --> From: Pictochat (pictochat@electricsignals.com) 
+2012-10-30 15:47:13 - INFO --> To:  (xin@jana.com),  
+2012-10-30 15:47:13 - INFO --> CC:  
+2012-10-30 15:47:13 - INFO --> BCC:  
+2012-10-30 15:47:13 - INFO --> Subject: Welcome to Pictochat 
+2012-10-30 15:47:13 - INFO --> Body: Hi Judy, welcome to Pictochat 
+2012-10-30 15:48:13 - INFO --> Controller/Method: users/p_signup 
+2012-10-30 15:48:13 - INFO --> From: Pictochat (pictochat@electricsignals.com) 
+2012-10-30 15:48:13 - INFO --> To:  (xin@jana.com),  
+2012-10-30 15:48:13 - INFO --> CC:  
+2012-10-30 15:48:13 - INFO --> BCC:  
+2012-10-30 15:48:13 - INFO --> Subject: Welcome to Pictochat 
+2012-10-30 15:48:13 - INFO --> Body: Hi , welcome to Pictochat 
+2012-10-30 15:49:48 - INFO --> Controller/Method: users/p_signup 
+2012-10-30 15:49:48 - INFO --> From: Pictochat (pictochat@electricsignals.com) 
+2012-10-30 15:49:48 - INFO --> To:  (xin@jana.com),  
+2012-10-30 15:49:48 - INFO --> CC:  
+2012-10-30 15:49:48 - INFO --> BCC:  
+2012-10-30 15:49:48 - INFO --> Subject: Welcome to Pictochat 
+2012-10-30 15:49:48 - INFO --> Body: Hi , welcome to Pictochat 
+2012-10-30 15:50:34 - INFO --> Controller/Method: users/p_signup 
+2012-10-30 15:50:34 - INFO --> From: Pictochat (pictochat@electricsignals.com) 
+2012-10-30 15:50:34 - INFO --> To:  (xin@jana.com),  
+2012-10-30 15:50:34 - INFO --> CC:  
+2012-10-30 15:50:34 - INFO --> BCC:  
+2012-10-30 15:50:34 - INFO --> Subject: Welcome to Pictochat 
+2012-10-30 15:50:34 - INFO --> Body: Hi Xin, welcome to Pictochat 
+2012-10-30 15:51:41 - INFO --> Controller/Method: users/p_signup 
+2012-10-30 15:51:41 - INFO --> From: Pictochat (pictochat@electricsignals.com) 
+2012-10-30 15:51:41 - INFO --> To:  (mail@xin-squared.com),  
+2012-10-30 15:51:41 - INFO --> CC:  
+2012-10-30 15:51:41 - INFO --> BCC:  
+2012-10-30 15:51:41 - INFO --> Subject: Welcome to Pictochat 
+2012-10-30 15:51:41 - INFO --> Body: Hi Xin, welcome to Pictochat 
+2012-10-30 15:55:04 - INFO --> Controller/Method: users/p_signup 
+2012-10-30 15:55:04 - INFO --> From: Pictochat (pictochat@electricsignals.com) 
+2012-10-30 15:55:04 - INFO --> To:  (xin@jana.com),  
+2012-10-30 15:55:04 - INFO --> CC:  
+2012-10-30 15:55:04 - INFO --> BCC:  
+2012-10-30 15:55:04 - INFO --> Subject: Welcome to Pictochat 
+2012-10-30 15:55:04 - INFO --> Body: Hi Xin, welcome to Pictochat. Pictochat is a socia 

@@ -3,7 +3,7 @@ class users_controller extends base_controller {
 
 	public function __construct() {
 		parent::__construct();
-		echo "users_controller construct called<br><br>";
+		//echo "users_controller construct called<br><br>";
 	} 
 	
 	public function index() {
@@ -33,18 +33,34 @@ class users_controller extends base_controller {
 		
 		# Insert this user into the database 
 		$user_id = DB::instance(DB_NAME)->insert("users", $_POST);
-	
+		
+		# Sign the new user in
+		
+		$token = $_POST['token'];
+		@setcookie("token", $token, strtotime('+1 year'), '/');
+		
+		# Email the new user
+		$to[] = Array("name" => $user->first_name, "email" => $_POST['email']);
+		$from = Array("name" => APP_NAME, "email" => APP_EMAIL);
+		$subject = "Welcome to Pictochat";		
+		$body = "Hi ".$_POST['first_name'].", welcome to Pictochat. Pictochat is a social network for people to talk in photos.";
+		$email = Email::send($to, $from, $subject, $body, true, $cc, $bcc);
+		
+		# Redirect to home page
+		Router::redirect("/");
 	}
 	
-	public function login() {
-
-	# Setup view
-		$this->template->content = View::instance('v_users_login');
-		$this->template->title   = "Login";
-		
-	# Render template
-		echo $this->template;
+	public function login($error = NULL) {
 	
+		# Set up the view
+		$this->template->content = View::instance("v_users_login");
+		
+		# Pass data to the view
+		$this->template->content->error = $error;
+	
+		# Render the view
+		echo $this->template;
+		
 	}
 		
 	public function p_login() {
@@ -61,12 +77,12 @@ class users_controller extends base_controller {
 		
 		$token = DB::instance(DB_NAME)->select_field($q);	
 					
-		# If we didn't get a token back, login failed
+		# Login failed
 		if(!$token) {
 				
 			# Send them back to the login page
-			Router::redirect("/users/login/");
-			
+			Router::redirect("/users/login/error"); # Note the addition of the parameter "error"
+						
 		# But if we did, login succeeded! 
 		} else {
 				
@@ -116,8 +132,5 @@ class users_controller extends base_controller {
 		# Render template
 		echo $this->template;
 	}
-
-
-
 
 } # end of the class

@@ -17,11 +17,11 @@ If you want a different default time format for this app, set it below
 	define('DB_NAME', "p2_electricsignals_com");
 
 # What is the name of this app?
-	define('APP_NAME', 'My App');  
+	define('APP_NAME', 'Pictochat');  
 
 # When email is sent out from the server, where should it come from?
 # Ideally, this should match the domain name
-	define('APP_EMAIL', 'webmaster@myapp.com'); 
+	define('APP_EMAIL', 'pictochat@electricsignals.com'); 
 
 /* 
 A email designated to receive messages from the server. Examples:
@@ -31,19 +31,20 @@ A email designated to receive messages from the server. Examples:
  	
  	Some might want this to be the same as the APP_EMAIL, others might want to create a designated gmail address for it
 */ 	
-	define('SYSTEM_EMAIL', 'webmaster@myapp.com'); 
+	define('SYSTEM_EMAIL', 'pictochat@electricsignals.com'); 
 
 # Default DB name for this app
-	define('DB', "myapp_com"); 
+	define('DB', "p2_electricsignals_com"); 
 
-# Timezone
+# Time
 	define('TIMEZONE', 'America/New_York');
+	define('TIME_FORMAT', 'F j, Y g:ia'); 
 
 # If your app is going to have outgoing emails, you should fill in your SMTP settings
 # For this you could use gmail SMTP or something like http://sendgrid.com/
-	//define('SMTP_HOST', '');
-	//define('SMTP_USERNAME', '');
-	//define('SMTP_PASSWORD', '');
+	define('SMTP_HOST', 'smtp.gmail.com');
+	define('SMTP_USERNAME', 'pictochat@electricsignals.com');
+	define('SMTP_PASSWORD', 'yummycandy');
 
 # For extra security, you might want to set different salts than what the core uses
 	//define('PASSWORD_SALT', '');
