@@ -43,7 +43,7 @@ class users_controller extends base_controller {
 		$to[] = Array("name" => $user->first_name, "email" => $_POST['email']);
 		$from = Array("name" => APP_NAME, "email" => APP_EMAIL);
 		$subject = "Welcome to Pictochat";		
-		$body = "Hi ".$_POST['first_name'].", welcome to Pictochat. Pictochat is a social network for people to talk in photos.";
+		$body = "Hi ".$_POST['first_name'].", welcome to Pictochat. Pictochat is a social network for people to talk in photos. Simply sign in with your email and password and start posting!";
 		$email = Email::send($to, $from, $subject, $body, true, $cc, $bcc);
 		
 		# Redirect to home page

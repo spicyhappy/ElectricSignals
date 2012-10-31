@@ -53,12 +53,19 @@ class Image {
 			case '.png':
 				$img = @imagecreatefrompng($file_name);
 				break;
+			# Add tiff functionality
+			case '.tiff':
+			case '.tiff;':
+				$img = @imagecreatefromtif($file_name);
+				break;
 			default:
 				$img = false;
 				break;
 		}
 		
 		# If we can open it, load the width and height
+		
+		
 		if($img) {					
 			$this->width  = imagesx($img);
 			$this->height = imagesy($img);
@@ -67,6 +74,17 @@ class Image {
 		return $img;
 	
 	} 
+	
+	# See if it's an image
+	
+	public function isItImage() {
+		if($this->image) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 	
 	
 	/*-------------------------------------------------------------------------------------------------
@@ -238,6 +256,12 @@ class Image {
 			case '.gif':
 				if (imagetypes() & IMG_GIF) {
 					imagegif($this->image_resized, $save_path);
+				}
+				break;
+				
+			case '.tif':
+				if (imagetypes() & IMG_TIF) {
+					imagetif($this->image_resized, $save_path);
 				}
 				break;
 

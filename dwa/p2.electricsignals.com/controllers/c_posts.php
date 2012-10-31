@@ -12,18 +12,21 @@ class posts_controller extends base_controller {
 		
 	}
 	
-	public function add() {
+	public function add($error = NULL) {
 	
 		# Setup view
 		$this->template->content = View::instance('v_posts_add');
 		$this->template->title   = "Add a new post";
+		
+		# If it's not an image
+		$this->template->content->error = $error;
 			
 		# Render template
 		echo $this->template;
 	
 	}
 	
-	public function p_add() {
+	/*public function p_add() {
 			
 		# Associate this post with this user
 		$_POST['user_id']  = $this->user->user_id;
@@ -39,6 +42,37 @@ class posts_controller extends base_controller {
 		# Quick and dirty feedback
 		echo "Your post has been added. <a href='/posts/add'>Add another?</a>";
 	
+	}*/
+	public function p_add() {
+	
+	
+	# Call up image class
+	$imgObj = new Image($_POST['url']);
+		
+	# Check to see if it's an image
+	if ($imgObj->isItImage()==true){
+		
+		//echo $_POST['url']." is an image";
+		
+		# Associate this post with this user
+		$_POST['user_id']  = $this->user->user_id;
+		
+		# Unix timestamp of when this post was created / modified
+		$_POST['created']  = Time::now();
+		$_POST['modified'] = Time::now();
+		
+		# Insert
+		DB::instance(DB_NAME)->insert('images', $_POST);
+		
+		Router::redirect("/posts");
+		
+		}
+		
+	# Send an error message if it's not an image
+	else {
+		//echo $_POST['url']." is not an image";s
+		Router::redirect("/posts/add/error");
+		}
 	}
 	
 	public function index() {
@@ -69,9 +103,9 @@ class posts_controller extends base_controller {
 	
 		# Now, lets build our query to grab the posts
 		$q = "SELECT * 
-			FROM posts 
+			FROM images 
 			JOIN users USING (user_id)
-			WHERE posts.user_id IN (".$connections_string.")"; # This is where we use that string of user_ids we created
+			WHERE images.user_id IN (".$connections_string.")"; # This is where we use that string of user_ids we created
 					
 		# Run our query, store the results in the variable $posts
 		$posts = DB::instance(DB_NAME)->select_rows($q);
