@@ -1,6 +1,7 @@
 <form method='POST' action='/posts/p_add'>
 
-	<strong>New Post:</strong><br>
+	<strong>Post a Picture</strong><br>
+	Title: <input type="text" name="title"><br>
 	<textarea name='url'></textarea>
 
 	<? if($error): ?>

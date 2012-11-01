@@ -6,8 +6,8 @@
 <?else:?>
 
 	<?foreach($posts as $post):?>
-
-		<i><?=$post['first_name']?> <?=$post['last_name']?> posted on <?=$post['created']?>:</i>
+		<br><?=$post['title']?>
+		<br><?=$post['first_name']?> <?=$post['last_name']?>, <?=Time::time_ago($post['created'], "-1");?>
 		<br>
 		<h3><img src="<?=$post['url']?>" /></h3>
 		<br>
