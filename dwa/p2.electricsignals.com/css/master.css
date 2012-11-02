@@ -23,11 +23,13 @@ body {
 	background-color: black;
 }
 
-.imagecontainer {
-	width: 200%;
-}
-.image {
-	max-height: 32%;
-	float: left;
-	margin: .1%;
-}
+/*
+	.imagecontainer {
+		width: 200%;
+	}
+	.image {
+		max-height: 32%;
+		float: left;
+		margin: .1%;
+	}
+*/

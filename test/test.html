@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hi</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="css/photoMosaic.screen.css" />	
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="js/jquery.photoMosaic.js"></script>
+
+	<script>
+	    $(document).ready(function(){
+	        $('#mosaic').photoMosaic({
+	        	html (str);
+		        columns: 3;
+		        width: 500;
+		        height: 100;
+		        padding: 2;
+		        
+	        });
+	    });
+    </script>
+	
+</head>
+
+<body>	
+	
+	<ul id="mosaic">		
+		<li>
+			<a href="images/42-1351835855.jpg">
+			<img src="images/42-1351835855.jpg" />
+			</a>
+			<span>This is a post</span>
+		</li>
+		<li>
+			<a href="images/42-1351835855.jpg">
+			<img src="images/42-1351835855.jpg" />
+			</a>
+			<span>This is a post</span>
+		</li>
+		<li>
+			<a href="images/42-1351835855.jpg">
+			<img src="images/42-1351835855.jpg" />
+			</a>
+			<span>This is a post</span>
+		</li>	
+		<li>
+			<a href="images/42-1351835855.jpg">
+			<img src="images/42-1351835855.jpg" />
+			</a>
+			<span>This is a post</span>
+		</li>
+	</ul>
+</body>
+</html>

@@ -5,10 +5,19 @@
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" href="/css/master.css" type="text/css">
+	<link rel="stylesheet" href="/css/photoMosaic.screen.css" />
 	
-	<!-- JS -->
+	<!-- JS
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>-->
+	
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="/js/jquery.photoMosaic.js"></script>
+	<script>
+	    $(document).ready(function(){
+	        $('#mosaic').photoMosaic();
+	    });
+    </script>
 				
 	<!-- Controller Specific JS/CSS -->
 	<?php echo @$client_files; ?>
@@ -36,15 +45,21 @@
 	
 	<!-- Show post stream  -->
 	<div class="imagecontainer">
+	<ul id="mosaic">
 		<?if(isset($posts) AND $posts != false) {?>
 		<?foreach($posts as $posts):?>
-			<img class="image" src="/uploads/images/<?=$posts['imagename']?>" />
-	
-		<?endforeach;}?>	
+		
+		
+		<li>
+			<a href="/uploads/images/<?=$posts['imagename']?>">
+			<img src="/uploads/images/<?=$posts['imagename']?>" />
+			</a>
+			<span><?=$posts['title']?></span>
+		</li>
+		<?endforeach;}?>
+	</ul>	
 	</div>
-	<br>
-	<footer>Made by <a href="http://www.xin-squared.com">X2</a>.</footer>
-	
+	<footer>Made by <a href="http://www.xin-squared.com">X2</a>.</footer>	
 
 </body>
 </html>
