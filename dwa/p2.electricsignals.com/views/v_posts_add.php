@@ -1,6 +1,6 @@
 
 
-<div class="imagePost">
+<div class="imagePost box">
 	<h1>Post a Picture</h1>
 	<? if(@$_GET['error']): ?>
 		<span class="error"><?=$_GET['error']?></span><br>

@@ -35,12 +35,13 @@
 	<?=$content;?>
 	
 	<!-- Show post stream  -->
-	<?if(isset($posts) AND $posts != false) {?>
-	<?foreach($posts as $posts):?>
-		<img class="image" src="/uploads/images/<?=$posts['imagename']?>" />
-
-	<?endforeach;}?>	
+	<div class="imagecontainer">
+		<?if(isset($posts) AND $posts != false) {?>
+		<?foreach($posts as $posts):?>
+			<img class="image" src="/uploads/images/<?=$posts['imagename']?>" />
 	
+		<?endforeach;}?>	
+	</div>
 	<br>
 	<footer>Made by <a href="http://www.xin-squared.com">X2</a>.</footer>
 	

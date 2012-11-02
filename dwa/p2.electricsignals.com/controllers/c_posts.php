@@ -44,7 +44,6 @@ class posts_controller extends base_controller {
 		}	
 		
 		else {
-			echo "Perfect file";
 			
 			# Save information
 			
@@ -63,8 +62,8 @@ class posts_controller extends base_controller {
 			# Redirect
 			Router::redirect("/posts/add?alert=Your message was posted!");
 		}
-		
-		}
+		Router::redirect("/posts");
+	}
 		
 	# Send an error message if it's not an image
 	else {
