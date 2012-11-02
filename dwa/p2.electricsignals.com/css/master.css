@@ -1,0 +1,29 @@
+@font-face {
+  font-family: Nexa;
+  src: url(../fonts/nexa_light-webfont.ttf);
+  font-weight: normal;
+}
+@font-face {
+  font-family: Nexa;
+  src: url(../fonts/nexa_bold-webfont.ttf);
+  font-weight: bold;
+}
+
+html, body, div, h1, h2, p, img, nav, footer, form, input {
+  margin: 0;
+  padding: 0;
+  color: white;
+  font-family: Nexa, Arial, sans-serif;
+  font-size: 1em;
+  line-height: 1.25em;
+  display: block;
+}
+
+body {
+	background-color: black;
+}
+
+.image {
+	max-height: 20%;
+	float: left;
+}

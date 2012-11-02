@@ -24,8 +24,8 @@ class Post {
 		# Connections string example: 10,7,8 (where the numbers are the user_ids of who this user is following)
 		if(empty($connections_string)) {
 			# If the user isn't following anyone, this prevents a SQL error
-			$no_followers = "You need to follow people to see their posts! Find some friends <a href=\"/posts/users\">here</a>.";
-			$this->template->content->no_followers = $no_followers;
+			//$no_followers = "You need to follow people to see their posts! Find some friends <a href=\"/posts/users\">here</a>.";
+			//$this->template->content->no_followers = $no_followers;
 		} else {
 			# Run our query, store the results in the variable $posts
 			# If our user is following any users, we'll run the query to grab their posts

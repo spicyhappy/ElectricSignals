@@ -21,8 +21,15 @@ class users_controller extends base_controller {
 		else {$canUse = false;}
 		
 		# See if the username was already used or if the field has blanks
-		if (($_POST['password']!="") AND ($_POST['username']!="") AND ($_POST['password']!=" ") AND ($_POST['username']!=" ") AND $canUse==true)
-		{
+		if (($_POST['password']="") OR ($_POST['username']="") OR ($_POST['password']=" ") OR ($_POST['username']!=" ")) {
+			Router::redirect("/?errorsignin=Sorry, you left a field blank.");
+		}
+		
+		else if ($canUse==false){
+			Router::redirect("/?errorsignin=Sorry, that username already exists.");
+		}
+		
+		else {
 			# Encrypt the password	
 			$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 			
@@ -66,7 +73,7 @@ class users_controller extends base_controller {
 		if(!$token) {
 				
 			# Send them back to the login page
-			Router::redirect("/");
+			Router::redirect("/?errorlogin=Sorry, your username/password combination didn't work.");
 			
 		# But if we did, login succeeded! 
 		} else {

@@ -3,7 +3,8 @@
 <head>
 	<title><?=@$title; ?></title>
 
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="/css/master.css" type="text/css">
 	
 	<!-- JS -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
@@ -21,8 +22,7 @@
 		<? if($user): ?>
 			<nav id='menu'>
 				<a href='/'>Mosaic</a>
-				<a href='/posts/users/'>Follow</a>
-				<a href='/posts'>Posts</a>
+				<a href='/posts/users/'>Filter</a>
 				<a href='/posts/add'>Add</a>
 				<a href='/users/logout'>Logout</a>
 			</nav><br>
@@ -33,18 +33,13 @@
 	
 	
 	<?=$content;?>
-		
-	<?foreach($posts as $posts):?>
-		<br><?=$posts['title']?>
-		<br><?=$posts['username']?>, <?=Time::time_ago($posts['created'], "-1");?>
-		<br>
-		<h3><img src="<?=$posts['url']?>" /></h3>
-		<br>
-
-	<?endforeach;?>
-
-
 	
+	<!-- Show post stream  -->
+	<?if(isset($posts) AND $posts != false) {?>
+	<?foreach($posts as $posts):?>
+		<img class="image" src="/uploads/images/<?=$posts['imagename']?>" />
+
+	<?endforeach;}?>	
 	
 	<br>
 	<footer>Made by <a href="http://www.xin-squared.com">X2</a>.</footer>

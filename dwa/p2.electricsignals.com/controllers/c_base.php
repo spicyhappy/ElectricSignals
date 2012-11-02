@@ -22,7 +22,7 @@ class base_controller {
 			$this->template->set_global('user', $this->user);
 		
 		
-		# Can use $post in views
+		# Can use $post in views but only if the user has access
 			if($this->user) {
 				$posts = Post::recent();
 				$this->template->set_global('posts', $posts);

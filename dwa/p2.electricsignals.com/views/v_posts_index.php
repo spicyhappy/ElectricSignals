@@ -10,7 +10,7 @@
 		-->
 		
 		<br>
-		<h3><img src="<?=$post['url']?>" /></h3>
+		<img src="/uploads/images/<?=$post['imagename']?>" />
 		<br>
 
 

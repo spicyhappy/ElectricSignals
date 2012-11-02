@@ -24,9 +24,7 @@ class posts_controller extends base_controller {
 	}
 	
 	public function p_add() {
-	
-	
-	# Call up image class
+	 
 	$errors     = array();
 	$file_ext   = strtolower(strrchr($_FILES['imagename']['name'], '.'));
 	$file_size  = $_FILES['imagename']['size'];
@@ -56,19 +54,21 @@ class posts_controller extends base_controller {
 			$_POST['imagename']	= $file_name;
 			
 			# Save to database
-			
-			
+
 			DB::instance(DB_NAME)->insert('images', $_POST);
+
+			# Save to your file path			
 			move_uploaded_file($file_tmp, APP_PATH."/uploads/images/".$file_name);
 			
-			Router::redirect("/posts/add");
+			# Redirect
+			Router::redirect("/posts/add?alert=Your message was posted!");
 		}
 		
 		}
 		
 	# Send an error message if it's not an image
 	else {
-		echo "Nothing uploaded";
+		Router::redirect("/posts/add?error=Please select an image to upload");
 		}
 	}
 	
@@ -156,56 +156,6 @@ class posts_controller extends base_controller {
 		echo $this->template;
 	}
 	
-	/*public function imagepost() {
-		echo "I called";
-		
-		if(isset($_FILES['image'])){
-			
-			echo "I am an image";
-			
-			$errors     = array();
-			$file_ext   = strtolower(strrchr($_FILES['image']['name'], '.'));			
-			$file_size  = $_FILES['image']['size'];
-			$file_tmp   = $_FILES['image']['tmp_name'];
-			$file_type  = $_FILES['image']['type'];   
-			$file_name  = $_POST['post_id'].$file_ext;
-			$_POST['user_id']  = $this->user->user_id;
-
-			$extensions = array(".jpeg",".jpg",".png",".gif"); 		
-			
-			if(in_array($file_ext,$extensions) === false){
-				Router::redirect("/posts/edit-avatar?error=Only jpg, png or gif images please.");
-			}
-
-			if($file_size > 2097152) {
-				Router::redirect("/posts/edit-avatar?error=Your file size was too large; please choose an image smaller than 2mb");
-			}				
-			if(empty($errors)==true) {
-				echo "no error";
-				# Save to database
-					DB::instance(DB_NAME)->update("images", Array("url_saved" => 1), "WHERE user_id = ".$_POST['user_id']);
-					
-				# Move files
-					echo $file_name;
-					move_uploaded_file($file_tmp, "/uploads/images/".$file_name);
-
-				# Create small (thumb)
-
-					$imgObj = new Image("/uploads/images/".$file_name);
-
-					$small = Utils::postfix("_".SMALL_W."_".SMALL_H, "/uploads/images/".$file_name);
-
-					$imgObj->resize(SMALL_W, SMALL_H, 'crop');
-					$imgObj->save_image($small, 100);
-
-				# Send them back to the add page
-					Router::redirect("/posts/add");
-
-			} else {
-				Router::redirect("/posts/edit-avatar?error=There was an error uploading your image.");
-			}			
-	}*/
-
 	public function follow($user_id_followed) {
 		
 		# Prepare our data array to be inserted
