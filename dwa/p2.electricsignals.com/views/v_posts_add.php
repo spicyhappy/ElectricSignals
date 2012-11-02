@@ -1,16 +1,30 @@
-<form method='POST' action='/posts/p_add'>
 
-	<strong>Post a Picture</strong><br>
-	Title: <input type="text" name="title"><br>
-	Image Url:<textarea name='url'></textarea>
 
-	<? if($error): ?>
-		<div class="error">Sorry that was not an image. Pictochat only takes jpeg, jpg, and png file formats.</div>
-	<? endif; ?>
-
-	<br><br>
-	<input type='submit'>
-
+<div class="imagePost">
+	<h1>Post a Picture</h1>
+	<form method='POST' enctype="multipart/form-data" action='/posts/p_add'>
+		Title: <input type="text" name="title"><br>
+		Upload: <input type='file' name='imagename'><br>
 	
+		<? if(@$_GET['error']): ?>
+		<span class="error"><?=$_GET['error']?></span><br>
+		<? endif; ?>
+		<input type='submit'>
+			
+	</form>
+	
+<!--<form method="POST" action="/posts/imagepost" enctype="multipart/form-data">
 
-</form>
+	<input type="file" name="image" /><br>
+	
+		<? if(@$_GET['error']): ?>
+			<span style='color:red'><?=$_GET['error']?></span><br>
+			<? endif; ?>
+	<input type="submit" />
+	
+<br>
+			
+</form>-->
+
+
+</div>

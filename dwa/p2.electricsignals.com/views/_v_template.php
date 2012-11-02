@@ -15,31 +15,40 @@
 </head>
 
 <body>	
-
-	<div id='menu'>
 	
 		<!-- Menu for users who are logged in -->
-		<? if($user): ?>
-			
-			<a href='/users/logout'>Logout</a>
-			<a href='/posts/users/'>Follow</a>
-			<a href='/users/profile'>Profile</a>
-			<a href='/posts/'>View posts</a>
-			<a href='/posts/add'>Add a new post</a>
 		
+		<? if($user): ?>
+			<nav id='menu'>
+				<a href='/'>Mosaic</a>
+				<a href='/posts/users/'>Follow</a>
+				<a href='/posts'>Posts</a>
+				<a href='/posts/add'>Add</a>
+				<a href='/users/logout'>Logout</a>
+			</nav><br>
+
 		<!-- Menu options for users who are not logged in -->	
 		<? else: ?>
-		
-			<a href='/users/signup'>Sign up</a>
-			<a href='/users/login'>Log in</a>
-		
 		<? endif; ?>
 	
-	</div>
+	
+	<?=$content;?>
+		
+	<?foreach($posts as $posts):?>
+		<br><?=$posts['title']?>
+		<br><?=$posts['username']?>, <?=Time::time_ago($posts['created'], "-1");?>
+		<br>
+		<h3><img src="<?=$posts['url']?>" /></h3>
+		<br>
+
+	<?endforeach;?>
+
+
+	
 	
 	<br>
+	<footer>Made by <a href="http://www.xin-squared.com">X2</a>.</footer>
 	
-	<?=$content;?> 
 
 </body>
 </html>

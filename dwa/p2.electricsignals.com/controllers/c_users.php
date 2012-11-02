@@ -7,63 +7,48 @@ class users_controller extends base_controller {
 	} 
 	
 	public function index() {
-		echo "Welcome to the users's department";
-	}
-	
-	public function signup() {
-		
-		# Setup view
-		$this->template->content = View::instance('v_users_signup');
-		$this->template->title   = "Signup";
-			
-		# Render template
-		echo $this->template;
-		
+		# Redirect to home page
+		Router::redirect("/posts/users");
 	}
 
 	public function p_signup() {
+		
+		# Check to see if the username is already in the database
+		$username = $_POST['username'];
+		$username = DB::instance(DB_NAME)->sanitize($username);
+		$user_id = DB::instance(DB_NAME)->select_row("SELECT user_id FROM users WHERE username = '".$username."'");
+		if(!$user_id) {$canUse = true;}
+		else {$canUse = false;}
+		
+		# See if the username was already used or if the field has blanks
+		if (($_POST['password']!="") AND ($_POST['username']!="") AND ($_POST['password']!=" ") AND ($_POST['username']!=" ") AND $canUse==true)
+		{
+			# Encrypt the password	
+			$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 			
-		# Encrypt the password	
-		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
-		
-		# More data we want stored with the user	
-		$_POST['created']  = Time::now();
-		$_POST['modified'] = Time::now();
-		$_POST['token']    = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
-		
-		# Insert this user into the database 
-		$user_id = DB::instance(DB_NAME)->insert("users", $_POST);
-		
-		# Sign the new user in
-		
-		$token = $_POST['token'];
-		@setcookie("token", $token, strtotime('+1 year'), '/');
-		
-		# Email the new user
-		$to[] = Array("name" => $user->first_name, "email" => $_POST['email']);
-		$from = Array("name" => APP_NAME, "email" => APP_EMAIL);
-		$subject = "Welcome to Pictochat";		
-		$body = "Hi ".$_POST['first_name'].", welcome to Pictochat. Pictochat is a social network for people to talk in photos. Simply sign in with your email and password and start posting!";
-		$email = Email::send($to, $from, $subject, $body, true, $cc, $bcc);
+			# More data we want stored with the user	
+			$_POST['created']  = Time::now();
+			$_POST['modified'] = Time::now();
+			$_POST['token']    = sha1(TOKEN_SALT.$_POST['username'].Utils::generate_random_string());
+			
+			# Insert this user into the database 
+			$user_id = DB::instance(DB_NAME)->insert("users", $_POST);
+			
+			# Sign the new user in
+			
+			$token = $_POST['token'];
+			@setcookie("token", $token, strtotime('+1 year'), '/');
+			
+		}
 		
 		# Redirect to home page
 		Router::redirect("/");
 	}
-	
-	public function login($error = NULL) {
-	
-		# Set up the view
-		$this->template->content = View::instance("v_users_login");
-		
-		# Pass data to the view
-		$this->template->content->error = $error;
-	
-		# Render the view
-		echo $this->template;
-		
-	}
 		
 	public function p_login() {
+		
+		# Sanitize the user entered data to prevent any funny-business (re: SQL Injection Attacks)
+		$_POST = DB::instance(DB_NAME)->sanitize($_POST);
 		
 		# Hash submitted password so we can compare it against one in the db
 		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
@@ -72,22 +57,22 @@ class users_controller extends base_controller {
 		# Retrieve the token if it's available
 		$q = "SELECT token 
 			FROM users 
-			WHERE email = '".$_POST['email']."' 
+			WHERE username = '".$_POST['username']."' 
 			AND password = '".$_POST['password']."'";
 		
 		$token = DB::instance(DB_NAME)->select_field($q);	
 					
-		# Login failed
+		# If we didn't get a token back, login failed
 		if(!$token) {
 				
 			# Send them back to the login page
-			Router::redirect("/users/login/error"); # Note the addition of the parameter "error"
-						
+			Router::redirect("/");
+			
 		# But if we did, login succeeded! 
 		} else {
 				
 			# Store this token in a cookie
-			@setcookie("token", $token, strtotime('+1 year'), '/');
+			setcookie("token", $token, strtotime('+1 year'), '/');
 			
 			# Send them to the main page - or whever you want them to go
 			Router::redirect("/");
@@ -95,10 +80,10 @@ class users_controller extends base_controller {
 		}
 	
 	}
-	
+		
 	public function logout() {
 		# Generate and save a new token for next login
-		$new_token = sha1(TOKEN_SALT.$this->user->email.Utils::generate_random_string());
+		$new_token = sha1(TOKEN_SALT.$this->user->username.Utils::generate_random_string());
 		
 		# Create the data array we'll use with the update method
 		# In this case, we're only updating one field, so our array only has one entry
@@ -113,24 +98,5 @@ class users_controller extends base_controller {
 		# Send them back to the main landing page
 		Router::redirect("/");
 			}
-		
-	public function profile() {
-	
-		# If user is blank, they're not logged in, show message and don't do anything else
-		if(!$this->user) {
-			echo "Members only. <a href='/users/login'>Login</a>";
-			
-			# Return will force this method to exit here so the rest of 
-			# the code won't be executed and the profile view won't be displayed.
-			return false;
-		}
-		
-		# Setup view
-		$this->template->content = View::instance('v_users_profile');
-		$this->template->title   = "Profile of".$this->user->first_name;
-			
-		# Render template
-		echo $this->template;
-	}
 
 } # end of the class

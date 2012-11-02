@@ -12,66 +12,63 @@ class posts_controller extends base_controller {
 		
 	}
 	
-	public function add($error = NULL) {
+	public function add() {
 	
 		# Setup view
 		$this->template->content = View::instance('v_posts_add');
 		$this->template->title   = "Add a new post";
-		
-		# If it's not an image
-		$this->template->content->error = $error;
 			
 		# Render template
 		echo $this->template;
 	
 	}
 	
-	/*public function p_add() {
-			
-		# Associate this post with this user
-		$_POST['user_id']  = $this->user->user_id;
-		
-		# Unix timestamp of when this post was created / modified
-		$_POST['created']  = Time::now();
-		$_POST['modified'] = Time::now();
-		
-		# Insert
-		# Note we didn't have to sanitize any of the $_POST data because we're using the insert method which does it for us
-		DB::instance(DB_NAME)->insert('posts', $_POST);
-		
-		# Quick and dirty feedback
-		echo "Your post has been added. <a href='/posts/add'>Add another?</a>";
-	
-	}*/
 	public function p_add() {
 	
 	
 	# Call up image class
-	$imgObj = new Image($_POST['url']);
+	$errors     = array();
+	$file_ext   = strtolower(strrchr($_FILES['imagename']['name'], '.'));
+	$file_size  = $_FILES['imagename']['size'];
+	$file_tmp   = $_FILES['imagename']['tmp_name'];
+	$extensions = array(".jpeg",".jpg",".png",".gif",".tif",".tiff");
+	$file_name	= $this->user->user_id."-".Time::now().$file_ext;
 		
 	# Check to see if it's an image
-	if ($imgObj->isItImage()==true){
+	if(isset($_FILES['imagename'])){
+	
+		if(in_array($file_ext,$extensions) === false){
+			Router::redirect("/posts/add?error=Only jpg, png or gif images please.");
+		}
 		
-		//echo $_POST['url']." is an image";
+		else if($file_size > 2097152) {
+			Router::redirect("/posts/add?error=Your file size is too big.");
+		}	
 		
-		# Associate this post with this user
-		$_POST['user_id']  = $this->user->user_id;
-		
-		# Unix timestamp of when this post was created / modified
-		$_POST['created']  = Time::now();
-		$_POST['modified'] = Time::now();
-		
-		# Insert
-		DB::instance(DB_NAME)->insert('images', $_POST);
-		
-		Router::redirect("/posts");
+		else {
+			echo "Perfect file";
+			
+			# Save information
+			
+			$_POST['user_id'] 	= $this->user->user_id;
+			$_POST['created'] 	= Time::now();
+			$_POST['modified'] 	= Time::now();
+			$_POST['imagename']	= $file_name;
+			
+			# Save to database
+			
+			
+			DB::instance(DB_NAME)->insert('images', $_POST);
+			move_uploaded_file($file_tmp, APP_PATH."/uploads/images/".$file_name);
+			
+			Router::redirect("/posts/add");
+		}
 		
 		}
 		
 	# Send an error message if it's not an image
 	else {
-		//echo $_POST['url']." is not an image";s
-		Router::redirect("/posts/add/error");
+		echo "Nothing uploaded";
 		}
 	}
 	
@@ -108,7 +105,7 @@ class posts_controller extends base_controller {
 			# Run our query, store the results in the variable $posts
 			# If our user is following any users, we'll run the query to grab their posts
 			$q =
-			"SELECT images.*, users.user_id, users.first_name, users.last_name 
+			"SELECT images.*, users.user_id, users.username
 			FROM images 
 			JOIN users USING (user_id)
 			WHERE images.user_id IN (".$connections_string.") 
@@ -158,6 +155,56 @@ class posts_controller extends base_controller {
 		# Render the view
 		echo $this->template;
 	}
+	
+	/*public function imagepost() {
+		echo "I called";
+		
+		if(isset($_FILES['image'])){
+			
+			echo "I am an image";
+			
+			$errors     = array();
+			$file_ext   = strtolower(strrchr($_FILES['image']['name'], '.'));			
+			$file_size  = $_FILES['image']['size'];
+			$file_tmp   = $_FILES['image']['tmp_name'];
+			$file_type  = $_FILES['image']['type'];   
+			$file_name  = $_POST['post_id'].$file_ext;
+			$_POST['user_id']  = $this->user->user_id;
+
+			$extensions = array(".jpeg",".jpg",".png",".gif"); 		
+			
+			if(in_array($file_ext,$extensions) === false){
+				Router::redirect("/posts/edit-avatar?error=Only jpg, png or gif images please.");
+			}
+
+			if($file_size > 2097152) {
+				Router::redirect("/posts/edit-avatar?error=Your file size was too large; please choose an image smaller than 2mb");
+			}				
+			if(empty($errors)==true) {
+				echo "no error";
+				# Save to database
+					DB::instance(DB_NAME)->update("images", Array("url_saved" => 1), "WHERE user_id = ".$_POST['user_id']);
+					
+				# Move files
+					echo $file_name;
+					move_uploaded_file($file_tmp, "/uploads/images/".$file_name);
+
+				# Create small (thumb)
+
+					$imgObj = new Image("/uploads/images/".$file_name);
+
+					$small = Utils::postfix("_".SMALL_W."_".SMALL_H, "/uploads/images/".$file_name);
+
+					$imgObj->resize(SMALL_W, SMALL_H, 'crop');
+					$imgObj->save_image($small, 100);
+
+				# Send them back to the add page
+					Router::redirect("/posts/add");
+
+			} else {
+				Router::redirect("/posts/edit-avatar?error=There was an error uploading your image.");
+			}			
+	}*/
 
 	public function follow($user_id_followed) {
 		

@@ -1,23 +1,31 @@
-<h1>Pictochat</h1>
 
 
-	<? if($user): ?>
-	
-	<h2>Welcome, <?=$user->first_name?>.</h2>
-		
-		
-	<? else: ?>
-		
-	<h2>Welcome, stranger. Pictochat is Twitter for photos. Post, respond, repost, and follow your favorite people!</h2>
-		
-	<? endif; ?>
-	
-<ul>
-	<li><a href="/users/login">Log in</a></li>
-	<li><a href="/users/signup">Sign up</a></li>
-</ul>
 
+<? if($user): ?>
+
+<div class="box">
+	<h1>Hello <?=$user->username?>!</h2>
+</div>
+		
+		
+<? else: ?>
 	
-	</div>
+<div class="box">
+
+	<h1>Mosaic is a breathing, living photostream.</h1>
 	
-	<br>
+	<form class="userForm" method='POST' action='/users/p_login'>
+		Username: <input type='text' name='username'><br>
+		Password: <input type='password' name='password'><br>
+		<input type='submit' value='Log In'>
+	</form>
+	
+	<form class="userForm" method='POST' action='/users/p_signup'>
+		Username: <input type='text' name='username'><br>
+		Password: <input type='password' name='password'><br>
+		<input type='submit' value='Sign Up'>
+	</form> 
+	
+</div>
+
+<? endif; ?>

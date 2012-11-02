@@ -55,7 +55,7 @@ class Image {
 				break;
 			# Add tiff functionality
 			case '.tiff':
-			case '.tiff;':
+			case '.tif':
 				$img = @imagecreatefromtif($file_name);
 				break;
 			default:
@@ -85,7 +85,6 @@ class Image {
 			return false;
 		}
 	}
-	
 	
 	/*-------------------------------------------------------------------------------------------------
 	

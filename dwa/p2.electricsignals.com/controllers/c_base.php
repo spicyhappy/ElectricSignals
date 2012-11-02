@@ -20,7 +20,14 @@ class base_controller {
 								
 		# So we can use $user in views			
 			$this->template->set_global('user', $this->user);
-						
+		
+		
+		# Can use $post in views
+			if($this->user) {
+				$posts = Post::recent();
+				$this->template->set_global('posts', $posts);
+			}
+								
 	}
 	
 } 
