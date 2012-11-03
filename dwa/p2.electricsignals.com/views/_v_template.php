@@ -13,6 +13,7 @@
 	
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="/js/jquery.photoMosaic.js"></script>
+	
 	<script>
 	    $(document).ready(function(){
 			$('#mosaic').photoMosaic({
@@ -22,7 +23,6 @@
 			});
 	    });	    
     </script>
-
 				
 	<!-- Controller Specific JS/CSS -->
 	<?php echo @$client_files; ?>
