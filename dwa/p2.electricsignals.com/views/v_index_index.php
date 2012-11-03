@@ -15,8 +15,12 @@
 
 	<h1 class="title">Mosaic is a breathing, living photostream.</h1>
 	
+		<? if(@$_GET['errorsignin']): ?>
+		<br><div class="useralert"><?=$_GET['errorsignin']?></div><br>
+	<? endif; ?>
+	
 	<? if(@$_GET['errorlogin']): ?>
-		<span class="error"><?=$_GET['errorlogin']?></span><br>
+		<br><div class=" useralert"><?=$_GET['errorlogin']?></div><br>
 	<? endif; ?>
 	
 	<div class="center left">
@@ -26,10 +30,6 @@
 		<input class="field" type='password' name='password' placeholder='Password'><br>
 		<input class='button' type='submit' value='LOG IN'>
 	</form>
-
-	<? if(@$_GET['errorsignin']): ?>
-		<span class="error"><?=$_GET['errorsignin']?></span><br>
-	<? endif; ?>
 	
 	<form class="userForm" method='POST' action='/users/p_signup'>
 		<input class="field" type='text' name='username' placeholder='Username'><br>

@@ -126,7 +126,6 @@ footer {
 .userForm {
 	width: 40%;
 	height: 50%;
-	margin-top: 10%;
 	background-color: #162c3b;
 	float: left;
 	padding: 5%;
@@ -147,14 +146,24 @@ footer {
 	font-size: 2em;
 	margin: 0 10% auto;
 	margin-top: 10%;
+	margin-bottom: 3%;
 	text-align: center;
 }
 
 .alert {
-	background-color: #162c3b;
-	width: 40%;
 	padding: 20px;
-	margin: 0 auto;
-	margin-top: 20%;
+	font-weight: bold;	
+}
+
+.useralert {
+	width: 100%;
 	text-align: center;
+	background-color: #660000;
+	padding: 10px;
+}
+
+.error {
+	padding: 10px;
+	color: red;
+	font-weight: bold;
 }

@@ -36,11 +36,11 @@ class posts_controller extends base_controller {
 	if(isset($_FILES['imagename'])){
 	
 		if(in_array($file_ext,$extensions) === false){
-			Router::redirect("/posts/add?error=Only jpg, png or gif images please.");
+			Router::redirect("/posts/add?error=* Only jpg, png or gif images please.");
 		}
 		
 		else if($file_size > 2097152) {
-			Router::redirect("/posts/add?error=Your file size is too big.");
+			Router::redirect("/posts/add?error=* Your file size is too big! Max size of 2 mb, please.");
 		}	
 		
 		else {
@@ -60,14 +60,14 @@ class posts_controller extends base_controller {
 			move_uploaded_file($file_tmp, APP_PATH."/uploads/images/".$file_name);
 			
 			# Redirect
-			Router::redirect("/posts/add?alert=Your message was posted!");
+			Router::redirect("/posts/add?alert=Hurray! Your message was posted!");
 		}
 		Router::redirect("/posts");
 	}
 		
 	# Send an error message if it's not an image
 	else {
-		Router::redirect("/posts/add?error=Please select an image to upload");
+		Router::redirect("/posts/add?error=* Please select an image to upload");
 		}
 	}
 	
