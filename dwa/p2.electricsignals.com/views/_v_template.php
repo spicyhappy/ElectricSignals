@@ -15,9 +15,14 @@
 	<script src="/js/jquery.photoMosaic.js"></script>
 	<script>
 	    $(document).ready(function(){
-	        $('#mosaic').photoMosaic();
-	    });
+			$('#mosaic').photoMosaic({
+			    input: 'html',
+			    width: "auto",
+			    padding: 10
+			});
+	    });	    
     </script>
+
 				
 	<!-- Controller Specific JS/CSS -->
 	<?php echo @$client_files; ?>
@@ -26,30 +31,12 @@
 
 <body>	
 	
-		<!-- Menu for users who are logged in -->
-		
-		<? if($user): ?>
-			<nav id='menu'>
-				<a href='/'>Mosaic</a>
-				<a href='/posts/users/'>Filter</a>
-				<a href='/posts/add'>Add</a>
-				<a href='/users/logout'>Logout</a>
-			</nav><br>
-
-		<!-- Menu options for users who are not logged in -->	
-		<? else: ?>
-		<? endif; ?>
-	
-	
 	<?=$content;?>
 	
 	<!-- Show post stream  -->
-	<div class="imagecontainer">
 	<ul id="mosaic">
 		<?if(isset($posts) AND $posts != false) {?>
 		<?foreach($posts as $posts):?>
-		
-		
 		<li>
 			<a href="/uploads/images/<?=$posts['imagename']?>">
 			<img src="/uploads/images/<?=$posts['imagename']?>" />
@@ -57,9 +44,25 @@
 			<span><?=$posts['title']?></span>
 		</li>
 		<?endforeach;}?>
-	</ul>	
-	</div>
-	<footer>Made by <a href="http://www.xin-squared.com">X2</a>.</footer>	
+	</ul>
+			<!-- Menu for users who are logged in -->
+		
+		<? if($user): ?>
+			<nav>
+			<div>
+				<ul class="navbar">
+					<li class="navlist"><a href='/'>Mosaic</a></li>
+					<li class="navlist"><a href='/posts/users/'>Follow</a></li>
+					<li class="navlist"><a href='/posts/add'>Post</a></li>
+					<li class="navlist"><a href='/users/logout'>Logout</a></li>
+				</ul>
+				<footer>Made by <a href="http://www.xin-squared.com">X2</a></footer>
+			</div>
+			</nav><br>
+
+		<!-- Menu options for users who are not logged in -->	
+		<? else: ?>
+		<? endif; ?>
 
 </body>
 </html>

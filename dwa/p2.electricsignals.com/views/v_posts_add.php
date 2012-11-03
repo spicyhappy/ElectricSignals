@@ -1,7 +1,7 @@
 
 
-<div class="imagePost box">
-	<h1>Post a Picture</h1>
+<div class="box imagepost">
+	<h1 class="navlist">Post a Picture</h1>
 	<? if(@$_GET['error']): ?>
 		<span class="error"><?=$_GET['error']?></span><br>
 	<? endif; ?>
@@ -11,10 +11,10 @@
 	<? endif; ?>
 	
 	<form method='POST' enctype="multipart/form-data" action='/posts/p_add'>
-		Title: <input type="text" name="title"><br>
-		Upload: <input type='file' name='imagename'><br>
+		<span class="navlist">Title: <input class= "" type="text" name="title" autofocus="autofocus"></span>
+		<span class="navlist">Upload: <input class= "" type='file' name='imagename'></span>
 	
-		<input type='submit'>
+		<input class="button" type='submit' value="POST">
 			
 	</form>
 

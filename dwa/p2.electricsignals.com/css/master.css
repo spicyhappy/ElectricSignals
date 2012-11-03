@@ -9,13 +9,14 @@
   font-weight: bold;
 }
 
-html, body, div, h1, h2, p, img, nav, footer, form, input {
+html, body, h1, ul, h2, p, nav, footer, form {
   margin: 0;
   padding: 0;
   color: white;
   font-family: Nexa, Arial, sans-serif;
   font-size: 1em;
   line-height: 1.25em;
+  letter-spacing: .1em;
   display: block;
 }
 
@@ -23,13 +24,128 @@ body {
 	background-color: black;
 }
 
-/*
-	.imagecontainer {
-		width: 200%;
-	}
-	.image {
-		max-height: 32%;
-		float: left;
-		margin: .1%;
-	}
-*/
+h1 {
+	font-size: 1.25em;
+	letter-spacing: .15em;
+	text-transform: uppercase;
+}
+
+nav {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	padding: 10px 0px;
+	z-index: 1000;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+a, a:visited {
+	letter-spacing: .1em;
+	font-weight: bold;
+	color: white;
+	text-decoration: none;
+	border-bottom:1px dotted;
+	text-transform: uppercase;
+}
+
+a:hover {
+	color: orange;
+}
+
+.navbar, .navlist, footer {
+	display: inline;
+}
+
+nav > div {
+	padding: 0 20px;
+}
+
+.navlist {
+	padding: 10px 10px;
+}
+
+footer {
+	padding: 0 10px;
+	float: right;
+}
+
+.box {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	z-index: 10001;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.follow {
+	padding: 10px 20px;
+}
+
+.unfollowed {
+	font-weight: normal;
+	color: gray;
+	border-bottom: 1px dotted gray;
+}
+
+.imagepost {
+	padding: 10px 20px;
+}
+
+.imagepost > h1 {
+	display: inline;
+}
+
+.imagepost > form {
+	display: inline;
+}
+
+.button {
+	margin: 0;
+	padding: 8px 15px;
+	font-weight: bold;
+	font-size: 1em;
+	letter-spacing: .1em;
+	font-family: Nexa, Arial, sans-serif;
+	color: white;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	background-color: #006DCC;
+	border-color: #04C #04C #002A80;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+
+.button:hover {
+	text-shadow: 0 -2px 0 rgba(0, 0, 0, 0.6);s
+	background-color: #1060a6;
+}
+
+.center {
+	margin: 0 auto;
+	width: 80%;
+}
+
+.userForm {
+	width: 40%;
+	height: 50%;
+	margin-top: 10%;
+	background-color: #162c3b;
+	float: left;
+	padding: 5%;
+}
+
+.left {
+
+}
+
+.field {
+	margin: 0;
+	margin-bottom: 10px;
+	padding: 10px;
+	width: 90%;
+}
+
+.title {
+	font-size: 2em;
+	margin: 0 10% auto;
+	margin-top: 10%;
+	text-align: center;
+}

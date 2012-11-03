@@ -21,11 +21,11 @@ class users_controller extends base_controller {
 		else {$canUse = false;}
 		
 		# See if the username was already used or if the field has blanks
-		if (($_POST['password']="") OR ($_POST['username']="") OR ($_POST['password']=" ") OR ($_POST['username']!=" ")) {
+		if (($_POST['password']=="") OR ($_POST['username']=="")) {
 			Router::redirect("/?errorsignin=Sorry, you left a field blank.");
 		}
 		
-		else if ($canUse==false){
+		if ($canUse==false){
 			Router::redirect("/?errorsignin=Sorry, that username already exists.");
 		}
 		
@@ -49,7 +49,7 @@ class users_controller extends base_controller {
 		}
 		
 		# Redirect to home page
-		Router::redirect("/");
+		Router::redirect("/posts/users");
 	}
 		
 	public function p_login() {
