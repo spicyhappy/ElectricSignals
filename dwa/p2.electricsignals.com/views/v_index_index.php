@@ -2,6 +2,13 @@
 
 
 <? if($user): ?>
+
+		<? if(@$_GET['alert']): ?>
+			<div class="alert">
+			<span class="error"><?=$_GET['alert']?></span><br>
+			</div>
+		<? endif; ?>
+
 <? else: ?>
 	
 <div class="intro">

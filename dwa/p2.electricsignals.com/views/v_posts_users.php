@@ -1,4 +1,3 @@
-
 <div class="box follow">
 <form method='POST' action='/posts/p_follow'>	
 	<li class="navlist">Following</li>
