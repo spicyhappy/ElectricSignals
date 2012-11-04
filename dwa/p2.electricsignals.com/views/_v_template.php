@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><?=@$title; ?></title>
+	<title><?php echo @$title; ?></title>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" href="/css/master.css" type="text/css">
 	<link rel="stylesheet" href="/css/photoMosaic.screen.css" />
-	
+
 	<!-- JS
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>-->
-	
+
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="/js/jquery.photoMosaic.js"></script>
-	
+
 	<script>
 	    $(document).ready(function(){
 			$('#mosaic').photoMosaic({
@@ -21,33 +21,33 @@
 			    width: "auto",
 			    padding: 10
 			});
-	    });	    
+	    });
     </script>
-				
+
 	<!-- Controller Specific JS/CSS -->
-	<?php echo @$client_files; ?>
-	
+	<!-- <?php echo @$client_files; ?> -->
+
 </head>
 
-<body>	
-	
-	<?=$content;?>
-	
+<body>
+
+	<?php echo $content;?>
+
 	<!-- Show post stream  -->
 	<ul id="mosaic">
-		<?if(isset($posts) AND $posts != false) {?>
-		<?foreach($posts as $posts):?>
+		<?php if(isset($posts) and $posts != false) {?>
+		<?php foreach($posts as $posts):?>
 		<li>
-			<a href="/uploads/images/<?=$posts['imagename']?>">
-			<img src="/uploads/images/<?=$posts['imagename']?>" />
+			<a href="/uploads/images/<?php echo $posts['imagename']?>">
+			<img src="/uploads/images/<?php echo $posts['imagename']?>" />
 			</a>
-			<span><?=$posts['title']?></span>
+			<span><?php echo $posts['title']?></span>
 		</li>
-		<?endforeach;}?>
+		<?php endforeach;}?>
 	</ul>
 			<!-- Menu for users who are logged in -->
-		
-		<? if($user): ?>
+
+		<?php if($user): ?>
 			<nav>
 			<div>
 				<ul class="navbar">
@@ -60,9 +60,9 @@
 			</div>
 			</nav><br>
 
-		<!-- Menu options for users who are not logged in -->	
-		<? else: ?>
-		<? endif; ?>
+		<!-- Menu options for users who are not logged in -->
+		<?php else: ?>
+		<?php endif; ?>
 
 </body>
 </html>

@@ -1,18 +1,18 @@
-<? if(isset($no_followers)):?>
-	<? echo $no_followers;?>
-<? else:?>
+<?php if(isset($no_followers)):?>
+	<?php echo $no_followers;?>
+<?php else:?>
 
-	<? foreach($posts as $post):?>
-	
+	<?php foreach($posts as $post):?>
+
 		<!--
-			<br><?=$post['title']?>
-			<br><?=$post['username']?>, <?=Time::time_ago($post['created'], "-1");?>
+			<br><?php echo $post['title']?>
+			<br><?php echo $post['username']?>, <?php echo Time::time_ago($post['created'], "-1");?>
 		-->
-		
+
 		<br>
-		<img src="/uploads/images/<?=$post['imagename']?>" />
+		<img src="/uploads/images/<?php echo $post['imagename']?>" />
 		<br>
 
 
-	<? endforeach;?>
-<? endif;?>
+	<?php endforeach;?>
+<?php endif;?>

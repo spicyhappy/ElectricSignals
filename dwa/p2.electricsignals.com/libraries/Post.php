@@ -1,18 +1,18 @@
-<?
+<?php
 
 class Post {
-	
+
 	public function recent() {
-		
+
 		# The capitalized "P" is very important. :/
 		# Build a query of the users this user is following - we're only interested in their posts
-		$q = "SELECT * 
+		$q = "SELECT *
 			FROM users_users
 			WHERE user_id = ".$this->user->user_id;
 
 		# Execute our query, storing the results in a variable $connections
 		$connections = DB::instance(DB_NAME)->select_rows($q);
-		
+
 		# In order to query for the posts we need, we're going to need a string of user id's, separated by commas
 		# To create this, loop through our connections array
 		$connections_string = "";
@@ -20,7 +20,7 @@ class Post {
 			$connections_string .= $connection['user_id_followed'].",";
 		}
 
-		# Remove the final comma 
+		# Remove the final comma
 		$connections_string = substr($connections_string, 0, -1);
 
 		# Connections string example: 10,7,8 (where the numbers are the user_ids of who this user is following)
@@ -32,10 +32,10 @@ class Post {
 			# Run our query, store the results in the variable $posts
 			# If our user is following any users, we'll run the query to grab their posts
 			$q =
-			"SELECT images.*, users.user_id, users.username
-			FROM images 
+				"SELECT images.*, users.user_id, users.username
+			FROM images
 			JOIN users USING (user_id)
-			WHERE images.user_id IN (".$connections_string.") 
+			WHERE images.user_id IN (".$connections_string.")
 			ORDER BY images.created DESC"; # This is where we use that string of user_ids we created
 			$posts = DB::instance(DB_NAME)->select_rows($q);
 		}
