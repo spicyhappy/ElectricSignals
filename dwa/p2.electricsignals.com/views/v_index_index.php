@@ -4,9 +4,7 @@
 <?php if($user): ?>
 
 		<?php if(@$_GET['alert']): ?>
-			<div class="alert">
-			<span class="error"><?php echo $_GET['alert']?></span><br>
-			</div>
+			<div class="welcome"><div class="padding"><?php echo $_GET['alert']?></div></div>
 		<?php endif; ?>
 
 <?php else: ?>

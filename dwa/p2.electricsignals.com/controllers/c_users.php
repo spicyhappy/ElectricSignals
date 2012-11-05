@@ -46,7 +46,7 @@ class users_controller extends base_controller {
 			$token = $_POST['token'];
 			@setcookie("token", $token, strtotime('+1 year'), '/');
 
-			Router::redirect("/?alert=Welcome to Mosaic! Follow people to see their posts or post something.");
+			Router::redirect("/?alert=Welcome to Mosaic! Follow someone to see photos.");
 
 		}
 

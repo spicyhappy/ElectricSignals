@@ -167,3 +167,33 @@ footer {
 	color:red;
 	font-weight:700;
 }
+
+.welcome {
+	color: white;
+	font-weight:700;
+	width: 100%;
+	margin-top: 20%;
+	text-align: center;
+	background-color:#600;
+}
+
+.padding {
+	padding: 20px;
+}
+
+@media all and (max-width: 550px) {
+	.navbar,.navlist, footer {
+		display: block;
+		float: left;
+	}
+	footer {
+		padding:10px;
+	}
+	.welcome {
+		margin-top: 30%;
+	}
+	.padding {
+		padding: 30px;
+		text-align: left;
+	}
+}
