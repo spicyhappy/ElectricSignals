@@ -97,8 +97,5 @@ body {
     border-right: 10px solid transparent;
     border-left: 10px solid transparent;
     border-bottom: 0;
-    _border-right-color: pink;
-    _border-left-color: pink;
-    _filter: chroma(color=#ffc0cb);
   }
 }
