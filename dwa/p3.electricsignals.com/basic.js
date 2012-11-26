@@ -11,5 +11,7 @@ function init() {
 		scrollSensitivity: 75,
 		scrollSpeed: 25
   });
+  
+  $('.star').sprite({fps: 12, no_of_frames: 5});
 
 }

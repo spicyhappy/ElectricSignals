@@ -37,3 +37,15 @@ body {
 	top: 620px;
 	left: 650px;
 }
+
+.star {
+	position: absolute;
+	background-image: url('images/star-sprite.png');
+	width: 35px;
+	height: 35px;
+}
+
+.star1 {
+	top: 600px;
+	left: 400px;
+}
