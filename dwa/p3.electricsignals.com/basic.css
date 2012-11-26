@@ -44,6 +44,18 @@ body {
 	left:	650px;
 }
 
+.philosophers {
+	position: absolute;
+	top: 1000px;
+	left: 900px;
+}
+
+.boatman {
+	position: absolute;
+	top: 1200px;
+	left: 500px;
+}
+
 .girl {
 	position: absolute;
 	top: 700px;

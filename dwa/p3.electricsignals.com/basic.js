@@ -45,6 +45,18 @@ function init() {
 	 audio.play();
 	  
   });
+  $('.boatman').click(function() {
+  
+	 var audio = $("#boatmanAudio")[0];
+	 audio.play();
+	  
+  });
+  $('.philosophers').click(function() {
+  
+	 var audio = $("#philosophersAudio")[0];
+	 audio.play();
+	  
+  });
   
 }
 
