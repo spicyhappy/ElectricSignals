@@ -2,6 +2,8 @@ $( init );
  
 function init() {
 
+	// Things that can be dragged
+	
 	$('.draggable').draggable({
 		containment: 'document',
 		cursor: 'move',
@@ -10,13 +12,12 @@ function init() {
 		opacity: 0.5,
 		scrollSensitivity: 75,
 		scrollSpeed: 25
-  });
+	});
+  
+  
+  // Sprites
   
   $('.star').sprite({fps: 12, no_of_frames: 5});
-
-  $('.star').click(function() {
-	  
-	  
-  })
+  $('.star').click(function() {	  })
   
 }
