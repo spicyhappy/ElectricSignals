@@ -19,7 +19,6 @@ function init() {
   
   $('.star').sprite({fps: 12, no_of_frames: 5});
   
-  
   // Audio
   
   $('.star').click(function() {
@@ -28,21 +27,24 @@ function init() {
 	 audio.play();
 	  
   });
-  
-   $('.king').click(function() {
+  $('.king').click(function() {
   
 	 var audio = $("#kingAudio")[0];
 	 audio.play();
 	  
   });
-  
-   $('.queen').click(function() {
+  $('.queen').click(function() {
   
 	 var audio = $("#queenAudio")[0];
 	 audio.play();
 	  
   });
+  $('.girl').click(function() {
   
+	 var audio = $("#girlAudio")[0];
+	 audio.play();
+	  
+  });
   
 }
 
