@@ -13,6 +13,10 @@
 html, body, div, img {
 	margin: 	0;
 	padding: 	0;
+	font-family: 	Nexa,Arial,sans-serif;
+	font-size: 		1em;
+	line-height: 	1.25em;
+	letter-spacing: .1em;
 	color: white;
 	display: block;
 }
@@ -24,6 +28,32 @@ body {
 
 #background {
 	
+}
+
+#dashboard {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	padding: 10px 30px;
+	z-index: 1000;
+	background: rgba(0,0,0,0.6);
+}
+
+#dashboard > ul {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	vertical-align: center;
+}
+
+#dashboard li {
+	color: red;
+	display: inline;
+	float: left;
+}
+
+#dashboard .star {
+	position: relative;
 }
 
 .title {
@@ -70,7 +100,6 @@ body {
 	background: url('images/star-sprite.png') no-repeat center center;
 	width: 	35px;
 	height: 35px;
-	margin: 10px;
 }
 
 .star:hover:before {
