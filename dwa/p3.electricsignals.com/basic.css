@@ -45,6 +45,21 @@ body {
 	height: 35px;
 }
 
+.star:hover:after {
+	content: "";
+	width: 35px;
+	height:35px;
+	background-color: #fffcd6;
+	-moz-box-shadow:    	0px 0px 50px 8px #fffcd6;
+	-webkit-box-shadow: 	0px 0px 50px 8px #fffcd6;
+	box-shadow:         	0px 0px 50px 8px #fffcd6;
+	-webkit-border-radius: 	17.5px;
+	-moz-border-radius: 	17.5px;
+	border-radius: 			17.5px;
+	display: block;
+	opacity: .3;
+}
+
 .star1 {
 	top: 600px;
 	left: 400px;

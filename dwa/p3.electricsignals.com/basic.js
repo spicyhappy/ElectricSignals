@@ -14,4 +14,9 @@ function init() {
   
   $('.star').sprite({fps: 12, no_of_frames: 5});
 
+  $('.star').click(function() {
+	  
+	  
+  })
+  
 }
