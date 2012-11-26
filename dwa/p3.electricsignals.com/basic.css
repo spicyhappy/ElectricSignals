@@ -1,0 +1,31 @@
+@font-face {
+  font-family: Nexa;
+  src: url(fonts/nexa_light-webfont.ttf);
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: Nexa;
+  src: url(fonts/nexa_bold-webfont.ttf);
+  font-weight: bold;
+}
+
+html, body, div, img {
+	margin: 0;
+	padding: 0;
+	color: white;
+	display: block;
+}
+
+body {
+	width: 2592px;
+	height: 1936px;
+}
+#background {
+	
+}
+
+.character {
+	position: absolute;
+	z-index: 2;
+}
