@@ -18,6 +18,31 @@ function init() {
   // Sprites
   
   $('.star').sprite({fps: 12, no_of_frames: 5});
-  $('.star').click(function() {	  })
+  
+  
+  // Audio
+  
+  $('.star').click(function() {
+  
+	 var audio = $("#starAudio")[0];
+	 audio.play();
+	  
+  });
+  
+   $('.king').click(function() {
+  
+	 var audio = $("#kingAudio")[0];
+	 audio.play();
+	  
+  });
+  
+   $('.queen').click(function() {
+  
+	 var audio = $("#queenAudio")[0];
+	 audio.play();
+	  
+  });
+  
   
 }
+

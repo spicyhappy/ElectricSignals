@@ -28,13 +28,13 @@ body {
 
 .queen {
 	position: absolute;
-	top: 	655px;
+	top: 	670px;
 	left: 	688px;
 }
 
 .king {
 	position: absolute;
-	top: 	620px;
+	top: 	630px;
 	left:	650px;
 }
 
@@ -61,4 +61,9 @@ body {
 .star1 {
 	top: 	600px;
 	left: 	400px;
+}
+
+.star2 {
+	top:	500px;
+	left:	700px;
 }
