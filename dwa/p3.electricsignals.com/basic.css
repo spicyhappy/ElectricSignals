@@ -21,11 +21,19 @@ body {
 	width: 2592px;
 	height: 1936px;
 }
+
 #background {
 	
 }
 
-.character {
+.queen {
 	position: absolute;
-	z-index: 2;
+	top: 655px;
+	left: 688px;
+}
+
+.king {
+	position: absolute;
+	top: 620px;
+	left: 650px;
 }

@@ -2,7 +2,7 @@ $( init );
  
 function init() {
 
-	$('.character').draggable({
+	$('.draggable').draggable({
 		containment: 'document',
 		cursor: 'move',
 		delay: 50,
