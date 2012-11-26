@@ -11,14 +11,14 @@
 }
 
 html, body, div, img {
-	margin: 0;
-	padding: 0;
+	margin: 	0;
+	padding: 	0;
 	color: white;
 	display: block;
 }
 
 body {
-	width: 2592px;
+	width: 	2592px;
 	height: 1936px;
 }
 
@@ -28,39 +28,37 @@ body {
 
 .queen {
 	position: absolute;
-	top: 655px;
-	left: 688px;
+	top: 	655px;
+	left: 	688px;
 }
 
 .king {
 	position: absolute;
-	top: 620px;
-	left: 650px;
+	top: 	620px;
+	left:	650px;
 }
 
 .star {
 	position: absolute;
-	background-image: url('images/star-sprite.png');
-	width: 35px;
+	background: url('images/star-sprite.png') no-repeat center center;
+	width: 	35px;
 	height: 35px;
+	margin: 10px;
 }
 
-.star:hover:after {
+.star:hover:before {
 	content: "";
-	width: 35px;
-	height:35px;
-	background-color: #fffcd6;
-	-moz-box-shadow:    	0px 0px 50px 8px #fffcd6;
-	-webkit-box-shadow: 	0px 0px 50px 8px #fffcd6;
-	box-shadow:         	0px 0px 50px 8px #fffcd6;
-	-webkit-border-radius: 	17.5px;
-	-moz-border-radius: 	17.5px;
-	border-radius: 			17.5px;
-	display: block;
-	opacity: .3;
+	width: 	45px;
+	height: 45px;
+	right: 	-5px;
+	top: 	-5px;
+	position: 	absolute;
+	background: url('images/star-glow.png') no-repeat center center;
+	display: 	block;
+	opacity:	.3;
 }
 
 .star1 {
-	top: 600px;
-	left: 400px;
+	top: 	600px;
+	left: 	400px;
 }
