@@ -15,9 +15,19 @@
 			body.innerHTML += "Don't do that again.<br><br>";
 		},
 		
+		showMovement : function() {
+			body.innerHTML += "moving!<br>";
+		},
+		
+		changedOrientation : function() {
+			body.innerHTML += "";
+		}
+		
 	};
 	
 	body.addEventListener("touchstart", touchControls.pokeTheScreen, false);
 	body.addEventListener("touchend", touchControls.stopPokingTheScreen, false);
+	body.addEventListener("touchmove", touchControls.showMovement, false);
+	body.addEventListener("orientationchange", touchControls.changedOrientation, false);
 	
 })();
