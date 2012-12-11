@@ -1,0 +1,28 @@
+{
+	"addressBook" : [
+		{
+			"name": "Hayao Miyazaki",
+			"email": "post@ghibli.co.jp"
+		},
+		{
+			"name": "Chris Milk",
+			"email": "mail2@chrismilk.com"
+		},
+		{
+			"name": "Michael Dudok de Wit",
+			"email": "m@dudokdewit.co.uk"	
+		},
+		{
+			"name": "Jenova Chen",
+			"email": "jenovachen@gmail.com"	
+		},
+		{
+			"name": "Cyriak Harris",
+			"email": "info@cyriak.co.uk"
+		},
+		{
+			"name": "Mom",
+			"email": "mom@always.com"
+		},
+	]
+}
