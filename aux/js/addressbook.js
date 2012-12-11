@@ -1,8 +1,8 @@
 // Wrap everything in an anonymous function,
 (function() {
 
-// Detect if XMLHttpRequest is supported, if not use ActiveXObject
-function getHTTPObject() {
+	// Detect if XMLHttpRequest is supported, if not use ActiveXObject
+	function getHTTPObject() {
 
 	var xhr;
 	
@@ -18,8 +18,8 @@ function getHTTPObject() {
 
 }
 
-// Define Ajax call
-function ajaxCall(dataUrl, outputElement, callback) {
+	// Define Ajax call
+	function ajaxCall(dataUrl, outputElement, callback) {
 	
 	// Feature detection
 	var request = getHTTPObject();
@@ -35,7 +35,8 @@ function ajaxCall(dataUrl, outputElement, callback) {
 			var contacts = JSON.parse(request.responseText);
 			
 			// Check to see if call back is a function, run
-			if(typeof callback === "function") {
+			if(typeof callback === "function"){
+				
 				callback(contacts);
 			}
 		
@@ -49,14 +50,14 @@ function ajaxCall(dataUrl, outputElement, callback) {
 	request.send(null);
 }
 
-// Initial variables
-var searchForm = document.getElementById("search-form"),
-	searchField = document.getElementById("q"),
-	getAllButton = document.getElementById("get-all"),
-	target = document.getElementById("output");
+	// Initial variables
+	var searchForm = document.getElementById("search-form"),
+		searchField = document.getElementById("q"),
+		getAllButton = document.getElementById("get-all"),
+		target = document.getElementById("output");
 	
-// Object with address book methods
-var addr = {
+	// Object with address book methods
+	var addr = {
 	
 	search : function(event){
 		
@@ -141,12 +142,13 @@ var addr = {
 	
 };
 
-// Event listeners
-searchField.addEventListener("keyup", addr.search, false);
-searchField.addEventListener("focus", addr.addActiveSection, false);
-searchField.addEventListener("blur", addr.removeActiveSection, false);
-getAllButton.addEventListener("click", addr.getAllContacts, false);
-searchForm.addEventListener("mouseover", addr.addHoverClass, false);
-searchForm.addEventListener("mouseout", addr.removeHoverClass, false);
-searchForm.addEventListener("submit", addr.search, false);
+	// Event listeners
+	searchField.addEventListener("keyup", addr.search, false);
+	searchField.addEventListener("focus", addr.addActiveSection, false);
+	searchField.addEventListener("blur", addr.removeActiveSection, false);
+	getAllButton.addEventListener("click", addr.getAllContacts, false);
+	searchForm.addEventListener("mouseover", addr.addHoverClass, false);
+	searchForm.addEventListener("mouseout", addr.removeHoverClass, false);
+	searchForm.addEventListener("submit", addr.search, false);
+	
 })(); // End anonymous function
