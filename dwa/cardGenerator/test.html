@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<head>
+        <title>Class Practice</title>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+        <script type='text/javascript'>
+
+        $('document').ready(function() { // start doc ready; do not delete this!        
+	        
+	        $("input").keyup(function () {
+	        	var value = $(this).val();
+	        	$('#lucy').css('background-color', value);
+		    }).keyup();
+	          
+        }); // end doc ready
+        
+</script>
+
+        <style type='text/css'>
+                #lucy, #ricardo {
+                        border:1px solid black;
+                        width:100px;
+                        height:100px;
+                        background-color: blue;
+                }
+        </style>
+</head>
+
+<body>
+        <div id='lucy'></div>
+        <div id='ricardo'></div>
+        <input type="text" value="pick a color"/>
+</body>
+</html>
