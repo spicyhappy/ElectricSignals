@@ -20,7 +20,7 @@
 		},
 		
 		changedOrientation : function() {
-			body.innerHTML += "";
+			body.innerHTML = "";
 		}
 		
 	};
