@@ -9,9 +9,12 @@
 			body.innerHTML += "You just poked me, how rude!<br>";
 		},
 		
-		stopPokingTheScreen: function() {
-			body.innerHTMl += "Don't poke me again.<br><br>";
-		}
+		
+		stopPokingTheScreen : function() {
+			
+			body.innerHTML += "Don't do that again.<br><br>";
+		},
+		
 	};
 	
 	body.addEventListener("touchstart", touchControls.pokeTheScreen, false);
