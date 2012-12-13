@@ -2,12 +2,15 @@ ig.module(
 	'game.entities.player'
 )
 .requires(
-	'impact.entity'
+	'impact.entity',
+	'impact.sound'
 )
 .defines(function () {
 	EntityPlayer = ig.Entity.extend({
 	
 		animSheet: new ig.AnimationSheet('media/player.png', 32, 32),
+		jumpSFX: new ig.Sound('media/audio/player-laugh.*'),
+		
 		size: {x: 21, y:31},
 		offset: {x:4, y:0},
 		flip: false,
@@ -18,6 +21,11 @@ ig.module(
 		accelGround: 400,
 		accelAir: 200,
 		jump: 200,
+		
+		// Collision
+		type: ig.Entity.TYPE.A,
+		checkAgainst: ig.Entity.TYPE.NONE,
+		collides: ig.Entity.COLLIDES.PASSIVE,
 		
 		// Different animation states
 		init: function(x,y,settings) {
@@ -42,6 +50,7 @@ ig.module(
         	// jump
         	if( this.standing && ig.input.pressed('jump') ) {
         		this.vel.y = -this.jump;
+        		this.jumpSFX.play();
         	}
             // set the current animation, based on the player's speed
             if( this.vel.x != 0 ) {
