@@ -63,12 +63,41 @@ MyGame = ig.Game.extend({
 	}
 });
 
+StartScreen = ig.Game.extend({
+	
+	text: new ig.Font('media/minionpro.font.png'),
+	background: new ig.Image('media/screen-bg.gif'),
+	init: function() {
+		ig.input.bind(ig.KEY.SPACE,'start');
+	},
+	update: function() {
+	
+		//document.addEventListener("click", ig.system.setGame(MyGame), false);
+				
+		if(ig.input.pressed('start')){
+			ig.system.setGame(MyGame);
+		}
+		this.parent();
+	},
+	draw: function() {
+		this.parent();
+		this.background.draw(0,0);
+		
+		var x = ig.system.width/2,
+			y = ig.system.height*2/3;
+		
+		this.text.draw('Press spacebar to start', x, y, ig.Font.ALIGN.CENTER);
+
+	}
+	
+});
+
 // Disable audio for mobile devices
 if(ig.ua.mobile){
 	ig.Sound.enabled = false;
 }
 
-// Start the Game with 60fps, a resolution of 640x380
-ig.main( '#canvas', MyGame, 60, 640, 380, 1 );
+// Start the Game with 60fps, a resolution of 640x480
+ig.main( '#canvas', StartScreen, 60, 640, 480, 1 );
 
 });
