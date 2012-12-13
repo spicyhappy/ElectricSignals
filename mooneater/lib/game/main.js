@@ -97,7 +97,7 @@ if(ig.ua.mobile){
 	ig.Sound.enabled = false;
 }
 
-// Start the Game with 60fps, a resolution of 640x480
-ig.main( '#canvas', StartScreen, 60, 640, 480, 1 );
+// Start the Game with 60fps, a resolution of 512x384
+ig.main( '#canvas', StartScreen, 60, 512, 384, 1 );
 
 });
