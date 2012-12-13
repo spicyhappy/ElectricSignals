@@ -63,9 +63,12 @@ MyGame = ig.Game.extend({
 	}
 });
 
+// Disable audio for mobile devices
+if(ig.ua.mobile){
+	ig.Sound.enabled = false;
+}
 
-// Start the Game with 60fps, a resolution of 320x240, scaled
-// up by a factor of 2
+// Start the Game with 60fps, a resolution of 640x380
 ig.main( '#canvas', MyGame, 60, 640, 380, 1 );
 
 });
