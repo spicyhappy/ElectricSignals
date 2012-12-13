@@ -10,9 +10,13 @@ ig.module(
 
 MyGame = ig.Game.extend({
 	
-	// Load a font
-	text: new ig.Font( 'media/minionpro.font.png' ),
+	instructText: new ig.Font( 'media/minionpro.font.png' ),
 	gravity: 300,
+	
+	// Status
+	statusText: new ig.Font( 'media/minionpro.font.png' ),
+	statMatte: new ig.Image('media/statusBar.png'),
+	stats: {cookies: 5, lamp: false, balloon: false},
 	
 	init: function() {
 		// Initialize your game here; bind keys etc.
@@ -40,8 +44,8 @@ MyGame = ig.Game.extend({
 		if(player) {
 			this.screen.x = player.pos.x - ig.system.width/2;
 			//this.screen.y = player.pos.y - ig.system.height/2;
-			if(player.accel.x > 0 && this.text) {
-				this.text=null;
+			if(player.accel.x > 0 && this.instructText) {
+				this.instructText=null;
 			}
 		}
 	},
@@ -55,18 +59,19 @@ MyGame = ig.Game.extend({
 		
 		// Instructions
 		
-		if (this.text) {
+		if (this.instructText) {
 			var x = ig.system.width/2,
 				y = ig.system.height - 25;
-				this.text.draw('Left/Right Moves, Space Jumps', x, y, ig.Font.ALIGN.CENTER);
+				this.instructText.draw('Left/Right Moves, Space Jumps', x, y, ig.Font.ALIGN.CENTER);
 		}
 	}
 });
 
 StartScreen = ig.Game.extend({
 	
-	text: new ig.Font('media/minionpro.font.png'),
-	background: new ig.Image('media/screen-bg.gif'),
+	instructText: new ig.Font('media/minionpro.font.png'),
+	background: new ig.Image('media/screenBG.gif'),
+	
 	init: function() {
 		ig.input.bind(ig.KEY.SPACE,'start');
 	},
@@ -86,7 +91,7 @@ StartScreen = ig.Game.extend({
 		var x = ig.system.width/2,
 			y = ig.system.height*2/3;
 		
-		this.text.draw('Press spacebar to start', x, y, ig.Font.ALIGN.CENTER);
+		this.instructText.draw('Press spacebar to start', x, y, ig.Font.ALIGN.CENTER);
 
 	}
 	
