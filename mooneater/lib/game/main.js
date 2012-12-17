@@ -103,6 +103,6 @@ if(ig.ua.mobile){
 }
 
 // Start the Game with 60fps, a resolution of 512x384
-ig.main( '#canvas', StartScreen, 60, 512, 384, 1 );
+ig.main( '#canvas', StartScreen, 60, 320, 240, 2 );
 
 });
