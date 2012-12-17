@@ -8,11 +8,11 @@ ig.module(
 .defines(function () {
 	EntityPlayer = ig.Entity.extend({
 	
-		animSheet: new ig.AnimationSheet('media/player.png', 32, 32),
-		jumpSFX: new ig.Sound('media/audio/player-laugh.*'),
+		animSheet: new ig.AnimationSheet('media/player2.gif', 16, 16),
+		//jumpSFX: new ig.Sound('media/audio/player-laugh.*'),
 		
-		size: {x: 21, y:31},
-		offset: {x:4, y:0},
+		size: {x: 5, y:15},
+		offset: {x:8, y:1},	
 		flip: false,
 		
 		// Physics
@@ -31,7 +31,7 @@ ig.module(
 		init: function(x,y,settings) {
 			this.parent(x,y,settings);
 			this.addAnim('idle',1,[0]);
-			this.addAnim('run',0.07,[0,1,2,3,4]);
+			this.addAnim('run',0.07,[0,1,2,3,4,5]);
 		},
 		
 		// Controls player movement
@@ -48,12 +48,12 @@ ig.module(
         		this.accel.x = 0;
         	}
         	// jump
-        	if( this.standing && ig.input.pressed('jump') ) {
+        	if( ig.input.pressed('jump') ) {
         		this.vel.y = -this.jump;
-        		this.jumpSFX.play();
+        		//this.jumpSFX.play();
         	}
             // set the current animation, based on the player's speed
-            if( this.vel.x != 0 ) {
+            if( this.vel.y < 0 ) {
             	this.currentAnim = this.anims.run;
             }else{
             	this.currentAnim = this.anims.idle;
