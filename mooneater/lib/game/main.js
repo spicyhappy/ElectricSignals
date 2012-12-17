@@ -10,11 +10,11 @@ ig.module(
 
 MyGame = ig.Game.extend({
 	
-	instructText: new ig.Font( 'media/minionpro.font.png' ),
+	instructText: new ig.Font( 'media/04b03.font.png' ),
 	gravity: 300,
 	
 	// Status
-	statusText: new ig.Font( 'media/minionpro.font.png' ),
+	statusText: new ig.Font( 'media/04b03.font.png' ),
 	statMatte: new ig.Image('media/statusBar.png'),
 	stats: {cookies: 5, lamp: false, balloon: false},
 	
@@ -23,7 +23,7 @@ MyGame = ig.Game.extend({
 		this.loadLevel ( LevelTown );
 		
 		// Background music
-		ig.music.add('media/audio/background-musicbox.*');
+		//ig.music.add('media/audio/background-musicbox.*');
 		ig.music.volume = 0.5;
 		ig.music.play();
 		
@@ -42,7 +42,7 @@ MyGame = ig.Game.extend({
 		// Screen follows player
 		var player = this.getEntitiesByType(EntityPlayer)[0];
 		if(player) {
-			this.screen.x = player.pos.x - ig.system.width/2;
+			//this.screen.x = player.pos.x - ig.system.width/2;
 			//this.screen.y = player.pos.y - ig.system.height/2;
 			if(player.accel.x > 0 && this.instructText) {
 				this.instructText=null;
@@ -69,7 +69,7 @@ MyGame = ig.Game.extend({
 
 StartScreen = ig.Game.extend({
 	
-	instructText: new ig.Font('media/minionpro.font.png'),
+	instructText: new ig.Font('media/04b03.font.png'),
 	background: new ig.Image('media/screenBG.gif'),
 	
 	init: function() {
