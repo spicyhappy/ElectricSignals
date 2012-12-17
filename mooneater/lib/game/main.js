@@ -70,7 +70,7 @@ MyGame = ig.Game.extend({
 StartScreen = ig.Game.extend({
 	
 	instructText: new ig.Font('media/04b03.font.png'),
-	background: new ig.Image('media/screenBG.gif'),
+	background: new ig.Image('media/screenBG2.gif'),
 	
 	init: function() {
 		ig.input.bind(ig.KEY.SPACE,'start');
@@ -89,7 +89,7 @@ StartScreen = ig.Game.extend({
 		this.background.draw(0,0);
 		
 		var x = ig.system.width/2,
-			y = ig.system.height*2/3;
+			y = ig.system.height*3/4;
 		
 		this.instructText.draw('Press spacebar to start', x, y, ig.Font.ALIGN.CENTER);
 
@@ -102,7 +102,7 @@ if(ig.ua.mobile){
 	ig.Sound.enabled = false;
 }
 
-// Start the Game with 60fps, a resolution of 512x384
+// Start the Game with 60fps, a resolution of 320x240
 ig.main( '#canvas', StartScreen, 60, 320, 240, 2 );
 
 });
