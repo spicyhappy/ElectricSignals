@@ -64,7 +64,7 @@ ig.module(
         	
         	// Jump
         	if( ig.input.pressed('jump') ) {
-        		this.vel.y = -this.jump*.5;
+        		this.vel.y = -this.jump*.3;
         		//this.jumpSFX.play();
         	}
         	
@@ -82,6 +82,11 @@ ig.module(
 	        	this.currentAnim.alpha = 1;
         	}
         	
+        	// Kill player if flies too close to the sun/water
+        	if (this.pos.y < 20 || this.pos.y > 108) {
+	        	this.kill();
+        	}
+        	
         	this.parent();
         },
         
@@ -91,6 +96,11 @@ ig.module(
 	        if(this.invincible)
 	        	return;
 	        this.parent(amount, from);
+        },
+        
+        kill: function() {
+	        this.parent();
+	        
         },
         
         draw: function(){
