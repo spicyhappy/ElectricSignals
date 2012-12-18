@@ -36,14 +36,17 @@ EntityEnemy1 = ig.Entity.extend({
     
     init: function( x, y, settings ) {
     	this.parent( x, y, settings );
-    	this.addAnim('walk', .07, [0,1,2,3]);
+    	this.addAnim('fly', .07, [0,1,2,3]);
     },
     update: function() {
     	
     	this.vel.x = this.speed * -1;
+    	
+    	// Remove if goes off screen on the left side
     	if (this.pos.x < -20) {
 	    	this.kill();
     	}
+    	
     	
     	this.parent();
     },
