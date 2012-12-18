@@ -27,6 +27,10 @@ MyGame = ig.Game.extend({
 		// Initialize game
 		this.loadLevel ( LevelTown );
 		
+		// Screen size starts at
+		this.screen.x = 8;
+		this.screen.y = 8;
+		
 		// Background music
 		//ig.music.add('media/audio/background-musicbox.*');
 		ig.music.volume = 0.5;
@@ -62,7 +66,7 @@ MyGame = ig.Game.extend({
 			if (this.enemy === false) {
 				console.log("spawned!");
 				this.enemy = true;
-				ig.game.spawnEntity(EntityEnemy1,300,60);
+				ig.game.spawnEntity(EntityEnemy1,180,60);
 			}
 			
 		}
@@ -79,7 +83,7 @@ MyGame = ig.Game.extend({
 		// Control instructions
 		if (this.instructText) {
 			var x = ig.system.width/2,
-				y = ig.system.height - 25;
+				y = ig.system.height*7/8;
 				this.instructText.draw('Left/Right Moves, Space Jumps', x, y, ig.Font.ALIGN.CENTER);
 		}
 	}
@@ -95,7 +99,7 @@ StartScreen = ig.Game.extend({
 	},
 	update: function() {				
 		if(ig.input.pressed('start')){
-			ig.system.setGame(MyGame);
+			ig.system.setGame(StartScreen2);
 		}
 		this.parent();
 	},
@@ -112,12 +116,46 @@ StartScreen = ig.Game.extend({
 	
 });
 
+StartScreen2 = ig.Game.extend({
+	
+	instructText: new ig.Font('media/04b03.font.png'),
+	storyText: new ig.Font('media/04b03.font.png'),
+	background: new ig.Image('media/screenBG3.gif'),
+	
+	init: function() {
+		ig.input.bind(ig.KEY.SPACE,'start');
+	},
+	update: function() {				
+		if(ig.input.pressed('start')){
+			ig.system.setGame(MyGame);
+		}
+		this.parent();
+	},
+	draw: function() {
+		this.parent();
+		this.background.draw(0,0);
+		
+		var x = ig.system.width/2,
+			y = ig.system.height*3/4,
+			x1 = 20,
+			y1 = 24;
+		
+		this.storyText.draw('Be careful, son. Our wings', x1, y1, ig.Font.ALIGN.LEFT);
+		this.storyText.draw("are delicate. They will fall", x1, y1+10, ig.Font.ALIGN.LEFT);
+		this.storyText.draw("apart if the conditions are", x1, y1+20, ig.Font.ALIGN.LEFT);
+		this.storyText.draw("not right . . .", x1, y1+30, ig.Font.ALIGN.LEFT);
+		this.instructText.draw('Press spacebar to start', x, y, ig.Font.ALIGN.CENTER);
+
+	}
+	
+});
+
 // Disable audio for mobile devices
 if(ig.ua.mobile){
 	ig.Sound.enabled = false;
 }
 
-// Start the Game with 60fps, a resolution of 320x240
-ig.main( '#canvas', StartScreen, 60, 320, 240, 2 );
+// Start the Game with 60fps, a resolution of 160x120
+ig.main( '#canvas', StartScreen, 60, 160, 120, 4 );
 
 });
