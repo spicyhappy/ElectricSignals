@@ -9,11 +9,14 @@ ig.module(
 	EntityPlayer = ig.Entity.extend({
 	
 		animSheet: new ig.AnimationSheet('media/player2.gif', 16, 16),
-		//jumpSFX: new ig.Sound('media/audio/player-laugh.*'),
-		
 		size: {x: 5, y:15},
 		offset: {x:8, y:1},	
 		flip: false,
+		
+		health: 3,
+		invincible: true,
+		invincibleDelay: 2,
+		invincibleTimer: null,
 		
 		// Physics
 		maxVel: {x:100, y:150},
@@ -27,16 +30,27 @@ ig.module(
 		checkAgainst: ig.Entity.TYPE.NONE,
 		collides: ig.Entity.COLLIDES.PASSIVE,
 		
-		// Different animation states
+		// Make invincible
+		makeInvincible: function(){
+			this.invincible = true;
+			console.log("I'm invincible");
+			this.invincibleTimer.reset();
+		},
+		
 		init: function(x,y,settings) {
+			// Different animation states
 			this.parent(x,y,settings);
 			this.addAnim('idle',1,[0]);
 			this.addAnim('run',0.07,[2,3,4,5,0,1]);
+			
+			// Set invincibility timer and start out invincible
+			this.invincibleTimer = new ig.Timer();
+			this.makeInvincible();
 		},
 		
-		// Controls player movement
         update: function() {
-              // move left or right
+            
+            // Move left/right
         	var accel = this.standing ? this.accelGround : this.accelAir;
         	if( ig.input.state('left') ) {
         		this.accel.x = -accel;
@@ -47,20 +61,46 @@ ig.module(
         	}else{
         		this.accel.x = 0;
         	}
-        	// jump
+        	
+        	// Jump
         	if( ig.input.pressed('jump') ) {
         		this.vel.y = -this.jump*.5;
         		//this.jumpSFX.play();
         	}
-            // set the current animation, based on the player's speed
+        	
+            // Set the current animation, based on the player's speed
             if( this.vel.y < 0 ) {
             	this.currentAnim = this.anims.run;
             }else{
             	this.currentAnim = this.anims.idle;
             }
             this.currentAnim.flip.x = this.flip;
-        	// move!
+        	
+        	// Remove invincibily after delay
+        	if (this.invincibleTimer.delta()>this.invincibleDelay) {
+	        	this.invincible = false;
+	        	this.currentAnim.alpha = 1;
+        	}
+        	
         	this.parent();
         },
+        
+        receiveDamage: function(amount,from) {
+        
+	        // Don't take damage if you're invincible
+	        if(this.invincible)
+	        	return;
+	        this.parent(amount, from);
+        },
+        
+        draw: function(){
+        
+        	// Fade in when invincible
+	        if(this.invincible) {
+	        	this.currentAnim.alpha = this.invincibleTimer.delta()/this.invincibleDelay*1;
+	        }
+	        this.parent();
+        }
+    
 	});
 });

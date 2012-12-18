@@ -16,6 +16,9 @@ EntityCitizen = ig.Entity.extend({
     offset: {x: 11, y: 3},
     flip: false,
     
+    //
+    health: 3,
+    
     // Physics
     maxVel: {x: 100, y: 100},
     friction: {x: 150, y: 0},
