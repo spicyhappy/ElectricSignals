@@ -31,7 +31,7 @@ ig.module(
 		init: function(x,y,settings) {
 			this.parent(x,y,settings);
 			this.addAnim('idle',1,[0]);
-			this.addAnim('run',0.07,[0,1,2,3,4,5]);
+			this.addAnim('run',0.07,[2,3,4,5,0,1]);
 		},
 		
 		// Controls player movement
