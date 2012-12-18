@@ -49,7 +49,7 @@ ig.module(
         	}
         	// jump
         	if( ig.input.pressed('jump') ) {
-        		this.vel.y = -this.jump;
+        		this.vel.y = -this.jump*.5;
         		//this.jumpSFX.play();
         	}
             // set the current animation, based on the player's speed
