@@ -45,9 +45,33 @@ MyGame = ig.Game.extend({
 		ig.input.bind( ig.KEY.RIGHT_ARROW , 'right' );
 		ig.input.bind( ig.KEY.SPACE , 'jump' );
 		ig.input.bind( ig.KEY.ENTER , 'enter' );
-		
-		this.enemy = false;
 
+	},
+	
+	spawnEnemy: function(time,positionY) {
+		var enemy = false;
+		if (this.levelTimer.delta() > time) {
+			if (enemy === false) {
+				enemy = true;
+				ig.game.spawnEntity(EntityEnemy1,180,positionY);
+				this.levelTimer.reset();
+			}
+		}	
+	},
+	
+	deathCoincidence: function() {
+		var x = ig.system.width/2,
+			y = ig.system.height*3/4,
+			x1 = 10,
+			y1 = 24;
+				
+		this.deathBackground.draw(0,0);
+				
+		this.deathText.draw("Oh cruel fate,", x1, y1, ig.Font.ALIGN.LEFT);
+		this.deathText.draw("what a tragic hand you deal me.", x1, y1+10, ig.Font.ALIGN.LEFT);
+		this.deathText.draw('Press enter to replay', x, y, ig.Font.ALIGN.CENTER);
+
+		
 	},
 	
 	update: function() {
@@ -63,20 +87,12 @@ MyGame = ig.Game.extend({
 			}
 		}
 		
-		if (this.levelTimer.delta() > 2) {
-			if (this.enemy === false) {
-				console.log("spawned!");
-				this.enemy = true;
-				ig.game.spawnEntity(EntityEnemy1,180,50);
-			}
-			
-		}
+		this.spawnEnemy(Math.random()*2+.6,Math.random()*64+32);
 		
 		var player = this.getEntitiesByType( EntityPlayer )[0];
 		
 		if (!player) {			
 			if(ig.input.pressed('enter')){
-				console.log("new game!");
 				ig.system.setGame(MyGame);
 			}
 		}
@@ -102,33 +118,18 @@ MyGame = ig.Game.extend({
 		// Death message
 		if (!player) {
 		
-			var x = ig.system.width/2,
-				y = ig.system.height*3/4,
-				x1 = 20,
-				y1 = 24;
-				
-				this.deathBackground.draw(0,0);
-				
-				this.deathText.draw("Often we aren't as strong", x1, y1, ig.Font.ALIGN.LEFT);
-				this.deathText.draw("as we think we are.", x1, y1+10, ig.Font.ALIGN.LEFT);
-				this.deathText.draw('Press enter to replay', x, y, ig.Font.ALIGN.CENTER);
-
+		
+			this.deathCoincidence();
 		}
 		
+		// Status
 		if (player) {
-			
-			console.log(player.health);
 			
 			for (i=0; i<player.health; i++) {
 				this.lifeSprite.draw(5+i*10,5);
 			}
 			
 		}
-		
-		// Status
-		
-
-
 		
 	}
 });
@@ -184,10 +185,10 @@ StartScreen2 = ig.Game.extend({
 			x1 = 20,
 			y1 = 24;
 		
-		this.storyText.draw('Be careful, son. Our wings', x1, y1, ig.Font.ALIGN.LEFT);
-		this.storyText.draw("are delicate. They will fall", x1, y1+10, ig.Font.ALIGN.LEFT);
-		this.storyText.draw("apart if the conditions are", x1, y1+20, ig.Font.ALIGN.LEFT);
-		this.storyText.draw("not right . . .", x1, y1+30, ig.Font.ALIGN.LEFT);
+		this.storyText.draw('Follow me closely, son. The', x1, y1, ig.Font.ALIGN.LEFT);
+		this.storyText.draw("wings that carry us are", x1, y1+10, ig.Font.ALIGN.LEFT);
+		this.storyText.draw("fragile and there are many ", x1, y1+20, ig.Font.ALIGN.LEFT);
+		this.storyText.draw("dangers ahead . . .", x1, y1+30, ig.Font.ALIGN.LEFT);
 		this.instructText.draw('Press enter to continue', x, y, ig.Font.ALIGN.CENTER);
 
 	}

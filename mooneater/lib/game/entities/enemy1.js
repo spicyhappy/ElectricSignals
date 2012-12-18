@@ -12,8 +12,8 @@ EntityEnemy1 = ig.Entity.extend({
     animSheet: new ig.AnimationSheet( 'media/enemy1.gif', 16, 16 ),
     //hitSFX: new ig.Sound('media/audio/king-surprise.*'),
     
-    size: {x: 12, y:9},
-    offset: {x: 1, y: 3},
+    size: {x: 9, y:8},
+    offset: {x: 3, y: 4},
     flip: false,
 
     health: 1,
@@ -55,10 +55,8 @@ EntityEnemy1 = ig.Entity.extend({
     },
     
     check: function(other) {
-	    console.log("enemy hit!");
 	    this.receiveDamage(1, this);
 	    other.receiveDamage(1, this);
-	    other.makeInvincible();
 	    //this.hitSFX.play();
     }
 });

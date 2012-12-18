@@ -15,15 +15,16 @@ ig.module(
 		
 		health: 3,
 		invincible: true,
-		invincibleDelay: 2,
+		invincibleDelay: 1.5,
 		invincibleTimer: null,
+		
 		
 		// Physics
 		maxVel: {x:100, y:150},
 		friction: {x:600, y: 0},
 		accelGround: 400,
-		accelAir: 200,
-		jump: 200,
+		accelAir: 100,
+		jump: 5,
 		
 		// Collision
 		type: ig.Entity.TYPE.A,
@@ -33,7 +34,6 @@ ig.module(
 		// Make invincible
 		makeInvincible: function(){
 			this.invincible = true;
-			console.log("I'm invincible");
 			this.invincibleTimer.reset();
 		},
 		
@@ -62,10 +62,20 @@ ig.module(
         		this.accel.x = 0;
         	}
         	
-        	// Jump
-        	if( ig.input.pressed('jump') ) {
-        		this.vel.y = -this.jump*.3;
+        	// Jump with acceleration
+        	
+        	if( ig.input.state('jump') ) {
+        		if (this.jump < 50) {
+        			this.jump=this.jump*1.2;
+        		}
+        		this.vel.y = -this.jump;
         		//this.jumpSFX.play();
+        	}
+        	
+        	// Reset jump
+        	
+        	if( ig.input.released('jump') ) {
+        		this.jump = 5;
         	}
         	
             // Set the current animation, based on the player's speed
@@ -91,11 +101,14 @@ ig.module(
         },
         
         receiveDamage: function(amount,from) {
-        
 	        // Don't take damage if you're invincible
 	        if(this.invincible)
-	        	return;
-	        this.parent(amount, from);
+	        	this.parent(0, from);
+	        
+	        if(!this.invincible) {
+	        	this.parent(amount, from);
+		    	this.makeInvincible();   
+	        }
         },
         
         kill: function() {
