@@ -41,7 +41,7 @@ ig.module(
 			// Different animation states
 			this.parent(x,y,settings);
 			this.addAnim('idle',1,[0]);
-			this.addAnim('run',0.07,[2,3,4,5,0,1]);
+			this.addAnim('run',0.07,[5,0,1,2,3,4]);
 			
 			// Set invincibility timer and start out invincible
 			this.invincibleTimer = new ig.Timer();
