@@ -21,7 +21,7 @@ EntityEnemy1 = ig.Entity.extend({
     // Physics
     //maxVel: {x: 100, y: 100},
     //friction: {x: 150, y: 0},
-    speed: 20,
+    speed: 40,
     gravityFactor: 0,
     bounciness: .8,
     
