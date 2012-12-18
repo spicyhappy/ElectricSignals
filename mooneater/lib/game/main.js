@@ -4,7 +4,9 @@ ig.module(
 .requires(
 	'impact.game',
 	'impact.font',
-	'game.levels.town'
+	'game.levels.town',
+	'impact.timer',
+	'game.entities.enemy1'
 )
 .defines(function(){
 
@@ -35,6 +37,11 @@ MyGame = ig.Game.extend({
 		ig.input.bind( ig.KEY.RIGHT_ARROW , 'right' );
 		ig.input.bind( ig.KEY.SPACE , 'jump' );
 		ig.input.bind( ig.KEY.C , 'shoot' );
+		
+		// Game timer
+		this.gameTimer = new ig.Timer();
+		
+		this.enemy = false;
 
 	},
 	
@@ -49,6 +56,15 @@ MyGame = ig.Game.extend({
 					this.instructText=null;
 				}
 			}
+		}
+		
+		if (this.gameTimer.delta() > 2) {
+			if (this.enemy === false) {
+				console.log("spawned!");
+				this.enemy = true;
+				ig.game.spawnEntity(EntityEnemy1,300,60);
+			}
+			
 		}
 		
 		this.parent();
