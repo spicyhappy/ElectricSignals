@@ -10,16 +10,19 @@ ig.module(
 
 MyGame = ig.Game.extend({
 	
+	// Resources
 	instructText: new ig.Font( 'media/04b03.font.png' ),
-	gravity: 300,
+	
+	// Physics
+	gravity: 0,
 	
 	// Status
 	statusText: new ig.Font( 'media/04b03.font.png' ),
 	statMatte: new ig.Image('media/statusBar.png'),
-	stats: {cookies: 5, lamp: false, balloon: false},
+	stats: {},
 	
 	init: function() {
-		// Initialize your game here; bind keys etc.
+		// Initialize game
 		this.loadLevel ( LevelTown );
 		
 		// Background music
@@ -27,38 +30,37 @@ MyGame = ig.Game.extend({
 		ig.music.volume = 0.5;
 		ig.music.play();
 		
+		// Setup keys
 		ig.input.bind( ig.KEY.LEFT_ARROW , 'left' );
 		ig.input.bind( ig.KEY.RIGHT_ARROW , 'right' );
 		ig.input.bind( ig.KEY.SPACE , 'jump' );
 		ig.input.bind( ig.KEY.C , 'shoot' );
+
 	},
 	
 	update: function() {
-		// Update all entities and backgroundMaps
-		this.parent();
+	
+		if (this.gravity === 0) {
 		
-		// Add your own, additional update code here
-		
-		// Screen follows player
-		var player = this.getEntitiesByType(EntityPlayer)[0];
-		if(player) {
-			//this.screen.x = player.pos.x - ig.system.width/2;
-			//this.screen.y = player.pos.y - ig.system.height/2;
-			if(player.accel.x > 0 && this.instructText) {
-				this.instructText=null;
+		// Instructions disappear when something is pressed
+			if (ig.input.pressed('left') || ig.input.pressed('right') || ig.input.pressed('down') || ig.input.pressed('jump') || ig.input.pressed('shoot')) {
+				this.gravity = 150;
+				if(this.instructText) {
+					this.instructText=null;
+				}
 			}
 		}
+		
+		this.parent();
+	
 	},
 	
 	draw: function() {
+	
 		// Draw all entities and backgroundMaps
 		this.parent();
-		
-		
-		// Add your own drawing code here
-		
-		// Instructions
-		
+				
+		// Control instructions
 		if (this.instructText) {
 			var x = ig.system.width/2,
 				y = ig.system.height - 25;
@@ -75,10 +77,7 @@ StartScreen = ig.Game.extend({
 	init: function() {
 		ig.input.bind(ig.KEY.SPACE,'start');
 	},
-	update: function() {
-	
-		//document.addEventListener("click", ig.system.setGame(MyGame), false);
-				
+	update: function() {				
 		if(ig.input.pressed('start')){
 			ig.system.setGame(MyGame);
 		}
