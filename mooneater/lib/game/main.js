@@ -16,6 +16,8 @@ MyGame = ig.Game.extend({
 	instructText: new ig.Font( 'media/04b03.font.png' ),
 	deathText: new ig.Font( 'media/04b03.font.png' ),
 	deathBackground: new ig.Image('media/screenDeath1.png'),
+	lifeSprite: new ig.Image('media/statusLife.gif'),
+
 	
 	// Physics
 	gravity: 0,
@@ -23,7 +25,7 @@ MyGame = ig.Game.extend({
 	// Status
 	statusText: new ig.Font( 'media/04b03.font.png' ),
 	statMatte: new ig.Image('media/statusBar.png'),
-	stats: {},
+	levelTimer: new ig.Timer(),
 	
 	init: function() {
 		// Initialize game
@@ -44,9 +46,6 @@ MyGame = ig.Game.extend({
 		ig.input.bind( ig.KEY.SPACE , 'jump' );
 		ig.input.bind( ig.KEY.ENTER , 'enter' );
 		
-		// Game timer
-		this.gameTimer = new ig.Timer();
-		
 		this.enemy = false;
 
 	},
@@ -64,7 +63,7 @@ MyGame = ig.Game.extend({
 			}
 		}
 		
-		if (this.gameTimer.delta() > 2) {
+		if (this.levelTimer.delta() > 2) {
 			if (this.enemy === false) {
 				console.log("spawned!");
 				this.enemy = true;
@@ -100,6 +99,7 @@ MyGame = ig.Game.extend({
 		
 		var player = this.getEntitiesByType( EntityPlayer )[0];
 		
+		// Death message
 		if (!player) {
 		
 			var x = ig.system.width/2,
@@ -114,6 +114,22 @@ MyGame = ig.Game.extend({
 				this.deathText.draw('Press enter to replay', x, y, ig.Font.ALIGN.CENTER);
 
 		}
+		
+		if (player) {
+			
+			console.log(player.health);
+			
+			for (i=0; i<player.health; i++) {
+				this.lifeSprite.draw(5+i*10,5);
+			}
+			
+		}
+		
+		// Status
+		
+
+
+		
 	}
 });
 
