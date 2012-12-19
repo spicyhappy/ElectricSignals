@@ -13,7 +13,7 @@ ig.module(
 		offset: {x:8, y:1},	
 		flip: false,
 		
-		health: 3,
+		health: 6,
 		invincible: true,
 		invincibleDelay: 1.5,
 		invincibleTimer: null,

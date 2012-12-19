@@ -77,6 +77,7 @@ MyGame = ig.Game.extend({
 			
 			else if (pcDistance>distance2) {
 				follow = false;
+				
 			}
 			
 			
@@ -135,7 +136,7 @@ MyGame = ig.Game.extend({
 		}
 		
 		this.spawnEnemy(Math.random()*2+.5,Math.random()*64+32);
-		this.followParent(20,80,0.1,0.05);
+		this.followParent(30,100,0.2,0.05);
 				
 		if (!this.player) {			
 			if(ig.input.pressed('enter')){
