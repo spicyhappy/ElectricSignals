@@ -46,7 +46,7 @@ ig.module(
             this.currentAnim.flip.x = this.flip;
         	
         	// Kill player if flies too close to the sun/water
-        	if (this.pos.y < 20 || this.pos.y > 108) {
+        	if (this.pos.y < 22 || this.pos.y > 102) {
 	        	this.kill();
         	}
         	

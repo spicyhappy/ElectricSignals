@@ -91,14 +91,6 @@ MyGame = ig.Game.extend({
 				this.child.pos.x = currentX+(targetX - currentX)*accelFactor;
 				this.child.pos.y = currentY+(targetY - currentY)*accelFactor;
 			}
-			
-			if(this.player.flip === true) {
-				this.child.currentAnim.flip.x = false;
-			}
-			
-			else {
-				this.child.currentAnim.flip.x = true;
-			}
 		}
 		},
 	
