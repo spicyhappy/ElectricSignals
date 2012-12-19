@@ -6,7 +6,8 @@ ig.module(
 	'impact.font',
 	'game.levels.town',
 	'impact.timer',
-	'game.entities.enemy1'
+	'game.entities.enemy1',
+	'game.entities.child'
 )
 .defines(function(){
 
@@ -26,6 +27,7 @@ MyGame = ig.Game.extend({
 	statusText: new ig.Font( 'media/04b03.font.png' ),
 	statMatte: new ig.Image('media/statusBar.png'),
 	levelTimer: new ig.Timer(),
+	enemyTimer: new ig.Timer(),
 	
 	init: function() {
 		// Initialize game
@@ -50,21 +52,61 @@ MyGame = ig.Game.extend({
 	
 	spawnEnemy: function(time,positionY) {
 		var enemy = false;
-		if (this.levelTimer.delta() > time) {
+		if (this.enemyTimer.delta() > time) {
 			if (enemy === false) {
 				enemy = true;
 				ig.game.spawnEntity(EntityEnemy1,180,positionY);
-				this.levelTimer.reset();
+				this.enemyTimer.reset();
 			}
 		}	
 	},
+	
+	followParent: function(distance1,distance2,distance3,accel1,accel2) {	
+			if (this.player && this.child) {
+			var pcDistance = this.child.distanceTo(this.player);
+			var follow;
+			
+			if (pcDistance<distance1) {
+				follow = true;
+				accelFactor=accel1;
+			}
+			
+			else if (pcDistance>distance1 && pcDistance<distance2) {
+				accelFactorFactor=accel2;
+			}
+			
+			else if (pcDistance>distance2) {
+				follow = false;
+			}
+			
+			
+			/* Modified follow script from blog.davidrhayes.com/post/34523414782/platformer-game-prototype */
+			if (follow) {
+				var currentX = this.child.pos.x;
+				var currentY = this.child.pos.y;
+				var targetX = this.player.pos.x-12;
+				var targetY = this.player.pos.y;
+			
+				this.child.pos.x = currentX+(targetX - currentX)*accelFactor;
+				this.child.pos.y = currentY+(targetY - currentY)*accelFactor;
+			}
+			
+			if(this.player.flip === true) {
+				this.child.currentAnim.flip.x = false;
+			}
+			
+			else {
+				this.child.currentAnim.flip.x = true;
+			}
+		}
+		},
 	
 	deathCoincidence: function() {
 		var x = ig.system.width/2,
 			y = ig.system.height*3/4,
 			x1 = 10,
 			y1 = 24;
-				
+			
 		this.deathBackground.draw(0,0);
 				
 		this.deathText.draw("Oh cruel fate,", x1, y1, ig.Font.ALIGN.LEFT);
@@ -76,6 +118,11 @@ MyGame = ig.Game.extend({
 	
 	update: function() {
 	
+	
+		this.player = this.getEntitiesByType( EntityPlayer )[0];
+		this.child = this.getEntitiesByType( EntityChild )[0];
+
+
 		if (this.gravity === 0) {
 		
 		// Instructions disappear when something is pressed
@@ -87,14 +134,18 @@ MyGame = ig.Game.extend({
 			}
 		}
 		
-		this.spawnEnemy(Math.random()*2+.6,Math.random()*64+32);
-		
-		var player = this.getEntitiesByType( EntityPlayer )[0];
-		
-		if (!player) {			
+		this.spawnEnemy(Math.random()*2+.5,Math.random()*64+32);
+		this.followParent(20,80,0.1,0.05);
+				
+		if (!this.player) {			
 			if(ig.input.pressed('enter')){
 				ig.system.setGame(MyGame);
 			}
+		}
+		
+		
+		if (this.levelTimer.delta() > 5) {
+			console.log("five seconds!");
 		}
 		
 		this.parent();
@@ -165,7 +216,7 @@ StartScreen2 = ig.Game.extend({
 	
 	instructText: new ig.Font('media/04b03.font.png'),
 	storyText: new ig.Font('media/04b03.font.png'),
-	background: new ig.Image('media/screenBG3.gif'),
+	background: new ig.Image('media/screenBG.gif'),
 	
 	init: function() {
 		ig.input.bind(ig.KEY.ENTER,'enter');
@@ -185,10 +236,10 @@ StartScreen2 = ig.Game.extend({
 			x1 = 20,
 			y1 = 24;
 		
-		this.storyText.draw('Follow me closely, son. The', x1, y1, ig.Font.ALIGN.LEFT);
-		this.storyText.draw("wings that carry us are", x1, y1+10, ig.Font.ALIGN.LEFT);
-		this.storyText.draw("fragile and there are many ", x1, y1+20, ig.Font.ALIGN.LEFT);
-		this.storyText.draw("dangers ahead . . .", x1, y1+30, ig.Font.ALIGN.LEFT);
+		this.storyText.draw("Follow me closely, son.", x1, y1, ig.Font.ALIGN.LEFT);
+		this.storyText.draw("Our wings are strong but", x1, y1+10, ig.Font.ALIGN.LEFT);
+		this.storyText.draw("fragile and many dangers", x1, y1+20, ig.Font.ALIGN.LEFT);
+		this.storyText.draw("lie ahead . . .", x1, y1+30, ig.Font.ALIGN.LEFT);
 		this.instructText.draw('Press enter to continue', x, y, ig.Font.ALIGN.CENTER);
 
 	}
