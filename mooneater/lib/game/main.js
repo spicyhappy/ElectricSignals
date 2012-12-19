@@ -19,6 +19,7 @@ MyGame = ig.Game.extend({
 	statusText: new ig.Font( 'media/04b03.font.png' ),
 	statMatte: new ig.Image('media/statusBar.png'),
 	enemyTimer: new ig.Timer(),
+	pressSomething: false,
 	
 	gravity: 150,
 	
@@ -89,6 +90,7 @@ MyGame = ig.Game.extend({
 	// Detect if anything is pressed
 	anyPress: function () {
 		if (ig.input.pressed('left') || ig.input.pressed('right') || ig.input.pressed('down') || ig.input.pressed('jump') || ig.input.pressed('shoot')) {
+			this.pressSomething = true;
 			return true;
 		}
 			
@@ -156,6 +158,7 @@ MyGame = ig.Game.extend({
 	draw: function() {
 	
 		var player = this.getEntitiesByType( EntityPlayer )[0];
+		var child = this.getEntitiesByType( EntityChild )[0];
 		
 		// Draw all entities and backgroundMaps
 		this.parent();
@@ -170,7 +173,26 @@ MyGame = ig.Game.extend({
 		
 		if (!player) {
 			// Death message
-			this.death("Oh cruel fate,","what a tragic hand you deal me!","screenDeath1.png");
+			
+			if(!this.pressSomething) {
+				this.death("I close my eyes,","and everything is just fine.","screenDeath1.png");
+			}
+			else if(ig.global.deathPositionY < 28) {
+				this.death("The sun is a wondrous body,","like a magnificent father!","screenDeath1.png");
+			}
+			
+			else if (ig.global.deathPositionY >104) {
+				this.death("The water dark and deep,","lulls me gently to sleep.","screenDeath1.png");
+			}
+			
+			else if (child) {
+				this.death("Live, on my son,","lulls me away to sleep.","screenDeath1.png");
+
+			}
+			
+			else {
+				this.death("Oh cruel fate,","what a tragic hand you deal me!","screenDeath1.png");
+			}
 		}
 		
 		if (player) {
