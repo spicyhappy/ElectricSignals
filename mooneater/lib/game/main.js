@@ -18,21 +18,8 @@ MyGame = ig.Game.extend({
 	lifeSprite: new ig.Image('media/statusLife.gif'),
 	statusText: new ig.Font( 'media/04b03.font.png' ),
 	statMatte: new ig.Image('media/statusBar.png'),
-	levelTimer: new ig.Timer(),
 	enemyTimer: new ig.Timer(),
-	gravity: 0,
-	
-	init: function() {
-	
-		this.loadLevel ( LevelTown );
-		
-		// Setup keys
-		ig.input.bind( ig.KEY.LEFT_ARROW , 'left' );
-		ig.input.bind( ig.KEY.RIGHT_ARROW , 'right' );
-		ig.input.bind( ig.KEY.SPACE , 'jump' );
-		ig.input.bind( ig.KEY.ENTER , 'enter' );
-
-	},
+	gravity: 150,
 	
 	// Continuously spawn birds
 	spawnEnemy: function(time,positionY) {
@@ -44,8 +31,7 @@ MyGame = ig.Game.extend({
 				this.enemyTimer.reset();
 			}
 		}	
-	},
-	
+	},	
 	// Controls how child follows parent, leaves child after certain distrance
 	followParent: function(distance1,distance2,distance3,accel1,accel2) {	
 			if (this.player && this.child) {
@@ -79,7 +65,6 @@ MyGame = ig.Game.extend({
 			}
 		}
 		},
-	
 	// Text and background while dead
 	death: function(line1,line2,backgroundImg) {
 		var x = ig.system.width/2,
@@ -95,36 +80,82 @@ MyGame = ig.Game.extend({
 		deathText.draw(line2, x1, y1+10, ig.Font.ALIGN.LEFT);
 		deathText.draw('Press enter to replay', x, y, ig.Font.ALIGN.CENTER);	
 	},
+	// Win
+	win: function(line1, line2, backgroundImg) {
+		var x = ig.system.width/2,
+			y = ig.system.height*3/4,
+			x1 = 10,
+			y1 = 24;
+		
+		var winText = new ig.Font( 'media/04b03.font.png' );
+		var winBackground = new ig.Image('media/'+backgroundImg);
+		winBackground.draw(0,0);
+		winText.draw(line1, x1, y1, ig.Font.ALIGN.LEFT);
+		winText.draw(line2, x1, y1+10, ig.Font.ALIGN.LEFT);
+		winText.draw('Press enter to replay', x, y, ig.Font.ALIGN.CENTER);
+		
+		console.log("You win!");
+			
+	},
+	// Detect if anything is pressed
+	anyPress: function () {
+		if (ig.input.pressed('left') || ig.input.pressed('right') || ig.input.pressed('down') || ig.input.pressed('jump') || ig.input.pressed('shoot')) {
+			return true;
+		}
+			
+		else {
+			return false;
+		}
+	},
+	// Remove instructions at the beginning
+	removeInstructText: function() {
+				if (this.levelTimer.delta() > 3 && this.instructText) {
+				this.player.gravityFactor = 1;
+				this.instructText=null;
+			}
+			
+			if (this.anyPress() && this.instructText) {
+				this.player.gravityFactor = 1;
+				this.instructText=null;
+			}
+	},
+	
+	init: function() {
+	
+		this.loadLevel ( LevelTown );
+		this.levelTimer = new ig.Timer();
+		
+		// Setup keys
+		ig.input.bind( ig.KEY.LEFT_ARROW , 'left' );
+		ig.input.bind( ig.KEY.RIGHT_ARROW , 'right' );
+		ig.input.bind( ig.KEY.SPACE , 'jump' );
+		ig.input.bind( ig.KEY.ENTER , 'enter' );
+
+	},
 	
 	update: function() {
 	
 		this.player = this.getEntitiesByType( EntityPlayer )[0];
 		this.child = this.getEntitiesByType( EntityChild )[0];
-
-
-		if (this.gravity === 0) {
 		
-		// Instructions disappear when something is pressed
-			if (ig.input.pressed('left') || ig.input.pressed('right') || ig.input.pressed('down') || ig.input.pressed('jump') || ig.input.pressed('shoot')) {
-				this.gravity = 150;
-				if(this.instructText) {
-					this.instructText=null;
-				}
+		// While you are still alive...
+		if (this.player) {
+			
+			this.removeInstructText();	
+			this.spawnEnemy(Math.random()*2+.5,Math.random()*64+32);
+			this.followParent(30,100,0.2,0.05);
+			
+			if (this.levelTimer.delta() > 5) {
+				this.win("Finally, our destination in sight", "I breath a sigh of relief","screenWin1.png");				
 			}
+		
 		}
 		
-		this.spawnEnemy(Math.random()*2+.5,Math.random()*64+32);
-		this.followParent(30,100,0.2,0.05);
-				
+		// When you are dead
 		if (!this.player) {			
 			if(ig.input.pressed('enter')){
 				ig.system.setGame(MyGame);
 			}
-		}
-		
-		
-		if (this.levelTimer.delta() > 5) {
-			
 		}
 		
 		this.parent();
@@ -133,6 +164,8 @@ MyGame = ig.Game.extend({
 	
 	draw: function() {
 	
+		var player = this.getEntitiesByType( EntityPlayer )[0];
+
 		// Draw all entities and backgroundMaps
 		this.parent();
 				
@@ -140,19 +173,16 @@ MyGame = ig.Game.extend({
 		if (this.instructText) {
 			var x = ig.system.width/2,
 				y = ig.system.height*7/8;
-				this.instructText.draw('Left/Right Moves, Space Jumps', x, y, ig.Font.ALIGN.CENTER);
+			this.instructText.draw('Left/Right Moves, Space Jumps', x, y, ig.Font.ALIGN.CENTER);
 		}
 		
-		var player = this.getEntitiesByType( EntityPlayer )[0];
-		
-		// Death message
 		if (!player) {
+			// Death message
 			this.death("Oh cruel fate,","what a tragic hand you deal me!","screenDeath1.png");
 		}
 		
-		// Status
 		if (player) {
-			
+		// Health
 			for (i=0; i<player.health; i++) {
 				this.lifeSprite.draw(5+i*10,5);
 			}
