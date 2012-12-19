@@ -39,7 +39,7 @@ ig.module(
 		init: function(x,y,settings) {
 			// Different animation states
 			this.parent(x,y,settings);
-			this.addAnim('run',0.07,[5,0,1,2,3,4]);
+			this.addAnim('run',0.07,[5,4,3,2,1,0]);
 			
 			// Set invincibility timer and start out invincible
 			this.invincibleTimer = new ig.Timer();
@@ -87,6 +87,15 @@ ig.module(
         	}
         	
         	if (this.pos.y < 25) {
+        		var sweatAnimSheet = new ig.AnimationSheet('media/sweatdrops.gif', 16, 16);
+        		var sweatAnim = new ig.Animation(sweatAnimSheet, 0.2, [0,1,2]);
+
+        		x = this.pos.x,
+        		y = this.pos.y;
+        		
+        		sweatAnim.update();
+        		sweatAnim.draw(x,y);
+        		
 	        	console.log("getting warmer");
         	}
         	
@@ -115,7 +124,6 @@ ig.module(
         
         kill: function() {
 	        this.parent();
-	        
         },
         
         draw: function(){

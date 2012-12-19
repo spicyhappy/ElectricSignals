@@ -32,17 +32,11 @@ ig.module(
 		init: function(x,y,settings) {
 			// Different animation states
 			this.parent(x,y,settings);
-			this.addAnim('idle',1,[0]);
 			this.addAnim('run',0.07,[0,1,2]);
 		},
 		
         update: function() {
-            // Set the current animation, based on the player's speed
-            if( this.vel.y < 0 ) {
-            	this.currentAnim = this.anims.run;
-            }else{
-            	this.currentAnim = this.anims.idle;
-            }
+            this.currentAnim = this.anims.run;
             this.currentAnim.flip.x = this.flip;
         	
         	// Kill player if flies too close to the sun/water

@@ -38,7 +38,7 @@ EntityEnemy1 = ig.Entity.extend({
     
     init: function( x, y, settings ) {
     	this.parent( x, y, settings );
-    	this.addAnim('fly', .07, [0,1,2,3]);
+    	this.addAnim('fly', .07, [0,3,2,1]);
     },
     
     update: function() {
