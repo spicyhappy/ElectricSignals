@@ -12,6 +12,7 @@ ig.module(
 		size: {x: 3, y:7},
 		offset: {x:6, y:5},	
 		flip: false,
+		zIndex: 2,
 		
 		health: 1,		
 		

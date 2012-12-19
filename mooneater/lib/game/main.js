@@ -7,18 +7,19 @@ ig.module(
 	'game.levels.town',
 	'impact.timer',
 	'game.entities.enemy1',
-	'game.entities.child'
+	'game.entities.child',
+	'game.entities.waves'
 )
 .defines(function(){
 
 MyGame = ig.Game.extend({
 	
-	// Resources
 	instructText: new ig.Font( 'media/04b03.font.png' ),
 	lifeSprite: new ig.Image('media/statusLife.gif'),
 	statusText: new ig.Font( 'media/04b03.font.png' ),
 	statMatte: new ig.Image('media/statusBar.png'),
 	enemyTimer: new ig.Timer(),
+	
 	gravity: 150,
 	
 	// Continuously spawn birds
@@ -96,7 +97,7 @@ MyGame = ig.Game.extend({
 		}
 	},
 	// Remove instructions at the beginning
-	removeInstructText: function() {
+	removeInstructText: function() { 
 				if (this.levelTimer.delta() > 3 && this.instructText) {
 				this.player.gravityFactor = 1;
 				this.instructText=null;
@@ -155,10 +156,11 @@ MyGame = ig.Game.extend({
 	draw: function() {
 	
 		var player = this.getEntitiesByType( EntityPlayer )[0];
-
+		
 		// Draw all entities and backgroundMaps
 		this.parent();
-				
+		
+		
 		// Control instructions
 		if (this.instructText) {
 			var x = ig.system.width/2,

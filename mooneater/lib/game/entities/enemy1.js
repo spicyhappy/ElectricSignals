@@ -15,6 +15,7 @@ EntityEnemy1 = ig.Entity.extend({
     size: {x: 9, y:8},
     offset: {x: 3, y: 4},
     flip: false,
+    zIndex: 3,
 
     health: 1,
     damagePoint: 1,

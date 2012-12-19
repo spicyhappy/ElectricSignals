@@ -20,6 +20,7 @@ ig.module(
 		invincibleTimer: null,
 		gravityFactor: 0,
 		sweatTimer: new ig.Timer(),
+		zIndex: 1,
 		
 		// Physics
 		maxVel: {x:100, y:150},
