@@ -89,7 +89,7 @@ ig.module(
 	        	this.currentAnim.alpha = 1;
         	}
         	
-        	if (this.pos.y < 25) {
+        	if (this.pos.y < 33) {
         		if(this.sweatState === false) {
 	        		this.sweatAnim = new ig.Animation(this.sweatAnimSheet, 0.07, [0,1,2]);
         		}
@@ -99,7 +99,7 @@ ig.module(
 	        	console.log("getting warmer");
         	}
         	
-        	if (this.pos.y > 30 && this.pos.y < 90) {
+        	if (this.pos.y > 38 && this.pos.y < 92) {
 	        	this.sweatState = false;
         	}
         	
@@ -113,7 +113,7 @@ ig.module(
         	}
         	
         	// Kill player if flies too close to the sun/water
-        	if (this.pos.y < 20 || this.pos.y > 102) {
+        	if (this.pos.y < 28 || this.pos.y > 104) {
 	        	this.kill();
         	}
         	
@@ -142,8 +142,8 @@ ig.module(
 	        	this.currentAnim.alpha = this.invincibleTimer.delta()/this.invincibleDelay*1;
 	        }
 	        if(this.sweatState) {
-		        var x = this.pos.x-7,
-        			y = this.pos.y-7;
+		        var x = this.pos.x-15,
+        			y = this.pos.y-15;
         		
         		
         		this.sweatAnim.draw(x,y);

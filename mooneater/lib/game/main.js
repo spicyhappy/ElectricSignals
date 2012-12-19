@@ -63,6 +63,10 @@ MyGame = ig.Game.extend({
 				this.child.pos.x = currentX+(targetX - currentX)*accelFactor;
 				this.child.pos.y = currentY+(targetY - currentY)*accelFactor;
 			}
+			
+			else {
+				this.child.gravityFactor = -0.05;
+			}
 		}
 		},
 	// Text and background while dead
@@ -108,6 +112,8 @@ MyGame = ig.Game.extend({
 	
 		this.loadLevel ( LevelTown );
 		this.levelTimer = new ig.Timer();
+		this.screen.x = 8;	
+		this.screen.y = 8;
 		
 		// Setup keys
 		ig.input.bind( ig.KEY.LEFT_ARROW , 'left' );

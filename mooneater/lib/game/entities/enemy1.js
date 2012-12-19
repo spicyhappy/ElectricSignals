@@ -17,6 +17,7 @@ EntityEnemy1 = ig.Entity.extend({
     flip: false,
 
     health: 1,
+    damagePoint: 1,
 	    
     // Physics
     //maxVel: {x: 100, y: 100},
@@ -55,8 +56,8 @@ EntityEnemy1 = ig.Entity.extend({
     },
     
     check: function(other) {
-	    this.receiveDamage(1, this);
-	    other.receiveDamage(1, this);
+	    this.receiveDamage(this.damagePoint, this);
+	    other.receiveDamage(this.damagePoint, this);
 	    //this.hitSFX.play();
     }
 });
