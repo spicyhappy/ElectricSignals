@@ -1,16 +1,41 @@
-html,body, div {
+html, body, div, h1, img, header, p {
 	background-color: #333;
 	color: #fff;
-	font-family: helvetica, arial, sans-serif;
+	font-family: "proxima nova", helvetica, arial, sans-serif;
 	margin: 0;
 	padding: 0;
 	font-size: 12pt;
 }
 
 #wrapper {
+	padding: 0 20px;
+	padding-top: 40px;
 	width: 640px;
 	margin: auto;
 }
 		
 #canvas {
+	margin-bottom: 15px;
+}
+
+header {
+	margin-bottom: 15px;
+}
+
+h1 {
+	font-size: 50px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+}
+
+a {
+	color: #fff;
+}
+
+p {
+	margin-bottom: 5px;
+}
+
+.icon {
+	padding: 0 5px;
 }
