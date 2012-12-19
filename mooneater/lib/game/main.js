@@ -15,32 +15,16 @@ MyGame = ig.Game.extend({
 	
 	// Resources
 	instructText: new ig.Font( 'media/04b03.font.png' ),
-	deathText: new ig.Font( 'media/04b03.font.png' ),
-	deathBackground: new ig.Image('media/screenDeath1.png'),
 	lifeSprite: new ig.Image('media/statusLife.gif'),
-
-	
-	// Physics
-	gravity: 0,
-	
-	// Status
 	statusText: new ig.Font( 'media/04b03.font.png' ),
 	statMatte: new ig.Image('media/statusBar.png'),
 	levelTimer: new ig.Timer(),
 	enemyTimer: new ig.Timer(),
+	gravity: 0,
 	
 	init: function() {
-		// Initialize game
+	
 		this.loadLevel ( LevelTown );
-		
-		// Screen size starts at
-		this.screen.x = 8;
-		this.screen.y = 8;
-		
-		// Background music
-		//ig.music.add('media/audio/background-musicbox.*');
-		ig.music.volume = 0.5;
-		ig.music.play();
 		
 		// Setup keys
 		ig.input.bind( ig.KEY.LEFT_ARROW , 'left' );
@@ -50,6 +34,7 @@ MyGame = ig.Game.extend({
 
 	},
 	
+	// Continuously spawn birds
 	spawnEnemy: function(time,positionY) {
 		var enemy = false;
 		if (this.enemyTimer.delta() > time) {
@@ -61,6 +46,7 @@ MyGame = ig.Game.extend({
 		}	
 	},
 	
+	// Controls how child follows parent, leaves child after certain distrance
 	followParent: function(distance1,distance2,distance3,accel1,accel2) {	
 			if (this.player && this.child) {
 			var pcDistance = this.child.distanceTo(this.player);
@@ -94,23 +80,23 @@ MyGame = ig.Game.extend({
 		}
 		},
 	
-	deathCoincidence: function() {
+	// Text and background while dead
+	death: function(line1,line2,backgroundImg) {
 		var x = ig.system.width/2,
 			y = ig.system.height*3/4,
 			x1 = 10,
 			y1 = 24;
-			
-		this.deathBackground.draw(0,0);
-				
-		this.deathText.draw("Oh cruel fate,", x1, y1, ig.Font.ALIGN.LEFT);
-		this.deathText.draw("what a tragic hand you deal me.", x1, y1+10, ig.Font.ALIGN.LEFT);
-		this.deathText.draw('Press enter to replay', x, y, ig.Font.ALIGN.CENTER);
-
 		
+		var deathText = new ig.Font( 'media/04b03.font.png' );	
+		var deathBackground = new ig.Image('media/'+backgroundImg);
+		deathBackground.draw(0,0);
+				
+		deathText.draw(line1, x1, y1, ig.Font.ALIGN.LEFT);
+		deathText.draw(line2, x1, y1+10, ig.Font.ALIGN.LEFT);
+		deathText.draw('Press enter to replay', x, y, ig.Font.ALIGN.CENTER);	
 	},
 	
 	update: function() {
-	
 	
 		this.player = this.getEntitiesByType( EntityPlayer )[0];
 		this.child = this.getEntitiesByType( EntityChild )[0];
@@ -138,7 +124,7 @@ MyGame = ig.Game.extend({
 		
 		
 		if (this.levelTimer.delta() > 5) {
-			console.log("five seconds!");
+			
 		}
 		
 		this.parent();
@@ -161,9 +147,7 @@ MyGame = ig.Game.extend({
 		
 		// Death message
 		if (!player) {
-		
-		
-			this.deathCoincidence();
+			this.death("Oh cruel fate,","what a tragic hand you deal me!","screenDeath1.png");
 		}
 		
 		// Status
