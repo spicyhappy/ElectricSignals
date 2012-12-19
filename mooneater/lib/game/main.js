@@ -123,6 +123,11 @@ MyGame = ig.Game.extend({
 		ig.input.bind( ig.KEY.RIGHT_ARROW , 'right' );
 		ig.input.bind( ig.KEY.SPACE , 'jump' );
 		ig.input.bind( ig.KEY.ENTER , 'enter' );
+		
+		ig.global.deathSun = false;
+		ig.global.deathWater = false;
+		ig.global.deathChild = false;
+		ig.global.deathPlayer = false;
 
 	},
 	
@@ -177,16 +182,16 @@ MyGame = ig.Game.extend({
 			if(!this.pressSomething) {
 				this.death("I close my eyes,","and everything is just fine.","screenDeath1.png");
 			}
-			else if(ig.global.deathPositionY < 28) {
+			else if(ig.global.deathPositionY < 28 && ig.global.deathSun) {
 				this.death("The sun is a wondrous body,","like a magnificent father!","screenDeath1.png");
 			}
 			
-			else if (ig.global.deathPositionY >104) {
+			else if (ig.global.deathPositionY >104 && ig.global.deathWater) {
 				this.death("The water dark and deep,","lulls me gently to sleep.","screenDeath1.png");
 			}
 			
 			else if (child) {
-				this.death("Live, on my son,","lulls me away to sleep.","screenDeath1.png");
+				this.death("Live, on my son,","and dare to dream.","screenDeath1.png");
 
 			}
 			

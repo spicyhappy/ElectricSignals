@@ -48,6 +48,16 @@ ig.module(
         	this.parent();
         },
         
+        kill: function() {
+        	ig.global.deathChild = true;
+	        this.parent();
+        },
+        
+        receiveDamage: function(amount,from) {
+	        // Don't take damage if you're invincible
+	        if(ig.global.deathPlayer)
+	        	this.parent(0, from);
+	    },
         
         draw: function(){
 

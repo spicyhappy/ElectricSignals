@@ -115,12 +115,14 @@ ig.module(
         	
         	// Kill player if flies too close to the sun/water
         	if (this.pos.y < 28) {
-        		this.deathSun = true;
+        		ig.global.deathPositionY = this.pos.y;
+        		ig.global.deathSun = true;
 	        	this.kill();
         	}
         	
         	if (this.pos.y > 104) {
         		ig.global.deathPositionY = this.pos.y;
+        		ig.global.deathWater = true;
 	        	this.kill();
         	}
         	
@@ -139,6 +141,7 @@ ig.module(
         },
         
         kill: function() {
+        	ig.global.deathPlayer = true;
 	        this.parent();
         },
         
