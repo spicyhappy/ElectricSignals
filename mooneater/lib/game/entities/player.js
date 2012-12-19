@@ -3,12 +3,14 @@ ig.module(
 )
 .requires(
 	'impact.entity',
-	'impact.sound'
+	'impact.sound',
+	'impact.timer'
 )
 .defines(function () {
 	EntityPlayer = ig.Entity.extend({
 	
 		animSheet: new ig.AnimationSheet('media/player2.gif', 16, 16),
+		sweatAnimSheet: new ig.AnimationSheet('media/sweatdrops.gif', 16, 16),
 		size: {x: 5, y:15},
 		offset: {x:8, y:1},	
 		flip: false,
@@ -17,6 +19,7 @@ ig.module(
 		invincibleDelay: 1.5,
 		invincibleTimer: null,
 		gravityFactor: 0,
+		sweatTimer: new ig.Timer(),
 		
 		// Physics
 		maxVel: {x:100, y:150},
@@ -87,20 +90,26 @@ ig.module(
         	}
         	
         	if (this.pos.y < 25) {
-        		var sweatAnimSheet = new ig.AnimationSheet('media/sweatdrops.gif', 16, 16);
-        		var sweatAnim = new ig.Animation(sweatAnimSheet, 0.2, [0,1,2]);
-
-        		x = this.pos.x,
-        		y = this.pos.y;
+        		if(this.sweatState === false) {
+	        		this.sweatAnim = new ig.Animation(this.sweatAnimSheet, 0.07, [0,1,2]);
+        		}
         		
-        		sweatAnim.update();
-        		sweatAnim.draw(x,y);
-        		
+        		this.sweatAnim.update();
+        		this.sweatState = true;
 	        	console.log("getting warmer");
         	}
         	
-        	if (this.pos.y > 97) {
-	        	console.log("getting wetter");
+        	if (this.pos.y > 30 && this.pos.y < 90) {
+	        	this.sweatState = false;
+        	}
+        	
+        	if (this.pos.y > 95) {
+	        	if(this.sweatState === false) {
+	        		this.sweatAnim = new ig.Animation(this.sweatAnimSheet, 0.07, [0,1,2]);
+        		}
+	        	this.sweatAnim.update();
+        		this.sweatState = true;
+        		console.log("getting cooler");
         	}
         	
         	// Kill player if flies too close to the sun/water
@@ -131,6 +140,13 @@ ig.module(
         	// Fade in when invincible
 	        if(this.invincible) {
 	        	this.currentAnim.alpha = this.invincibleTimer.delta()/this.invincibleDelay*1;
+	        }
+	        if(this.sweatState) {
+		        var x = this.pos.x-7,
+        			y = this.pos.y-7;
+        		
+        		
+        		this.sweatAnim.draw(x,y);
 	        }
 	        this.parent();
         }
