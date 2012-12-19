@@ -14,7 +14,7 @@ ig.module(
 		size: {x: 5, y:15},
 		offset: {x:8, y:1},	
 		flip: false,
-		health: 6,
+		health: 5,
 		invincible: true,
 		invincibleDelay: 1.5,
 		invincibleTimer: null,
@@ -97,7 +97,6 @@ ig.module(
         		
         		this.sweatAnim.update();
         		this.sweatState = true;
-	        	console.log("getting warmer");
         	}
         	
         	if (this.pos.y > 38 && this.pos.y < 92) {
@@ -110,7 +109,6 @@ ig.module(
         		}
 	        	this.sweatAnim.update();
         		this.sweatState = true;
-        		console.log("getting cooler");
         	}
         	
         	// Kill player if flies too close to the sun/water

@@ -137,20 +137,20 @@ MyGame = ig.Game.extend({
 		this.child = this.getEntitiesByType( EntityChild )[0];
 		
 		// While you are still alive...
-		if (this.player) {
+		if (ig.global.deathPlayer === false) {
 			
 			this.removeInstructText();	
 			this.spawnEnemy(Math.random()*2+.5,Math.random()*64+32);
 			this.followParent(30,100,0.2,0.05);
 			
-			if (this.levelTimer.delta() > 30) {
+			if (this.levelTimer.delta() > 20) {
 				ig.system.setGame(WinState1);
 			}	
 		
 		}
 		
 		// When you are dead
-		if (!this.player) {			
+		if (ig.global.deathPlayer === true) {			
 			if(ig.input.pressed('enter')){
 				ig.system.setGame(MyGame);
 			}
@@ -176,7 +176,7 @@ MyGame = ig.Game.extend({
 			this.instructText.draw('Left/Right Moves, Space Jumps', x, y, ig.Font.ALIGN.CENTER);
 		}
 		
-		if (!player) {
+		if (ig.global.deathPlayer === true) {
 			// Death message
 			
 			if(!this.pressSomething) {
@@ -199,8 +199,7 @@ MyGame = ig.Game.extend({
 				this.death("Oh cruel fate,","what a tragic hand you deal me!","screenDeath1.png");
 			}
 		}
-		
-		if (player) {
+		if (ig.global.deathPlayer === false) {
 		// Health
 			for (i=0; i<player.health; i++) {
 				this.lifeSprite.draw(5+i*10,5);
@@ -272,6 +271,11 @@ StartScreen2 = ig.Game.extend({
 });
 
 WinState1 = ig.Game.extend({
+
+	line1: "Finally, our destination in sight",
+	line2: "I breath a sigh of relief.",
+	backgroundImg: "screenWin1.png",
+	
 	win: function(line1, line2, backgroundImg) {
 		var x = ig.system.width/2,
 			y = ig.system.height*3/4,
@@ -284,8 +288,6 @@ WinState1 = ig.Game.extend({
 		winText.draw(line1, x1, y1, ig.Font.ALIGN.LEFT);
 		winText.draw(line2, x1, y1+10, ig.Font.ALIGN.LEFT);
 		winText.draw('Press enter to replay', x, y, ig.Font.ALIGN.CENTER);
-		
-		console.log("You win!");
 			
 	},
 	
@@ -295,9 +297,9 @@ WinState1 = ig.Game.extend({
 		}
 		this.parent();
 	},
-
+	
 	draw: function() {
-		this.win("Finally, our destination in sight", "I breath a sigh of relief.","screenWin1.png");
+		this.win(this.line1, this.line2, this.backgroundImg);
 	}
 });
 
