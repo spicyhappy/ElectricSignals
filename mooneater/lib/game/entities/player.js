@@ -48,8 +48,11 @@ ig.module(
 		
         update: function() {
             
+            var accel = this.standing ? this.accelGround : this.accelAir;
+            this.currentAnim = this.anims.run;
+            this.currentAnim.flip.x = this.flip;
+            
             // Move left/right
-        	var accel = this.standing ? this.accelGround : this.accelAir;
         	if( ig.input.state('left') ) {
         		this.accel.x = -accel;
         		this.flip = true;
@@ -76,10 +79,6 @@ ig.module(
         		this.jump = 5;
         	}
         	
-            // Set the current animation, based on the player's speed
-
-            this.currentAnim = this.anims.run;
-            this.currentAnim.flip.x = this.flip;
         	
         	// Remove invincibily after delay
         	if (this.invincibleTimer.delta()>this.invincibleDelay) {
@@ -87,8 +86,16 @@ ig.module(
 	        	this.currentAnim.alpha = 1;
         	}
         	
+        	if (this.pos.y < 25) {
+	        	console.log("getting warmer");
+        	}
+        	
+        	if (this.pos.y > 97) {
+	        	console.log("getting wetter");
+        	}
+        	
         	// Kill player if flies too close to the sun/water
-        	if (this.pos.y < 25 || this.pos.y > 102) {
+        	if (this.pos.y < 20 || this.pos.y > 102) {
 	        	this.kill();
         	}
         	
