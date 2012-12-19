@@ -80,23 +80,7 @@ MyGame = ig.Game.extend({
 		deathText.draw(line2, x1, y1+10, ig.Font.ALIGN.LEFT);
 		deathText.draw('Press enter to replay', x, y, ig.Font.ALIGN.CENTER);	
 	},
-	// Win
-	win: function(line1, line2, backgroundImg) {
-		var x = ig.system.width/2,
-			y = ig.system.height*3/4,
-			x1 = 10,
-			y1 = 24;
-		
-		var winText = new ig.Font( 'media/04b03.font.png' );
-		var winBackground = new ig.Image('media/'+backgroundImg);
-		winBackground.draw(0,0);
-		winText.draw(line1, x1, y1, ig.Font.ALIGN.LEFT);
-		winText.draw(line2, x1, y1+10, ig.Font.ALIGN.LEFT);
-		winText.draw('Press enter to replay', x, y, ig.Font.ALIGN.CENTER);
-		
-		console.log("You win!");
-			
-	},
+
 	// Detect if anything is pressed
 	anyPress: function () {
 		if (ig.input.pressed('left') || ig.input.pressed('right') || ig.input.pressed('down') || ig.input.pressed('jump') || ig.input.pressed('shoot')) {
@@ -145,9 +129,9 @@ MyGame = ig.Game.extend({
 			this.spawnEnemy(Math.random()*2+.5,Math.random()*64+32);
 			this.followParent(30,100,0.2,0.05);
 			
-			if (this.levelTimer.delta() > 5) {
-				this.win("Finally, our destination in sight", "I breath a sigh of relief","screenWin1.png");				
-			}
+			if (this.levelTimer.delta() > 30) {
+				ig.system.setGame(WinState1);
+			}	
 		
 		}
 		
@@ -186,7 +170,6 @@ MyGame = ig.Game.extend({
 			for (i=0; i<player.health; i++) {
 				this.lifeSprite.draw(5+i*10,5);
 			}
-			
 		}
 		
 	}
@@ -251,6 +234,36 @@ StartScreen2 = ig.Game.extend({
 
 	}
 	
+});
+
+WinState1 = ig.Game.extend({
+	win: function(line1, line2, backgroundImg) {
+		var x = ig.system.width/2,
+			y = ig.system.height*3/4,
+			x1 = 10,
+			y1 = 24;
+		
+		var winText = new ig.Font( 'media/04b03.font.png' );
+		var winBackground = new ig.Image('media/'+backgroundImg);
+		winBackground.draw(0,0);
+		winText.draw(line1, x1, y1, ig.Font.ALIGN.LEFT);
+		winText.draw(line2, x1, y1+10, ig.Font.ALIGN.LEFT);
+		winText.draw('Press enter to replay', x, y, ig.Font.ALIGN.CENTER);
+		
+		console.log("You win!");
+			
+	},
+	
+	update: function() {				
+		if(ig.input.pressed('enter')){
+			ig.system.setGame(MyGame);
+		}
+		this.parent();
+	},
+
+	draw: function() {
+		this.win("Finally, our destination in sight", "I breath a sigh of relief.","screenWin1.png");
+	}
 });
 
 // Disable audio for mobile devices
