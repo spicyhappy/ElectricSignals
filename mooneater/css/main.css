@@ -14,22 +14,29 @@ footer {
 	text-align: center;
 }
 
-#help {
-	font-size: 12px;
-	padding: 15px;
-	width: 100px;
-	color: #333;
-	background-color: #EEE;
+.floater {
+	width: 15%;
 	position: fixed;
 	right: 0;
 	top: 40px;
 }
 
+#help {
+	font-size: 12px;
+	padding: 15px;
+	color: #333;
+	background-color: #EEE;
+}
+
 #wrapper {
 	padding: 0 20px;
 	padding-top: 40px;
-	width: 640px;
+	width: 700px;
 	margin: auto;
+}
+
+.socialMedia {
+	width: 640px;
 }
 		
 #canvas {
@@ -63,4 +70,22 @@ p {
 
 .icon {
 	padding: 0 2px;
+}
+
+@media all and (max-width: 850px) {
+	.floater {
+		left: 0;
+		top: 0;
+		display: block;
+		position: relative;
+		width: 100%;
+	}
+	
+	#wrapper {
+		width: 640px;
+	}
+	
+	p {
+		display: inline;
+	}
 }
