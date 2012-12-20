@@ -142,22 +142,19 @@ MyGame = ig.Game.extend({
 			
 			this.removeInstructText();	
 			this.spawnEnemy(Math.random()*2+.5,Math.random()*64+32);
-			this.followParent(30,100,0.2,0.05);
+			this.followParent(18,50,150,0.13,0.02);
 			
 			if (this.levelTimer.delta() > this.winTime) {
 				
-				console.log(this.player.health);
-				console.log(ig.global.deathChild);
-				
-				if (ig.global.deathChild === false && this.player.health === 5) {
+				if (ig.global.deathChild === false && this.player.health === 3) {
 					ig.system.setGame(WinPerfect);
 				}
 				
-				else if (ig.global.deathChild === true && this.player.health === 5) {
+				else if (ig.global.deathChild === true && this.player.health === 3) {
 					ig.system.setGame(WinPointless);
 				}
 				
-				else if (ig.global.deathChild === true && this.player.health < 5) {
+				else if (ig.global.deathChild === true && this.player.health < 3) {
 					ig.system.setGame(WinSad);
 				}
 				
@@ -324,7 +321,7 @@ WinCheap = AnyScreen.extend({
 WinPerfect = AnyScreen.extend({
 	
 	line1: "PERFECT WIN",
-	line2: "Everything is well.",
+	line2: "Everything is well",
 	line3: "for I am a genius.",
 	backgroundImg: "screenWin1.png",
 	level: MyGame,

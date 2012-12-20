@@ -14,7 +14,7 @@ ig.module(
 		size: {x: 5, y:15},
 		offset: {x:8, y:1},	
 		flip: false,
-		health: 5,
+		health: 3,
 		invincible: true,
 		invincibleDelay: 1.5,
 		invincibleTimer: null,
