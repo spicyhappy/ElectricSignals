@@ -73,11 +73,11 @@ MyGame = ig.Game.extend({
 		}
 		},
 	// Text and background while dead
-	death: function(line1,line2,backgroundImg) {
+	death: function(line1,line2,line3,line4,backgroundImg) {
 		var x = ig.system.width/2,
-			y = ig.system.height*3/4,
+			y = ig.system.height*4/5,
 			x1 = 10,
-			y1 = 24;
+			y1 = 10;
 		
 		var deathText = new ig.Font( 'media/04b03.font.png' );	
 		var deathBackground = new ig.Image('media/'+backgroundImg);
@@ -85,7 +85,9 @@ MyGame = ig.Game.extend({
 				
 		deathText.draw(line1, x1, y1, ig.Font.ALIGN.LEFT);
 		deathText.draw(line2, x1, y1+10, ig.Font.ALIGN.LEFT);
-		deathText.draw('Press enter to replay', x, y, ig.Font.ALIGN.CENTER);	
+		deathText.draw(line3, x1, y1+20, ig.Font.ALIGN.LEFT);
+		deathText.draw(line4, x1, y1+30, ig.Font.ALIGN.LEFT);
+		deathText.draw('Press enter to start', x, y, ig.Font.ALIGN.CENTER);	
 	},
 
 	// Detect if anything is pressed
@@ -115,6 +117,18 @@ MyGame = ig.Game.extend({
 			}
 	},
 	
+	getNumEnding: function() {
+		var numEnding = 0;
+		
+		for (i=0; i<10; i++) {
+			if (ig.global.totalEnding[i] === true) {
+				numEnding++;
+			}
+		}
+		
+		return numEnding;
+	},
+	
 	init: function() {
 	
 		this.loadLevel ( LevelTown );
@@ -132,11 +146,18 @@ MyGame = ig.Game.extend({
 		ig.global.deathWater = false;
 		ig.global.deathChild = false;
 		ig.global.deathPlayer = false;
-
+		
 	},
 	
 	update: function() {
-	
+		
+		if (!ig.global.totalEnding) {
+			ig.global.totalEnding = [false,false,false,false,false,false,false,false,false,false];
+		}
+		
+		console.log(ig.global.totalEnding);
+		console.log(this.getNumEnding());
+		
 		this.player = this.getEntitiesByType( EntityPlayer )[0];
 		this.child = this.getEntitiesByType( EntityChild )[0];
 		
@@ -150,18 +171,23 @@ MyGame = ig.Game.extend({
 			if (this.levelTimer.delta() > this.winTime) {
 				
 				if (ig.global.deathChild === false && this.player.health === 3) {
+					ig.global.totalEnding[0] = true;
 					ig.system.setGame(WinPerfect);
+					
 				}
-				
+			
 				else if (ig.global.deathChild === true && this.player.health === 3) {
+					ig.global.totalEnding[1] = true;
 					ig.system.setGame(WinPointless);
 				}
 				
 				else if (ig.global.deathChild === true && this.player.health < 3) {
+					ig.global.totalEnding[2] = true;
 					ig.system.setGame(WinSad);
 				}
 				
 				else {
+					ig.global.totalEnding[3] = true;
 					ig.system.setGame(WinNormal);
 				}
 			}	
@@ -199,23 +225,28 @@ MyGame = ig.Game.extend({
 			// Death message
 			
 			if(!this.pressSomething) {
-				this.death("I close my eyes,","and everything is just fine.","screenDeath1.png");
+				ig.global.totalEnding[5] = true;
+				this.death("LAZY DEATH","I close my eyes,","and everything is just fine.",this.getNumEnding()+"/10 ENDINGS FOUND","screenDeath2.png");
 			}
 			else if(ig.global.deathPositionY < 28 && ig.global.deathSun) {
-				this.death("The sun is a wondrous body,","like a magnificent father!","screenDeath1.png");
+				ig.global.totalEnding[6] = true;
+				this.death("SUNNY DEATH","The sun is a wondrous body,","like a magnificent father!",this.getNumEnding()+"/10 ENDINGS FOUND","screenDeath2.png");
 			}
 			
 			else if (ig.global.deathPositionY >104 && ig.global.deathWater) {
-				this.death("The water dark and deep,","lulls me gently to sleep.","screenDeath1.png");
+				ig.global.totalEnding[7] = true;
+				this.death("WATERY DEATH","The water dark and deep,","lulls me gently to sleep.",this.getNumEnding()+"/10 ENDINGS FOUND","screenDeath2.png");
 			}
 			
 			else if (child) {
-				this.death("Live, on my son,","and dare to dream.","screenDeath1.png");
+				ig.global.totalEnding[8] = true;
+				this.death("HOPEFUL DEATH","Live, on my son,","and dare to dream.",this.getNumEnding()+"/10 ENDINGS FOUND","screenDeath2.png");
 
 			}
 			
 			else {
-				this.death("Oh cruel fate,","what a tragic hand you deal me!","screenDeath1.png");
+				ig.global.totalEnding[9] = true;
+				this.death("REGULAR DEATH","Oh cruel fate,","what a tragic hand you deal me!",this.getNumEnding()+"/10 ENDINGS FOUND","screenDeath2.png");
 			}
 		}
 		if (ig.global.deathPlayer === false) {
@@ -237,10 +268,22 @@ AnyScreen = ig.Game.extend({
 	
 	backgroundImg: "",
 	level: "",
+	getNumEnding: function() {
+		var numEnding = 0;
+		
+		for (i=0; i<10; i++) {
+			if (ig.global.totalEnding[i] === true) {
+				numEnding++;
+			}
+		}
+		
+		return numEnding;
+	},
+
 	
-	win: function(line1, line2, backgroundImg) {
+	win: function(line1, line2, line3, line4, backgroundImg) {
 		var x = ig.system.width/2,
-			y = ig.system.height*3/4,
+			y = ig.system.height*4/5,
 			x1 = 10,
 			y1 = 24;
 		
@@ -251,7 +294,7 @@ AnyScreen = ig.Game.extend({
 		winText.draw(this.line2, x1, y1+10, ig.Font.ALIGN.LEFT);
 		winText.draw(this.line3, x1, y1+20, ig.Font.ALIGN.LEFT);
 		winText.draw(this.line4, x1, y1+30, ig.Font.ALIGN.LEFT);
-		winText.draw('Press enter to replay', x, y, ig.Font.ALIGN.CENTER);
+		winText.draw('Press enter to start', x, y, ig.Font.ALIGN.CENTER);
 			
 	},
 	
@@ -259,11 +302,16 @@ AnyScreen = ig.Game.extend({
 		if(ig.input.pressed('enter')){
 			ig.system.setGame(this.level);
 		}
+		
+		if (ig.global.totalEnding) {
+			this.line4 = this.getNumEnding()+"/10 ENDINGS FOUND";
+		}
+		
 		this.parent();
 	},
 	
 	draw: function() {
-		this.win(this.line1, this.line2, this.backgroundImg);
+		this.win(this.line1, this.line2, this.line3, this.line4, this.backgroundImg);
 	}
 });
 
@@ -286,7 +334,7 @@ StartScreen = ig.Game.extend({
 		this.background.draw(0,0);
 		
 		var x = ig.system.width/2,
-			y = ig.system.height*3/4;
+			y = ig.system.height*4/5;
 		
 		this.instructText.draw('Press enter to start', x, y, ig.Font.ALIGN.CENTER);
 
@@ -299,7 +347,7 @@ StartScreen2 = AnyScreen.extend({
 	line2: "Our wings are srong but",
 	line3: "fragile and many dangers",
 	line4: "lie ahead . . .",
-	backgroundImg: "screenBG.gif",
+	backgroundImg: "screenBG3.gif",
 	level: MyGame,	
 });
 
