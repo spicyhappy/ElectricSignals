@@ -20,7 +20,7 @@ MyGame = ig.Game.extend({
 	statMatte: new ig.Image('media/statusBar.png'),
 	enemyTimer: new ig.Timer(),
 	pressSomething: false,
-	winTime: 10,
+	winTime: 20,
 	
 	gravity: 150,
 	
@@ -101,14 +101,17 @@ MyGame = ig.Game.extend({
 	},
 	// Remove instructions at the beginning
 	removeInstructText: function() { 
-				if (this.levelTimer.delta() > 3 && this.instructText) {
-				this.player.gravityFactor = 1;
+			
+			if (this.levelTimer.delta() > 6 && this.instructText) {
 				this.instructText=null;
+			} 
+			
+			if (this.levelTimer.delta() > 3 && this.instructText) {
+				this.player.gravityFactor = 1;
 			}
 			
 			if (this.anyPress() && this.instructText) {
 				this.player.gravityFactor = 1;
-				this.instructText=null;
 			}
 	},
 	
