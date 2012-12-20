@@ -464,11 +464,6 @@ WinFinal = ig.Game.extend({
 
 });
 
-// Disable audio for mobile devices
-if(ig.ua.mobile){
-	ig.Sound.enabled = false;
-}
-
 // Start the Game with 60fps, a resolution of 160x120
 ig.main( '#canvas', StartScreen, 60, 160, 120, 4 );
 

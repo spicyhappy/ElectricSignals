@@ -10,7 +10,6 @@ ig.module(
 EntityEnemy1 = ig.Entity.extend({
 
     animSheet: new ig.AnimationSheet( 'media/enemy1.gif', 16, 16 ),
-    //hitSFX: new ig.Sound('media/audio/king-surprise.*'),
     
     size: {x: 9, y:8},
     offset: {x: 3, y: 4},
