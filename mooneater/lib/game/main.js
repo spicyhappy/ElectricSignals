@@ -21,6 +21,7 @@ MyGame = ig.Game.extend({
 	enemyTimer: new ig.Timer(),
 	pressSomething: false,
 	winTime: 20,
+	allEndings: false,
 	
 	gravity: 150,
 	
@@ -148,16 +149,20 @@ MyGame = ig.Game.extend({
 		ig.global.deathChild = false;
 		ig.global.deathPlayer = false;
 		
+		if (!ig.global.totalEnding) {
+			ig.global.totalEnding = [false,false,false,false,false,false,false,false,false,false];
+		}
+		
+		if (this.getNumEnding() === 10) {
+			ig.system.setGame(WinFinal);
+		}
+		
 	},
 	
 	update: function() {
 		
 		this.player = this.getEntitiesByType( EntityPlayer )[0];
 		this.child = this.getEntitiesByType( EntityChild )[0];
-		
-		if (!ig.global.totalEnding) {
-			ig.global.totalEnding = [false,false,false,false,false,false,false,false,false,false];
-		}
 		
 		// While you are still alive...
 		if (ig.global.deathPlayer === false) {
@@ -171,11 +176,11 @@ MyGame = ig.Game.extend({
 				this.waterPoints++;
 			}
 			
-			
+			// After win time, disply different win states
 			if (this.levelTimer.delta() > this.winTime) {
 				
 				
-				if (this.waterPoints > 600) {
+				if (this.waterPoints > 500) {
 					ig.global.totalEnding[4] = true;
 					ig.system.setGame(WinCheap);
 				}
@@ -207,7 +212,11 @@ MyGame = ig.Game.extend({
 		// When you are dead
 		if (ig.global.deathPlayer === true) {			
 			if(ig.input.pressed('enter')){
-				ig.system.setGame(MyGame);
+			
+				if (this.getNumEnding() === 10) {
+					ig.system.setGame(WinFinal);
+			}
+				else {ig.system.setGame(MyGame);}
 			}
 		}
 		
@@ -297,7 +306,7 @@ AnyScreen = ig.Game.extend({
 			y = ig.system.height*4/5,
 			x1 = 10,
 			y1 = 24;
-		
+			
 		var winText = new ig.Font( 'media/04b03.font.png' );
 		var winBackground = new ig.Image('media/'+backgroundImg);
 		winBackground.draw(0,0);
@@ -309,12 +318,17 @@ AnyScreen = ig.Game.extend({
 			
 	},
 	
-	update: function() {				
-		if(ig.input.pressed('enter')){
-			ig.system.setGame(this.level);
-		}
+	update: function() {	
 		
-		if (ig.global.totalEnding) {
+		if(ig.input.pressed('enter')){
+			
+				if (this.getNumEnding() === 10) {
+					ig.system.setGame(WinFinal);
+			}
+				else {ig.system.setGame(MyGame);}
+		}			
+		
+		if (ig.global.totalEnding && this.getNumEnding() <10 && this.getNumEnding() >0) {
 			this.line4 = this.getNumEnding()+"/10 ENDINGS FOUND";
 		}
 		
@@ -333,6 +347,7 @@ StartScreen = ig.Game.extend({
 	
 	init: function() {
 		ig.input.bind(ig.KEY.ENTER,'enter');
+		ig.global.totalEnding = [false,false,false,false,false,false,false,false,false,false];
 	},
 	update: function() {				
 		if(ig.input.pressed('enter')){
@@ -355,11 +370,12 @@ StartScreen = ig.Game.extend({
 
 StartScreen2 = AnyScreen.extend({
 	line1: "Follow me closely, son.",
-	line2: "Our wings are srong but",
+	line2: "Our wings are strong but",
 	line3: "fragile and many dangers",
 	line4: "lie ahead . . .",
 	backgroundImg: "screenBG3.gif",
-	level: MyGame,	
+	level: MyGame,
+	
 });
 
 WinNormal = AnyScreen.extend({
@@ -401,10 +417,21 @@ WinPointless = AnyScreen.extend({
 WinSad = AnyScreen.extend({
 
 	line1: "SAD WIN",
-	line2: "What is essential is",
+	line2: "What is essential is often",
 	line3: "invisible to the eyes.",
 	backgroundImg: "screenWin1.png",
 	level: MyGame,
+});
+
+WinFinal = AnyScreen.extend({
+
+	line1: "CONGRATULATIONS",
+	line2: "You found all my endings.",
+	line3: "Good luck finding yours!",
+	line4: "Best, Xin Xin",
+	backgroundImg: "screenWin1.png",
+	level: StartScreen,
+
 });
 
 // Disable audio for mobile devices
