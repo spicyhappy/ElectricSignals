@@ -20,6 +20,7 @@ MyGame = ig.Game.extend({
 	statMatte: new ig.Image('media/statusBar.png'),
 	enemyTimer: new ig.Timer(),
 	pressSomething: false,
+	winTime: 10,
 	
 	gravity: 150,
 	
@@ -143,8 +144,26 @@ MyGame = ig.Game.extend({
 			this.spawnEnemy(Math.random()*2+.5,Math.random()*64+32);
 			this.followParent(30,100,0.2,0.05);
 			
-			if (this.levelTimer.delta() > 20) {
-				ig.system.setGame(WinState1);
+			if (this.levelTimer.delta() > this.winTime) {
+				
+				console.log(this.player.health);
+				console.log(ig.global.deathChild);
+				
+				if (ig.global.deathChild === false && this.player.health === 5) {
+					ig.system.setGame(WinPerfect);
+				}
+				
+				else if (ig.global.deathChild === true && this.player.health === 5) {
+					ig.system.setGame(WinPointless);
+				}
+				
+				else if (ig.global.deathChild === true && this.player.health < 5) {
+					ig.system.setGame(WinSad);
+				}
+				
+				else {
+					ig.system.setGame(WinNormal);
+				}
 			}	
 		
 		}
@@ -209,6 +228,45 @@ MyGame = ig.Game.extend({
 	}
 });
 
+AnyScreen = ig.Game.extend({
+
+	line1: "",
+	line2: "",
+	line3: "",
+	line4: "",
+	
+	backgroundImg: "",
+	level: "",
+	
+	win: function(line1, line2, backgroundImg) {
+		var x = ig.system.width/2,
+			y = ig.system.height*3/4,
+			x1 = 10,
+			y1 = 24;
+		
+		var winText = new ig.Font( 'media/04b03.font.png' );
+		var winBackground = new ig.Image('media/'+backgroundImg);
+		winBackground.draw(0,0);
+		winText.draw(this.line1, x1, y1, ig.Font.ALIGN.LEFT);
+		winText.draw(this.line2, x1, y1+10, ig.Font.ALIGN.LEFT);
+		winText.draw(this.line3, x1, y1+20, ig.Font.ALIGN.LEFT);
+		winText.draw(this.line4, x1, y1+30, ig.Font.ALIGN.LEFT);
+		winText.draw('Press enter to replay', x, y, ig.Font.ALIGN.CENTER);
+			
+	},
+	
+	update: function() {				
+		if(ig.input.pressed('enter')){
+			ig.system.setGame(this.level);
+		}
+		this.parent();
+	},
+	
+	draw: function() {
+		this.win(this.line1, this.line2, this.backgroundImg);
+	}
+});
+
 StartScreen = ig.Game.extend({
 	
 	instructText: new ig.Font('media/04b03.font.png'),
@@ -236,71 +294,58 @@ StartScreen = ig.Game.extend({
 	
 });
 
-StartScreen2 = ig.Game.extend({
-	
-	instructText: new ig.Font('media/04b03.font.png'),
-	storyText: new ig.Font('media/04b03.font.png'),
-	background: new ig.Image('media/screenBG.gif'),
-	
-	init: function() {
-		ig.input.bind(ig.KEY.ENTER,'enter');
-	},
-	update: function() {				
-		if(ig.input.pressed('enter')){
-			ig.system.setGame(MyGame);
-		}
-		this.parent();
-	},
-	draw: function() {
-		this.parent();
-		this.background.draw(0,0);
-		
-		var x = ig.system.width/2,
-			y = ig.system.height*3/4,
-			x1 = 20,
-			y1 = 24;
-		
-		this.storyText.draw("Follow me closely, son.", x1, y1, ig.Font.ALIGN.LEFT);
-		this.storyText.draw("Our wings are strong but", x1, y1+10, ig.Font.ALIGN.LEFT);
-		this.storyText.draw("fragile and many dangers", x1, y1+20, ig.Font.ALIGN.LEFT);
-		this.storyText.draw("lie ahead . . .", x1, y1+30, ig.Font.ALIGN.LEFT);
-		this.instructText.draw('Press enter to continue', x, y, ig.Font.ALIGN.CENTER);
-
-	}
-	
+StartScreen2 = AnyScreen.extend({
+	line1: "Follow me closely, son.",
+	line2: "Our wings are srong but",
+	line3: "fragile and many dangers",
+	line4: "lie ahead . . .",
+	backgroundImg: "screenBG.gif",
+	level: MyGame,	
 });
 
-WinState1 = ig.Game.extend({
+WinNormal = AnyScreen.extend({
 
-	line1: "Finally, our destination in sight",
-	line2: "I breath a sigh of relief.",
+	line1: "NORMAL WIN",
+	line2: "Finally, our destination in sight",
+	line3: "I breath a sigh of relief.",
 	backgroundImg: "screenWin1.png",
+	level: MyGame,
+});
+
+WinCheap = AnyScreen.extend({
+
+	line1: "CHEAP WIN",
+	line2: "Darling it's better",
+	line3: "down where it's wetter.",
+	backgroundImg: "screenWin1.png",
+	level: MyGame,
+});
+
+WinPerfect = AnyScreen.extend({
 	
-	win: function(line1, line2, backgroundImg) {
-		var x = ig.system.width/2,
-			y = ig.system.height*3/4,
-			x1 = 10,
-			y1 = 24;
-		
-		var winText = new ig.Font( 'media/04b03.font.png' );
-		var winBackground = new ig.Image('media/'+backgroundImg);
-		winBackground.draw(0,0);
-		winText.draw(line1, x1, y1, ig.Font.ALIGN.LEFT);
-		winText.draw(line2, x1, y1+10, ig.Font.ALIGN.LEFT);
-		winText.draw('Press enter to replay', x, y, ig.Font.ALIGN.CENTER);
-			
-	},
-	
-	update: function() {				
-		if(ig.input.pressed('enter')){
-			ig.system.setGame(MyGame);
-		}
-		this.parent();
-	},
-	
-	draw: function() {
-		this.win(this.line1, this.line2, this.backgroundImg);
-	}
+	line1: "PERFECT WIN",
+	line2: "Everything is well.",
+	line3: "for I am a genius.",
+	backgroundImg: "screenWin1.png",
+	level: MyGame,
+});
+
+WinPointless = AnyScreen.extend({
+
+	line1: "POINTLESS WIN",
+	line2: "What use is a beating heart",
+	line3: "when my son lies cold?",
+	backgroundImg: "screenWin1.png",
+	level: MyGame,
+});
+
+WinSad = AnyScreen.extend({
+
+	line1: "SAD WIN",
+	line2: "This miserable life",
+	line3: "has no happy ending.",
+	backgroundImg: "screenWin1.png",
+	level: MyGame,
 });
 
 // Disable audio for mobile devices
