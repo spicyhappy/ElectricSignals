@@ -135,6 +135,7 @@ MyGame = ig.Game.extend({
 		this.levelTimer = new ig.Timer();
 		this.screen.x = 8;	
 		this.screen.y = 8;
+		this.waterPoints = 0;
 		
 		// Setup keys
 		ig.input.bind( ig.KEY.LEFT_ARROW , 'left' );
@@ -151,26 +152,36 @@ MyGame = ig.Game.extend({
 	
 	update: function() {
 		
+		this.player = this.getEntitiesByType( EntityPlayer )[0];
+		this.child = this.getEntitiesByType( EntityChild )[0];
+		
 		if (!ig.global.totalEnding) {
 			ig.global.totalEnding = [false,false,false,false,false,false,false,false,false,false];
 		}
-		
-		console.log(ig.global.totalEnding);
-		console.log(this.getNumEnding());
-		
-		this.player = this.getEntitiesByType( EntityPlayer )[0];
-		this.child = this.getEntitiesByType( EntityChild )[0];
 		
 		// While you are still alive...
 		if (ig.global.deathPlayer === false) {
 			
 			this.removeInstructText();	
-			this.spawnEnemy(Math.random()*2+.5,Math.random()*64+32);
+			this.spawnEnemy(Math.random()*2+.5,Math.random()*56+32);
 			this.followParent(18,50,150,0.13,0.02);
+			
+			if (this.player.pos.y>95) {
+				
+				this.waterPoints++;
+				console.log(this.waterPoints);
+			}
+			
 			
 			if (this.levelTimer.delta() > this.winTime) {
 				
-				if (ig.global.deathChild === false && this.player.health === 3) {
+				
+				if (this.waterPoints > 600) {
+					ig.global.totalEnding[4] = true;
+					ig.system.setGame(WinCheap);
+				}
+				
+				else if (ig.global.deathChild === false && this.player.health === 3) {
 					ig.global.totalEnding[0] = true;
 					ig.system.setGame(WinPerfect);
 					
@@ -221,12 +232,13 @@ MyGame = ig.Game.extend({
 			this.instructText.draw('Left/Right Moves, Space Jumps', x, y, ig.Font.ALIGN.CENTER);
 		}
 		
+		// When player dies, display appropriate messages
 		if (ig.global.deathPlayer === true) {
 			// Death message
 			
 			if(!this.pressSomething) {
 				ig.global.totalEnding[5] = true;
-				this.death("LAZY DEATH","I close my eyes,","and everything is just fine.",this.getNumEnding()+"/10 ENDINGS FOUND","screenDeath2.png");
+				this.death("NATURAL DEATH","That Nature brings me home,","To fall is in the order of things",this.getNumEnding()+"/10 ENDINGS FOUND","screenDeath2.png");
 			}
 			else if(ig.global.deathPositionY < 28 && ig.global.deathSun) {
 				ig.global.totalEnding[6] = true;
@@ -235,12 +247,12 @@ MyGame = ig.Game.extend({
 			
 			else if (ig.global.deathPositionY >104 && ig.global.deathWater) {
 				ig.global.totalEnding[7] = true;
-				this.death("WATERY DEATH","The water dark and deep,","lulls me gently to sleep.",this.getNumEnding()+"/10 ENDINGS FOUND","screenDeath2.png");
+				this.death("WATERY DEATH","He who is drowned","is not troubled by the rain.",this.getNumEnding()+"/10 ENDINGS FOUND","screenDeath2.png");
 			}
 			
 			else if (child) {
 				ig.global.totalEnding[8] = true;
-				this.death("HOPEFUL DEATH","Live, on my son,","and dare to dream.",this.getNumEnding()+"/10 ENDINGS FOUND","screenDeath2.png");
+				this.death("HOPEFUL DEATH","What makes a desert beautiful?","Somewhere it hides a well.",this.getNumEnding()+"/10 ENDINGS FOUND","screenDeath2.png");
 
 			}
 			
@@ -354,8 +366,8 @@ StartScreen2 = AnyScreen.extend({
 WinNormal = AnyScreen.extend({
 
 	line1: "NORMAL WIN",
-	line2: "Finally, our destination in sight",
-	line3: "I breath a sigh of relief.",
+	line2: "Pain is inevitable",
+	line3: "Suffering is optional.",
 	backgroundImg: "screenWin1.png",
 	level: MyGame,
 });
@@ -372,8 +384,8 @@ WinCheap = AnyScreen.extend({
 WinPerfect = AnyScreen.extend({
 	
 	line1: "PERFECT WIN",
-	line2: "Everything is well",
-	line3: "for I am a genius.",
+	line2: "To live is the rarest thing.",
+	line3: "Most people exist, that is all.",
 	backgroundImg: "screenWin1.png",
 	level: MyGame,
 });
@@ -381,8 +393,8 @@ WinPerfect = AnyScreen.extend({
 WinPointless = AnyScreen.extend({
 
 	line1: "POINTLESS WIN",
-	line2: "What use is a beating heart",
-	line3: "when my son lies cold?",
+	line2: "How my achievements",
+	line3: "mock me!",
 	backgroundImg: "screenWin1.png",
 	level: MyGame,
 });
@@ -390,8 +402,8 @@ WinPointless = AnyScreen.extend({
 WinSad = AnyScreen.extend({
 
 	line1: "SAD WIN",
-	line2: "This miserable life",
-	line3: "has no happy ending.",
+	line2: "What is essential is",
+	line3: "invisible to the eyes.",
 	backgroundImg: "screenWin1.png",
 	level: MyGame,
 });
