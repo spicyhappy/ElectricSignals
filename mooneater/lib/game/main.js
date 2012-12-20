@@ -163,13 +163,12 @@ MyGame = ig.Game.extend({
 		if (ig.global.deathPlayer === false) {
 			
 			this.removeInstructText();	
-			this.spawnEnemy(Math.random()*2+.5,Math.random()*56+32);
+			this.spawnEnemy(Math.random()*2+.5,Math.random()*58+32);
 			this.followParent(18,50,150,0.13,0.02);
 			
-			if (this.player.pos.y>95) {
+			if (this.player.pos.y>92) {
 				
 				this.waterPoints++;
-				console.log(this.waterPoints);
 			}
 			
 			
