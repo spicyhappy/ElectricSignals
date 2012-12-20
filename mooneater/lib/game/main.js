@@ -21,7 +21,6 @@ MyGame = ig.Game.extend({
 	enemyTimer: new ig.Timer(),
 	pressSomething: false,
 	winTime: 20,
-	allEndings: false,
 	
 	gravity: 150,
 	
@@ -328,7 +327,7 @@ AnyScreen = ig.Game.extend({
 				else {ig.system.setGame(MyGame);}
 		}			
 		
-		if (ig.global.totalEnding && this.getNumEnding() <10 && this.getNumEnding() >0) {
+		if (ig.global.totalEnding && this.getNumEnding() > 0) {
 			this.line4 = this.getNumEnding()+"/10 ENDINGS FOUND";
 		}
 		
@@ -423,14 +422,45 @@ WinSad = AnyScreen.extend({
 	level: MyGame,
 });
 
-WinFinal = AnyScreen.extend({
+WinFinal = ig.Game.extend({
 
 	line1: "CONGRATULATIONS",
 	line2: "You found all my endings.",
 	line3: "Good luck finding yours!",
-	line4: "Best, Xin Xin",
+	line4: "Thank you for playing.",
 	backgroundImg: "screenWin1.png",
 	level: StartScreen,
+	
+	win: function(line1, line2, line3, line4, backgroundImg) {
+		var x = ig.system.width/2,
+			y = ig.system.height*4/5,
+			x1 = 10,
+			y1 = 24;
+			
+		var winText = new ig.Font( 'media/04b03.font.png' );
+		var winBackground = new ig.Image('media/'+backgroundImg);
+		winBackground.draw(0,0);
+		winText.draw(this.line1, x1, y1, ig.Font.ALIGN.LEFT);
+		winText.draw(this.line2, x1, y1+10, ig.Font.ALIGN.LEFT);
+		winText.draw(this.line3, x1, y1+20, ig.Font.ALIGN.LEFT);
+		winText.draw(this.line4, x1, y1+30, ig.Font.ALIGN.LEFT);
+		winText.draw('Made by Xin Xin', x, y, ig.Font.ALIGN.CENTER);
+			
+	},
+	
+	update: function() {	
+		
+		if(ig.input.pressed('enter')){
+			
+			ig.system.setGame(StartScreen);
+		}			
+		
+		this.parent();
+	},
+	
+	draw: function() {
+		this.win(this.line1, this.line2, this.line3, this.line4, this.backgroundImg);
+	}
 
 });
 
