@@ -1,13 +1,28 @@
-html, body, div, h1, img, header, p {
-	color: #fff;
-	font-family: "proxima nova", helvetica, arial, sans-serif;
+html, body, div, img, header, p {
+	font-family: "Helvetica Neue", helvetica, arial, sans-serif;
 	margin: 0;
 	padding: 0;
-	font-size: 12pt;
 }
 
 body {
 	background-color: #333;
+	color: #fff;
+	font-size: 12px;
+}
+
+footer {
+	text-align: center;
+}
+
+#help {
+	font-size: 12px;
+	padding: 15px;
+	width: 100px;
+	color: #333;
+	background-color: #EEE;
+	position: fixed;
+	right: 0;
+	top: 40px;
 }
 
 #wrapper {
@@ -21,24 +36,31 @@ body {
 	margin-bottom: 15px;
 }
 
-header {
-	margin-bottom: 15px;
+.block {
+	padding: 15px;
+	margin-top: 15px;
+	background-color: #EEE;
+	color: black;
 }
 
-h1 {
-	font-size: 50px;
-	text-transform: uppercase;
-	letter-spacing: 2px;
+.share {
+	padding-bottom: 20px;
+}
+
+.addThis {
+	float: right;
 }
 
 a {
-	color: #fff;
+	color: #29ABE2;
+	text-decoration: none;
+	font-weight: bold;
 }
 
 p {
-	margin-bottom: 5px;
+	margin-bottom: 7px;
 }
 
 .icon {
-	padding: 0 5px;
+	padding: 0 2px;
 }
