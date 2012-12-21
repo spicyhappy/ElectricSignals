@@ -51,7 +51,9 @@ ig.module(
 		},
 		
         update: function() {
-            
+          
+          	// Testing
+          	  
             var accel = this.standing ? this.accelGround : this.accelAir;
             this.currentAnim = this.anims.run;
             this.currentAnim.flip.x = this.flip;
