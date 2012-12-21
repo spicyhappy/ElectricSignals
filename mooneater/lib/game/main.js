@@ -22,7 +22,7 @@ MyGame = ig.Game.extend({
 	pressSomething: false,
 	winTime: 20,
 	
-	gravity: 150,
+	gravity: 20,
 	
 	// Continuously spawn birds
 	spawnEnemy: function(time,positionY) {
@@ -89,7 +89,6 @@ MyGame = ig.Game.extend({
 		deathText.draw(line4, x1, y1+30, ig.Font.ALIGN.LEFT);
 		deathText.draw('Press enter to start', x, y, ig.Font.ALIGN.CENTER);	
 	},
-
 	// Detect if anything is pressed
 	anyPress: function () {
 		if (ig.input.pressed('left') || ig.input.pressed('right') || ig.input.pressed('down') || ig.input.pressed('jump') || ig.input.pressed('shoot')) {
@@ -104,16 +103,16 @@ MyGame = ig.Game.extend({
 	// Remove instructions at the beginning
 	removeInstructText: function() { 
 			
-			if (this.levelTimer.delta() > 6 && this.instructText) {
+			if (this.levelTimer.delta() > 5 && this.instructText) {
 				this.instructText=null;
 			} 
 			
 			if (this.levelTimer.delta() > 3 && this.instructText) {
-				this.player.gravityFactor = 1;
+				this.gravity = 150;
 			}
 			
 			if (this.anyPress() && this.instructText) {
-				this.player.gravityFactor = 1;
+				this.gravity = 150;
 			}
 	},
 	
@@ -141,7 +140,8 @@ MyGame = ig.Game.extend({
 		ig.input.bind( ig.KEY.LEFT_ARROW , 'left' );
 		ig.input.bind( ig.KEY.RIGHT_ARROW , 'right' );
 		ig.input.bind( ig.KEY.SPACE , 'jump' );
-		ig.input.bind( ig.KEY.ENTER , 'enter' );
+		ig.input.bind( ig.KEY.MOUSE1 , 'jump');
+		
 		
 		ig.global.deathSun = false;
 		ig.global.deathWater = false;
@@ -155,7 +155,6 @@ MyGame = ig.Game.extend({
 		if (this.getNumEnding() === 10) {
 			ig.system.setGame(WinFinal);
 		}
-		
 	},
 	
 	update: function() {
@@ -209,13 +208,32 @@ MyGame = ig.Game.extend({
 		}
 		
 		// When you are dead
-		if (ig.global.deathPlayer === true) {			
-			if(ig.input.pressed('enter')){
+		if (ig.global.deathPlayer === true) {
+			// Death message
 			
-				if (this.getNumEnding() === 10) {
-					ig.system.setGame(WinFinal);
+			if(!this.pressSomething) {
+				ig.global.totalEnding[5] = true;
+				ig.system.setGame(DeathNatural);
+
 			}
-				else {ig.system.setGame(MyGame);}
+			else if(ig.global.deathPositionY < 28 && ig.global.deathSun) {
+				ig.global.totalEnding[6] = true;
+				ig.system.setGame(DeathSunny);
+			}
+			
+			else if (ig.global.deathPositionY >104 && ig.global.deathWater) {
+				ig.global.totalEnding[7] = true;
+				ig.system.setGame(DeathWatery);	
+			}
+			
+			else if (ig.global.deathChild === false) {
+				ig.global.totalEnding[8] = true;
+				ig.system.setGame(DeathHopeful);
+			}
+			
+			else {
+				ig.global.totalEnding[9] = true;
+				ig.system.setGame(DeathRegular);
 			}
 		}
 		
@@ -236,38 +254,9 @@ MyGame = ig.Game.extend({
 		if (this.instructText) {
 			var x = ig.system.width/2,
 				y = ig.system.height*7/8;
-			this.instructText.draw('Left/Right Moves, Space Jumps', x, y, ig.Font.ALIGN.CENTER);
+			this.instructText.draw('Press Mouse or Space to fly', x, y, ig.Font.ALIGN.CENTER);
 		}
 		
-		// When player dies, display appropriate messages
-		if (ig.global.deathPlayer === true) {
-			// Death message
-			
-			if(!this.pressSomething) {
-				ig.global.totalEnding[5] = true;
-				this.death("NATURAL DEATH","That Nature brings me home,","To fall is in the order of things",this.getNumEnding()+"/10 ENDINGS FOUND","screenDeath2.png");
-			}
-			else if(ig.global.deathPositionY < 28 && ig.global.deathSun) {
-				ig.global.totalEnding[6] = true;
-				this.death("SUNNY DEATH","The sun is a wondrous body,","like a magnificent father!",this.getNumEnding()+"/10 ENDINGS FOUND","screenDeath2.png");
-			}
-			
-			else if (ig.global.deathPositionY >104 && ig.global.deathWater) {
-				ig.global.totalEnding[7] = true;
-				this.death("WATERY DEATH","He who is drowned","is not troubled by the rain.",this.getNumEnding()+"/10 ENDINGS FOUND","screenDeath2.png");
-			}
-			
-			else if (child) {
-				ig.global.totalEnding[8] = true;
-				this.death("HOPEFUL DEATH","What makes a desert beautiful?","Somewhere it hides a well.",this.getNumEnding()+"/10 ENDINGS FOUND","screenDeath2.png");
-
-			}
-			
-			else {
-				ig.global.totalEnding[9] = true;
-				this.death("REGULAR DEATH","Oh cruel fate,","what a tragic hand you deal me!",this.getNumEnding()+"/10 ENDINGS FOUND","screenDeath2.png");
-			}
-		}
 		if (ig.global.deathPlayer === false) {
 		// Health
 			for (i=0; i<player.health; i++) {
@@ -284,6 +273,7 @@ AnyScreen = ig.Game.extend({
 	line2: "",
 	line3: "",
 	line4: "",
+	
 	
 	backgroundImg: "",
 	level: "",
@@ -313,13 +303,18 @@ AnyScreen = ig.Game.extend({
 		winText.draw(this.line2, x1, y1+10, ig.Font.ALIGN.LEFT);
 		winText.draw(this.line3, x1, y1+20, ig.Font.ALIGN.LEFT);
 		winText.draw(this.line4, x1, y1+30, ig.Font.ALIGN.LEFT);
-		winText.draw('Press enter to start', x, y, ig.Font.ALIGN.CENTER);
+		winText.draw('Press Mouse or Space to start', x, y, ig.Font.ALIGN.CENTER);
 			
+	},
+	
+	init: function() {
+		ig.input.bind( ig.KEY.SPACE , 'jump' );
+		ig.input.bind( ig.KEY.MOUSE1 , 'jump');
 	},
 	
 	update: function() {	
 		
-		if(ig.input.pressed('enter')){
+		if(ig.input.pressed('jump')){
 			
 				if (this.getNumEnding() === 10) {
 					ig.system.setGame(WinFinal);
@@ -345,11 +340,12 @@ StartScreen = ig.Game.extend({
 	background: new ig.Image('media/screenBG2.gif'),
 	
 	init: function() {
-		ig.input.bind(ig.KEY.ENTER,'enter');
+		ig.input.bind( ig.KEY.SPACE , 'jump' );
+		ig.input.bind( ig.KEY.MOUSE1 , 'jump');
 		ig.global.totalEnding = [false,false,false,false,false,false,false,false,false,false];
 	},
 	update: function() {				
-		if(ig.input.pressed('enter')){
+		if(ig.input.pressed('jump')){
 			ig.system.setGame(StartScreen2);
 		}
 		this.parent();
@@ -361,7 +357,7 @@ StartScreen = ig.Game.extend({
 		var x = ig.system.width/2,
 			y = ig.system.height*4/5;
 		
-		this.instructText.draw('Press enter to start', x, y, ig.Font.ALIGN.CENTER);
+		this.instructText.draw('Press Mouse or Space to start', x, y, ig.Font.ALIGN.CENTER);
 
 	}
 	
@@ -382,7 +378,7 @@ WinNormal = AnyScreen.extend({
 	line1: "NORMAL WIN",
 	line2: "Pain is inevitable",
 	line3: "Suffering is optional.",
-	backgroundImg: "screenWin1.png",
+	backgroundImg: "screenBG3.gif",
 	level: MyGame,
 });
 
@@ -391,7 +387,7 @@ WinCheap = AnyScreen.extend({
 	line1: "CHEAP WIN",
 	line2: "Darling it's better",
 	line3: "down where it's wetter.",
-	backgroundImg: "screenWin1.png",
+	backgroundImg: "screenBG3.gif",
 	level: MyGame,
 });
 
@@ -400,7 +396,7 @@ WinPerfect = AnyScreen.extend({
 	line1: "PERFECT WIN",
 	line2: "To live is the rarest thing.",
 	line3: "Most people exist, that is all.",
-	backgroundImg: "screenWin1.png",
+	backgroundImg: "screenBG3.gif",
 	level: MyGame,
 });
 
@@ -409,7 +405,7 @@ WinPointless = AnyScreen.extend({
 	line1: "POINTLESS WIN",
 	line2: "How my achievements",
 	line3: "mock me!",
-	backgroundImg: "screenWin1.png",
+	backgroundImg: "screenBG3.gif",
 	level: MyGame,
 });
 
@@ -418,7 +414,52 @@ WinSad = AnyScreen.extend({
 	line1: "SAD WIN",
 	line2: "What is essential is often",
 	line3: "invisible to the eyes.",
-	backgroundImg: "screenWin1.png",
+	backgroundImg: "screenBG3.gif",
+	level: MyGame,
+});
+
+DeathNatural = AnyScreen.extend({
+	
+	line1: "NATURAL DEATH",
+	line2: "That nature brings me home,",
+	line3: "To fall is in the order of things.",
+	backgroundImg: "screenDeath1.png",
+	level: MyGame,
+});
+
+DeathSunny = AnyScreen.extend({
+	
+	line1: "SUNNY DEATH",
+	line2: "The sun is a wondrous body",
+	line3: "like a magnificent father!",
+	backgroundImg: "screenDeath1.png",
+	level: MyGame,
+});
+
+DeathWatery = AnyScreen.extend({
+	
+	line1: "WATERY DEATH",
+	line2: "He who is drowned",
+	line3: "is not troubled by the rain.",
+	backgroundImg: "screenDeath1.png",
+	level: MyGame,
+});
+
+DeathHopeful = AnyScreen.extend({
+	
+	line1: "HOPEFUL DEATH",
+	line2: "What makes a desert beautiful?",
+	line3: "Somewhere it hides a well.",
+	backgroundImg: "screenDeath1.png",
+	level: MyGame,
+});
+
+DeathRegular = AnyScreen.extend({
+	
+	line1: "REGULAR DEATH",
+	line2: "Oh cruel fate,",
+	line3: "what a tragic hand you deal me!",
+	backgroundImg: "screenDeath1.png",
 	level: MyGame,
 });
 
@@ -448,9 +489,14 @@ WinFinal = ig.Game.extend({
 			
 	},
 	
+	init: function() {
+		ig.input.bind( ig.KEY.SPACE , 'jump' );
+		ig.input.bind( ig.KEY.MOUSE1 , 'jump');
+	},
+	
 	update: function() {	
 		
-		if(ig.input.pressed('enter')){
+		if(ig.input.pressed('jump')){
 			
 			ig.system.setGame(StartScreen);
 		}			

@@ -18,7 +18,7 @@ ig.module(
 		invincible: true,
 		invincibleDelay: 1.5,
 		invincibleTimer: null,
-		gravityFactor: 0,
+		gravityFactor: 1,
 		sweatTimer: new ig.Timer(),
 		zIndex: 1,
 		
